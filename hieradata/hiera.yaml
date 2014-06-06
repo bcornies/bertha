@@ -1,0 +1,8 @@
+:backends:
+  - yaml
+:yaml:
+  :datadir: /Users/bcornies/Documents/SixSquareStudio/Projects/bertha/hieradata
+:hierarchy:
+  - websites/%{::website}
+  - templates/%{template}
+  - defaults

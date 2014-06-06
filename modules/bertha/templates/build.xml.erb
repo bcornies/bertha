@@ -1,0 +1,143 @@
+<project name="<%= @website %>" default="dist" basedir=".">
+
+    <!-- ********************************** PROPERTIES DEFINITIONS ********************************** -->
+    
+    <property name="dist" value="dist"/>
+    <property name="data" value="sql"/>
+    <property name="mysql.bin" location="/Applications/MAMP/Library/bin"/>
+    <property name="utils.home" location="/Users/bcornies/Dropbox/SixSquareStudio/SixSquareStuff/Utils"/>
+
+    <property name="host.local" value="192.168.11.43"/>
+
+    <!-- ********************************** CUSTOM TASK DEFINITIONS ********************************* -->
+
+    <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"/>
+
+    <path id="classpath">
+        <fileset dir="${utils.home}/ant">
+            <include name="compiler.jar"/>
+        </fileset>
+    </path>
+
+    <!-- ********************************** TARGET DEFINITIONS ************************************** -->
+    
+    <target name="clean">
+        <delete dir="${dist}"/>
+    </target>
+    
+    <target name="init" depends="clean">
+        <mkdir dir="${dist}"/>
+    </target>
+    
+    <target name="dist" depends="init" description="Creates a distributable package">
+        <copy todir="${dist}">
+            <fileset dir=".">
+                <%- @dist_items.each do |dist_item| -%>
+                <include name="<%= dist_item %>"/>
+                <%- end -%>
+            </fileset>
+        </copy>
+        <%#apply executable="java" parallel="false" verbose="true">
+            <fileset dir="${dist}/${theme.dir}">
+                <include name="*.css"/>
+            </fileset>
+            <arg line="-jar"/>
+            <arg path="${utils.home}/ant/yuicompressor-2.4.7.jar"/>
+            <arg line="--line-break 0"/>
+            <srcfile />
+            <arg line="-o"/>
+            <mapper type="glob" from="*.css" to="${dist}/${theme.dir}/*-min.css"/>
+            <targetfile />
+        </apply>
+        <concat destfile="${dist}/${theme.dir}/style.css">
+            <fileset dir="${dist}/${theme.dir}">
+                <include name="theme.txt"/>
+            </fileset>
+            <fileset dir="${dist}/${theme.dir}">
+                <include name="*-min.css"/>
+            </fileset>
+        </concat>
+        <delete>
+            <fileset dir="${dist}/${theme.dir}" includes="*-min.css"/>
+        </delete>
+        <!-- <replace file="${dist}/${theme.dir}/functions.php" token="$prod_mode = false" value="$prod_mode = true"/> --%>
+    </target>
+
+    <%- if @is_cms -%>
+    <target name="dock" description="Docks this project into a <%= @template %> dock">
+    </target>
+
+    <target name="dump-mysql-local">
+        <mkdir dir="${data}"/>
+        <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">  
+            <arg value="--user=wordpress"/>  
+            <arg value="--password=password"/>
+            <arg value="--default-character-set=latin1"/>
+            <arg value="dawsonwallace"/>  
+        </exec>
+        <replace file="${data}/database-dump.sql" token="${host.local}" value="@WORDPRESS_HOST@"/>
+    </target>
+
+    <target name="import-mysql-local">
+        <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="${host.local}"/>    
+        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">  
+            <arg value="--user=wordpress"/>  
+            <arg value="--password=password"/>
+            <arg value="dawsonwallace"/>  
+        </exec>       
+        <replace file="${data}/database-dump.sql" token="${host.local}" value="@WORDPRESS_HOST@"/>
+    </target>
+    <% end -%>
+
+    <!-- ********************************** SITE DEFINITIONS ********************************** -->
+
+    <% @sites.each do |site, props| -%>
+
+    <!-- *** <%= site %> *** -->
+
+    <%- if @is_cms -%>
+    <target name="dist-<%= site %>" depends="dist">
+        <replace file="${dist}/wp-config.php" token="@DB_SERVER@" value="<%= props['db_server'] %>"/>
+        <replace file="${dist}/wp-config.php" token="@DB_NAME@" value="<%= props['db_name'] %>"/>
+        <replace file="${dist}/wp-config.php" token="@DB_USER@" value="<%= props['db_user'] %>"/>
+        <replace file="${dist}/wp-config.php" token="@DB_PASSWORD@" value="<%= props['db_password'] %>"/>
+    </target>
+
+    <target name="dump-uploads-<%= site %>" description="Pulls files from <%= site %>, overwrites local">
+        <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" remotedir="<%= @uploads_dir %>" action="get">
+            <fileset dir="<%= @uploads_dir %>">
+                <include name="**"/>
+            </fileset>
+        </ftp>
+    </target>
+
+    <target name="dump-mysql-<%= site %>">
+        <mkdir dir="${data}"/>
+        <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
+            <arg value="--host=<%= props['db_host'] %>"/>  
+            <arg value="--user=<%= props['db_user'] %>"/>  
+            <arg value="--password=<%= props['db_password'] %>"/>
+            <arg value="--default-character-set=latin1"/>
+            <arg value="<%= props['db_name'] %>"/>  
+        </exec>
+        <replace file="${data}/database-dump.sql" token="<%= props['host'] %>" value="@WORDPRESS_HOST@"/>
+    </target>
+    <% end -%>
+
+    <target name="publish-<%= site %>" depends="dist-prev, dump-mysql-local">
+        <%- if @is_cms -%>
+        <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>"/>
+        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">  
+            <arg value="--host=<%= props['db_host'] %>"/>  
+            <arg value="--user=<%= props['db_user'] %>"/>  
+            <arg value="--password=<%= props['db_password'] %>"/>
+            <arg value="<%= props['db_name'] %>"/>  
+        </exec>
+        <%- end -%>
+        <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" chmod="644" passive="yes">
+            <fileset dir="${dist}"/>
+        </ftp>
+    </target>
+    <% end -%>
+    
+</project>

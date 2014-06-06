@@ -1,3 +1,4 @@
-hieradata
+hieradata/websites
+hieradata/defaults.yaml
 *.sublime-project
 *.sublime-workspace

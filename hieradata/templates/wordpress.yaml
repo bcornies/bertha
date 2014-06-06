@@ -1,0 +1,4 @@
+bertha::is_cms: true
+bertha::cms_props:
+	uploads_dir: wp-content/uploads
+	config_file: wp-config.php
