@@ -34,10 +34,10 @@ then
 fi
 
 # Set our website fact which hooks into hiera
-FACTER_website=$1
+export FACTER_website=$1
 
 # Build our Puppet command
-CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=modules manifests/main.pp"
+CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=modules --parser future manifests/main.pp"
 
 if [ $DEBUG == true ]
 then

@@ -37,7 +37,7 @@
                 <%- end -%>
             </fileset>
         </copy>
-        <%#apply executable="java" parallel="false" verbose="true">
+        <apply executable="java" parallel="false" verbose="true">
             <fileset dir="${dist}/${theme.dir}">
                 <include name="*.css"/>
             </fileset>
@@ -49,7 +49,7 @@
             <mapper type="glob" from="*.css" to="${dist}/${theme.dir}/*-min.css"/>
             <targetfile />
         </apply>
-        <concat destfile="${dist}/${theme.dir}/style.css">
+       <!--  <concat destfile="${dist}/${theme.dir}/style.css">
             <fileset dir="${dist}/${theme.dir}">
                 <include name="theme.txt"/>
             </fileset>
@@ -59,8 +59,8 @@
         </concat>
         <delete>
             <fileset dir="${dist}/${theme.dir}" includes="*-min.css"/>
-        </delete>
-        <!-- <replace file="${dist}/${theme.dir}/functions.php" token="$prod_mode = false" value="$prod_mode = true"/> --%>
+        </delete> -->
+        <!-- <replace file="${dist}/${theme.dir}/functions.php" token="$prod_mode = false" value="$prod_mode = true"/>-->
     </target>
 
     <%- if @is_cms -%>
@@ -124,7 +124,7 @@
     </target>
     <% end -%>
 
-    <target name="publish-<%= site %>" depends="dist-prev, dump-mysql-local">
+    <target name="publish-<%= site %>" depends="dist-prev<% if @is_cms %>, dump-mysql-local<% end %>">
         <%- if @is_cms -%>
         <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>"/>
         <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">  

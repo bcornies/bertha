@@ -4,5 +4,5 @@
   :datadir: /Users/bcornies/Documents/SixSquareStudio/Projects/bertha/hieradata
 :hierarchy:
   - websites/%{::website}
-  - templates/%{template}
+  - engines/%{engine}
   - defaults

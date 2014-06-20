@@ -2,5 +2,5 @@ bertha::is_cms: false
 bertha::dist_items:
   - img/**
   - js/**
-  - style/**
+  - css/**
   - index.html

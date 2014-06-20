@@ -1,0 +1,32 @@
+@import 'mixins';
+
+// ----------------- Variables --------------------- //
+
+$black: #000000;
+$white: #ffffff;
+
+$font_serif: Times, 'Times New Roman', serif;
+
+// ----------------- General --------------------- //
+
+html {
+
+}
+
+// ----------------- Mobile Styles... --------------------- //
+
+@media only screen and (max-width: 580px) {
+
+}
+
+// ----------------- High-Definition Styles... --------------------- //
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
+
+}
+
+// ------------------ IE Fixes -------------------- //
+
+.lt-ie9 {
+
+}
