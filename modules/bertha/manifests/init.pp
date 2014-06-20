@@ -3,7 +3,7 @@ class bertha (
   $sites = {},
   $dist_items = [],
   $is_cms,
-  $include_frameworks = {},
+  $include_libraries = {},
 ) {
 
 	$base_dir="${websites_dir}/${::website}"
@@ -55,18 +55,18 @@ class bertha (
     content => template('bertha/css.php.erb'),
   }
 
-  $include_frameworks.each |$framework_type, $frameworks| {
+  $include_libraries.each |$library_type, $libraries| {
     file { [
-      "${base_dir}/${framework_type}",
-      "${base_dir}/${framework_type}/frameworks",
+      "${base_dir}/${library_type}",
+      "${base_dir}/${library_type}/libraries",
     ]:
       ensure => directory,
     }
 
-    $frameworks.each |$framework| {
-      file { "${base_dir}/${framework_type}/frameworks/${framework}.${framework_type}":
+    $libraries.each |$library| {
+      file { "${base_dir}/${library_type}/libraries/${library}.${library_type}":
         ensure => file,
-        source => "puppet:///modules/bertha/frameworks/${framework_type}/${framework}.${framework_type}",
+        source => "puppet:///modules/bertha/libraries/${library_type}/${library}.${library_type}",
       }
     }
   }

@@ -16,7 +16,7 @@ bertha::sites:
     ftp_user: furrylogic@sixsquarestudio.com
     ftp_password: password2
 
-bertha::include_frameworks:
+bertha::include_libraries:
   css:
     - cssreset
   scss:
