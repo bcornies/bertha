@@ -44,8 +44,14 @@ class bertha (
     source  => 'puppet:///modules/bertha/index.php',
   }
 
-  file { "${base_dir}/includes/css.php":
+  file { "${base_dir}/run_sass.sh":
     ensure => file,
+    source => 'puppet:///modules/bertha/run_sass.sh',
+    mode   => '0755',
+  }
+
+  file { "${base_dir}/includes/css.php":
+    ensure  => file,
     content => template('bertha/css.php.erb'),
   }
 
@@ -60,7 +66,7 @@ class bertha (
     $frameworks.each |$framework| {
       file { "${base_dir}/${framework_type}/frameworks/${framework}.${framework_type}":
         ensure => file,
-        source => "puppet:///modules/bertha/frameworks/${framework_type}/${framework}.${framework_type}"
+        source => "puppet:///modules/bertha/frameworks/${framework_type}/${framework}.${framework_type}",
       }
     }
   }
