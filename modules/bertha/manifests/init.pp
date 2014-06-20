@@ -8,7 +8,11 @@ class bertha (
 
 	$base_dir="${websites_dir}/${::website}"
 
-	file { $base_dir:
+	file { [
+      $base_dir,
+      "${base_dir}/includes",
+      "${base_dir}/img",
+    ]:
 		ensure => directory,
 	}
 
@@ -29,9 +33,20 @@ class bertha (
     source  => 'puppet:///modules/bertha/main.js',
   }
 
-  file { "$base_dir/build.xml":
+  file { "${base_dir}/build.xml":
     ensure  => file,
     content => template('bertha/build.xml.erb')
+  }
+
+  file { "${base_dir}/index.php":
+    ensure  => file,
+    replace => false,
+    source  => 'puppet:///modules/bertha/index.php',
+  }
+
+  file { "${base_dir}/includes/css.php":
+    ensure => file,
+    content => template('bertha/css.php.erb'),
   }
 
   $include_frameworks.each |$framework_type, $frameworks| {

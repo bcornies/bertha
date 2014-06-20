@@ -8,8 +8,8 @@ Features:
 
 * Bootstraps 3 different kinds of web projects:
     * Plain ol' HTML5 site
-    * Concrete5 theme
-    * Wordpress theme
+    * Concrete5 theme (not implemented yet)
+    * Wordpress theme (not implemented yet)
 * Dynamically patch existing projects with features added after initial project bootstrap
 * Drop-in any javascript, css, or sass frameworks and pick-and-choose which projects need what
 * Builds a custom Ant build script for each project that...
@@ -34,4 +34,4 @@ Features:
 
     Usage: ./bertha [-d] <website>
         -d Turns Puppet debugging on
-        <website> maps to a hiera file in hieradata/websites
+        <website> maps to a hiera (yaml) file in hieradata/websites

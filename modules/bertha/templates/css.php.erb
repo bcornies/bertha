@@ -1,0 +1,7 @@
+<%- @include_frameworks['css'].each do |stylesheet| -%>
+<link rel="stylesheet" type="text/css" href="/css/frameworks/<%= stylesheet %>.css">
+<%- end -%>
+<%- @include_frameworks['scss'].each do |stylesheet| -%>
+<link rel="stylesheet" type="text/css" href="/css/frameworks/<%= stylesheet %>.css">
+<%- end -%>
+<link rel="stylesheet" type="text/css" href="/css/global.css">
