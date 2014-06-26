@@ -17,17 +17,14 @@ function bootstrap {
 
   sudo gem install bundler
   bundle install
-  r10k install
+  r10k puppetfile install
 
   touch bertha.lock
 }
 
 function run_bertha {
-  # Set our website fact which hooks into hiera
-  export FACTER_website=$1
-
   # Build our Puppet command
-  CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=modules --parser future manifests/main.pp"
+  CMD="sudo FACTER_website=$1 puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --parser future manifests/main.pp"
 
   if [ $DEBUG == true ]
   then

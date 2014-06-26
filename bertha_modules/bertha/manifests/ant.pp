@@ -1,4 +1,9 @@
-class bertha::dependencies {
+class bertha::ant {
+
+  package { 'ant':
+    ensure   => installed,
+    provider => 'brew',
+  }
 
   file { [
     "${::home}/.ant",

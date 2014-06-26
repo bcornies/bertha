@@ -7,7 +7,7 @@ class bertha (
   $include_libraries = {},
 ) {
 
-  class { 'dependencies': }
+  class { 'ant': }
 
 	$base_dir="${websites_dir}/${::website}"
 
