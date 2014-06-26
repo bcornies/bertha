@@ -6,6 +6,6 @@
   <title></title>
 </head>
 <body>
-  
+  <?php include("includes/js.php"); ?>
 </body>
 </html>

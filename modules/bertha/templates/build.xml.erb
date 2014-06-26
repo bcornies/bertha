@@ -21,15 +21,12 @@
 
     <!-- ********************************** TARGET DEFINITIONS ************************************** -->
     
-    <target name="clean">
+    <target name="init">
         <delete dir="${dist}"/>
-    </target>
-    
-    <target name="init" depends="clean">
         <mkdir dir="${dist}"/>
     </target>
     
-    <target name="dist" depends="init" description="Creates a distributable package">
+    <target name="dist-base" depends="init" description="Creates structure of distribution">
         <copy todir="${dist}">
             <fileset dir=".">
                 <%- @dist_items.each do |dist_item| -%>
@@ -37,34 +34,56 @@
                 <%- end -%>
             </fileset>
         </copy>
+    </target>
+
+    <target name="dist-css" description="Minifies and concatenates css files">
         <apply executable="java" parallel="false" verbose="true">
-            <fileset dir="${dist}/${theme.dir}">
-                <include name="*.css"/>
+            <fileset dir="${dist}/css">
+                <include name="**/*.css"/>
             </fileset>
             <arg line="-jar"/>
             <arg path="${utils.home}/ant/yuicompressor-2.4.7.jar"/>
             <arg line="--line-break 0"/>
             <srcfile />
             <arg line="-o"/>
-            <mapper type="glob" from="*.css" to="${dist}/${theme.dir}/*-min.css"/>
+            <mapper type="glob" from="*.css" to="${dist}/css/*-min.css"/>
             <targetfile />
         </apply>
-       <!--  <concat destfile="${dist}/${theme.dir}/style.css">
-            <fileset dir="${dist}/${theme.dir}">
-                <include name="theme.txt"/>
-            </fileset>
-            <fileset dir="${dist}/${theme.dir}">
-                <include name="*-min.css"/>
+        <concat destfile="${dist}/css/<%= @website %>-min.css">
+            <fileset dir="${dist}/css">
+                <include name="**/*-min.css"/>
             </fileset>
         </concat>
-        <delete>
-            <fileset dir="${dist}/${theme.dir}" includes="*-min.css"/>
-        </delete> -->
-        <!-- <replace file="${dist}/${theme.dir}/functions.php" token="$prod_mode = false" value="$prod_mode = true"/>-->
+        <echo file="${dist}/includes/css.php"><![CDATA[<link rel="stylesheet" type="text/css" href="/css/<%= @website %>-min.css">]]></echo>
+        <delete includeemptydirs="true">
+            <fileset dir="${dist}/css" excludes="<%= @website %>-min.css"/>
+        </delete>
+    </target>
+
+    <target name="dist-js" description="Minifies and concatenates js files">
+        <jscomp compilationLevel="simple" debug="false" output="${dist}/js/<%= @website %>-min.js" warning="quiet">
+            <sources dir="${dist}/js">
+                <%- @include_libraries['js'].each do |javascript| -%>
+                <file name="libraries/<%= javascript %>.js"/>
+                <%- end -%>
+                <file name="main.js"/>
+            </sources>
+        </jscomp>
+        <echo file="${dist}/includes/js.php"><![CDATA[<script type="text/javascript" src="/js/<%= @website %>-min.js"></script>]]></echo>
+        <delete includeemptydirs="true">
+            <fileset dir="${dist}/js" excludes="<%= @website %>-min.js"/>
+        </delete>
+    </target>
+
+    <target name="dist" description="Creates a distributable package">
+        <antcall target="dist-base"/>
+        <antcall target="dist-css"/>
+        <antcall target="dist-js"/>
     </target>
 
     <%- if @is_cms -%>
     <target name="dock" description="Docks this project into a <%= @template %> dock">
+        <!-- TODO: implement! -->
     </target>
 
     <target name="dump-mysql-local">
@@ -124,7 +143,7 @@
     </target>
     <% end -%>
 
-    <target name="publish-<%= site %>" depends="dist-prev<% if @is_cms %>, dump-mysql-local<% end %>">
+    <target name="publish-<%= site %>" depends="dist<% if @is_cms %>, dump-mysql-local<% end %>">
         <%- if @is_cms -%>
         <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>"/>
         <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">  

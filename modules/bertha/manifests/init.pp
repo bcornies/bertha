@@ -22,11 +22,6 @@ class bertha (
     source  => 'puppet:///modules/bertha/global.scss',
   }
 
-  file { "${base_dir}/scss/mixins.scss":
-    ensure  => file,
-    source  => 'puppet:///modules/bertha/mixins.scss',
-  }
-
   file { "${base_dir}/js/main.js":
     ensure  => file,
     replace => false,
@@ -53,6 +48,11 @@ class bertha (
   file { "${base_dir}/includes/css.php":
     ensure  => file,
     content => template('bertha/css.php.erb'),
+  }
+
+  file { "${base_dir}/includes/js.php":
+    ensure  => file,
+    content => template('bertha/js.php.erb'),
   }
 
   $include_libraries.each |$library_type, $libraries| {

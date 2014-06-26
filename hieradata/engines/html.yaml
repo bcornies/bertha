@@ -3,4 +3,4 @@ bertha::dist_items:
   - img/**
   - js/**
   - css/**
-  - index.html
+  - index.php

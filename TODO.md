@@ -7,3 +7,4 @@
 * Should Ant be replaced with a more modern build engine?
 * Support Google Analytics and Web Master configuration
 * Support web fonts configuration
+* Remove all hard-coded, local filepaths
