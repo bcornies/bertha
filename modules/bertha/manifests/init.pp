@@ -1,10 +1,13 @@
 class bertha (
-	$websites_dir,
+  $websites_dir,
+  $mysql_path,
   $sites = {},
   $dist_items = [],
   $is_cms,
   $include_libraries = {},
 ) {
+
+  class { 'dependencies': }
 
 	$base_dir="${websites_dir}/${::website}"
 

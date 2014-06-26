@@ -4,20 +4,12 @@
     
     <property name="dist" value="dist"/>
     <property name="data" value="sql"/>
-    <property name="mysql.bin" location="/Applications/MAMP/Library/bin"/>
-    <property name="utils.home" location="/Users/bcornies/Dropbox/SixSquareStudio/SixSquareStuff/Utils"/>
-
-    <property name="host.local" value="192.168.11.43"/>
+    <property name="mysql.bin" location="<%= @mysql_path %>"/>
+    <property name="host.local" value="<%= @ipaddress %>"/>
 
     <!-- ********************************** CUSTOM TASK DEFINITIONS ********************************* -->
 
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"/>
-
-    <path id="classpath">
-        <fileset dir="${utils.home}/ant">
-            <include name="compiler.jar"/>
-        </fileset>
-    </path>
 
     <!-- ********************************** TARGET DEFINITIONS ************************************** -->
     
@@ -42,7 +34,7 @@
                 <include name="**/*.css"/>
             </fileset>
             <arg line="-jar"/>
-            <arg path="${utils.home}/ant/yuicompressor-2.4.7.jar"/>
+            <arg path="${user.home}/.ant/lib/yuicompressor-2.4.7.jar"/>
             <arg line="--line-break 0"/>
             <srcfile />
             <arg line="-o"/>
