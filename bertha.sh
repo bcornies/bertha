@@ -10,7 +10,34 @@ function usage {
 	echo "   <website> maps to a hiera file in hieradata/websites"
 }
 
-# Parse command line options
+function bootstrap {
+  if [ -f 'bertha.lock' ]; then
+    return
+  fi
+
+  sudo gem install bundler
+  bundle install
+  r10k install
+
+  touch bertha.lock
+}
+
+function run_bertha {
+  # Set our website fact which hooks into hiera
+  export FACTER_website=$1
+
+  # Build our Puppet command
+  CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=modules --parser future manifests/main.pp"
+
+  if [ $DEBUG == true ]
+  then
+    CMD="$CMD --debug" 
+  fi
+
+  # Run puppet!
+  $CMD
+}
+
 while getopts ":d" opt; do
   case $opt in
     d)
@@ -33,16 +60,5 @@ then
   exit 1
 fi
 
-# Set our website fact which hooks into hiera
-export FACTER_website=$1
-
-# Build our Puppet command
-CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=modules --parser future manifests/main.pp"
-
-if [ $DEBUG == true ]
-then
-	CMD="$CMD --debug" 
-fi
-
-# Run puppet!
-$CMD
+bootstrap
+run_bertha $1
