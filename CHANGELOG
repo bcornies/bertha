@@ -1,0 +1,14 @@
+## 0.0.2 (unreleased)
+
+FEATURES:
+
+  - concrete5 project support
+
+## 0.0.1 (Jun 25, 2014)
+
+FEATURES:
+  
+  - initial release
+  - plain html/php website support
+  - self-bootstrapping
+  - ant build generation

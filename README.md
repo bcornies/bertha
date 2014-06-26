@@ -1,7 +1,5 @@
 # Intro
 
-** This project is very much a work in progress! There are no official releases yet. **
-
 Bertha is a website bootstrapping engine built on top of Puppet.
 
 Features:
