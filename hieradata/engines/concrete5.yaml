@@ -1,0 +1,10 @@
+bertha::is_cms: true
+bertha::dist_items:
+  - img/**
+  - js/**
+  - css/**
+  - elements/**
+  - default.php
+bertha::cms_props:
+  uploads_dir: 
+  config_file: config/site.php

@@ -74,8 +74,9 @@
     </target>
 
     <%- if @is_cms -%>
-    <target name="dock" description="Docks this project into a <%= @template %> dock">
-        <!-- TODO: implement! -->
+    <target name="dock" description="Docks this project into a <%= @engine %> dock">
+        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/themes/<%= @website %>" resource="."/>
+        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/config/site.pp" resource="config/site.pp"/>
     </target>
 
     <target name="dump-mysql-local">

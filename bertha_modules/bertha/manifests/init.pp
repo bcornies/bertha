@@ -36,12 +36,6 @@ class bertha (
     content => template('bertha/build.xml.erb')
   }
 
-  file { "${base_dir}/index.php":
-    ensure  => file,
-    replace => false,
-    source  => 'puppet:///modules/bertha/index.php',
-  }
-
   file { "${base_dir}/run_sass.sh":
     ensure => file,
     source => 'puppet:///modules/bertha/run_sass.sh',

@@ -8,3 +8,4 @@
 * Support Google Analytics and Web Master configuration
 * Support web fonts configuration
 * ~~Remove all hard-coded, local filepaths~~
+* Auto database provisioning

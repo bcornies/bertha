@@ -23,8 +23,10 @@ function bootstrap {
 }
 
 function run_bertha {
+  export FACTER_website=$1
+
   # Build our Puppet command
-  CMD="sudo FACTER_website=$1 puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --parser future manifests/main.pp"
+  CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --parser future manifests/main.pp"
 
   if [ $DEBUG == true ]
   then
