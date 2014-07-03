@@ -2,7 +2,7 @@
 
 # Defaults
 DEBUG=false
-HIERA_DIR=hieradata/hiera.yaml
+HIERA_DIR=configuration/hiera.yaml
 
 function usage {
 	echo "Usage: ./bertha [-d] <website>"
@@ -24,6 +24,7 @@ function bootstrap {
 
 function run_bertha {
   export FACTER_website=$1
+  export FACTER_cwd=`pwd`
 
   # Build our Puppet command
   CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --parser future manifests/main.pp"

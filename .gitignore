@@ -1,5 +1,5 @@
-hieradata/websites/*.yaml
-hieradata/defaults.yaml
+configuration/websites/*.yaml
+configuration/defaults.yaml
 
 modules
 

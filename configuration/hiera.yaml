@@ -1,7 +1,7 @@
 :backends:
   - yaml
 :yaml:
-  :datadir: /Users/bcornies/Documents/SixSquareStudio/Projects/bertha/hieradata
+  :datadir: "%{::cwd}/configuration"
 :hierarchy:
   - websites/%{::website}
   - engines/%{engine}
