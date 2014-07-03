@@ -1,0 +1,7 @@
+<%- @include_libraries['css'].each do |stylesheet| -%>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getThemePath(); ?>/css/libraries/<%= stylesheet %>.css">
+<%- end -%>
+<%- @include_libraries['scss'].each do |stylesheet| -%>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getThemePath(); ?>/css/libraries/<%= stylesheet %>.css">
+<%- end -%>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getThemePath(); ?>/css/global.css">

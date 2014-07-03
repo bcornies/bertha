@@ -6,6 +6,15 @@
     <property name="data" value="sql"/>
     <property name="mysql.bin" location="<%= @mysql_path %>"/>
     <property name="host.local" value="<%= @ipaddress %>"/>
+    <%- if @is_cms -%>
+    <%- @sites.each do |site, props| -%>
+
+    <property name="db.server.<%= site %>" value="<%= props['db_server'] %>"/>
+    <property name="db.username.<%= site %>" value="<%= props['db_username'] %>"/>
+    <property name="db.password.<%= site %>" value="<%= props['db_password'] %>"/>
+    <property name="db.database.<%= site %>" value="<%= props['db_database'] %>"/>
+    <%- end -%>
+    <%- end -%>
 
     <!-- ********************************** CUSTOM TASK DEFINITIONS ********************************* -->
 
@@ -67,16 +76,27 @@
         </delete>
     </target>
 
+    <%- if @is_cms -%>
+    <target name="dist-config" description="Packages a CMS's configuration file">
+        <copy todir="${dist}">
+            <fileset dir=".">
+                <include name="config/**"/>
+            </fileset>
+        </copy>
+    </target>
+    <% end -%>
+
     <target name="dist" description="Creates a distributable package">
         <antcall target="dist-base"/>
         <antcall target="dist-css"/>
         <antcall target="dist-js"/>
+        <% if @is_cms %><antcall target="dist-config"/><% end %>
     </target>
 
     <%- if @is_cms -%>
     <target name="dock" description="Docks this project into a <%= @engine %> dock">
-        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/themes/<%= @website %>" resource="."/>
-        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/config/site.pp" resource="config/site.pp"/>
+        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/themes/<%= @website %>" resource="${basedir}" overwrite="true"/>
+        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/config/site.php" resource="${basedir}/config/site.php" overwrite="true"/>
     </target>
 
     <target name="dump-mysql-local">
@@ -109,10 +129,32 @@
 
     <%- if @is_cms -%>
     <target name="dist-<%= site %>" depends="dist">
-        <replace file="${dist}/wp-config.php" token="@DB_SERVER@" value="<%= props['db_server'] %>"/>
-        <replace file="${dist}/wp-config.php" token="@DB_NAME@" value="<%= props['db_name'] %>"/>
-        <replace file="${dist}/wp-config.php" token="@DB_USER@" value="<%= props['db_user'] %>"/>
-        <replace file="${dist}/wp-config.php" token="@DB_PASSWORD@" value="<%= props['db_password'] %>"/>
+        <move todir="${dist}">
+            <fileset dir="${dist}">
+                <include name="config/*.php.template"/>
+            </fileset>
+            <mapper type="glob" from="*.php.template" to="*.php"/>
+        </move>
+        <replace token="@DB_SERVER@" value="${db.server.<%= site %>}">
+            <fileset dir="${dist}">
+                <include name="config/*.php"/>
+            </fileset>
+        </replace>
+        <replace token="@DB_USERNAME@" value="${db.username.<%= site %>}">
+            <fileset dir="${dist}">
+                <include name="config/*.php"/>
+            </fileset>
+        </replace>
+        <replace token="@DB_PASSWORD@" value="${db.password.<%= site %>}">
+            <fileset dir="${dist}">
+                <include name="config/*.php"/>
+            </fileset>
+        </replace>
+        <replace token="@DB_DATABASE@" value="${db.database.<%= site %>}">
+            <fileset dir="${dist}">
+                <include name="config/*.php"/>
+            </fileset>
+        </replace>
     </target>
 
     <target name="dump-uploads-<%= site %>" description="Pulls files from <%= site %>, overwrites local">

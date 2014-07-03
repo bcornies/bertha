@@ -44,12 +44,12 @@ class bertha (
 
   file { "${base_dir}/includes/css.php":
     ensure  => file,
-    content => template('bertha/css.php.erb'),
+    content => template("${::engine}/css.php.erb"),
   }
 
   file { "${base_dir}/includes/js.php":
     ensure  => file,
-    content => template('bertha/js.php.erb'),
+    content => template("${::engine}/js.php.erb"),
   }
 
   $include_libraries.each |$library_type, $libraries| {

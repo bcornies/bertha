@@ -18,7 +18,20 @@ class concrete5 {
     source  => 'puppet:///modules/concrete5/footer.php',
   }
 
-  file { "${bertha::base_dir}/elements": 
+  file { "${bertha::base_dir}/config/site.php.template":
+    ensure => file,
+    source => 'puppet:///modules/concrete5/site.php',
+  }
+
+  file { "${bertha::base_dir}/config/site.php":
+    ensure => file,
+    content => template('concrete5/site.php.erb'),
+  }
+
+  file { [
+      "${bertha::base_dir}/elements",
+      "${bertha::base_dir}/config"
+    ]: 
     ensure => directory,
   }
 

@@ -1,0 +1,4 @@
+<%- @include_libraries['js'].each do |javascript| -%>
+<script type="text/javascript" src="<?php echo $this->getThemePath(); ?>/js/libraries/<%= javascript %>.js"></script>
+<%- end -%>
+<script type="text/javascript" src="<?php echo $this->getThemePath(); ?>/js/main.js"></script>

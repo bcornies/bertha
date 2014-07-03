@@ -1,1 +1,1 @@
-$this->inc('includes/js.php');
+<?php $this->inc('includes/js.php'); ?>
