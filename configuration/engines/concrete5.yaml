@@ -8,3 +8,5 @@ bertha::dist_items:
 bertha::cms_props:
   uploads_dir: 
   config_file: config/site.php
+
+concrete5::version: 5.6.3.1 
