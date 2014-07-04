@@ -95,8 +95,8 @@
 
     <%- if @is_cms -%>
     <target name="dock" description="Docks this project into a <%= @engine %> dock">
-        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/themes/<%= @website %>" resource="${basedir}" overwrite="true"/>
-        <symlink link="/Users/bcornies/Documents/SixSquareStudio/Docks/<%= @engine %>/config/site.php" resource="${basedir}/config/site.php" overwrite="true"/>
+        <symlink link="<%= @dock_dir %>/<%= @engine %>/themes/<%= @website %>" resource="${basedir}" overwrite="true"/>
+        <symlink link="<%= @dock_dir %>/<%= @engine %>/config/site.php" resource="${basedir}/config/site.php" overwrite="true"/>
     </target>
 
     <target name="dump-mysql-local">

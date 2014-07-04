@@ -1,5 +1,6 @@
 class bertha (
   $websites_dir,
+  $dock_dir,
   $mysql_path,
   $sites = {},
   $dist_items = [],
