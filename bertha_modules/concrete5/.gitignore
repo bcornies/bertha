@@ -1,0 +1,2 @@
+files/packages/**
+!files/packages/README.md

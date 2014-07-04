@@ -4,9 +4,8 @@ $this->inc('elements/header.php'); ?>
 
   <div id="body"> 
     <?php
-    $a = new Area('Main');
-    $a->display($c);
-    
+    Loader::element('system_errors', array('error' => $error));
+    print $innerContent;      
     ?>
   </div>
 

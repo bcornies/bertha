@@ -94,11 +94,6 @@
     </target>
 
     <%- if @is_cms -%>
-    <target name="dock" description="Docks this project into a <%= @engine %> dock">
-        <symlink link="<%= @dock_dir %>/<%= @engine %>/themes/<%= @website %>" resource="${basedir}" overwrite="true"/>
-        <symlink link="<%= @dock_dir %>/<%= @engine %>/config/site.php" resource="${basedir}/config/site.php" overwrite="true"/>
-    </target>
-
     <target name="dump-mysql-local">
         <mkdir dir="${data}"/>
         <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">  
