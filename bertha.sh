@@ -25,9 +25,11 @@ function bootstrap {
 function run_bertha {
   export FACTER_website=$1
   export FACTER_cwd=`pwd`
+  export FACTER_user=$USER
+  export FACTER_home=$HOME
 
   # Build our Puppet command
-  CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --show_diff --parser future manifests/main.pp"
+  CMD="sudo puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --show_diff --parser future manifests/main.pp"
 
   if [ $DEBUG == true ]
   then

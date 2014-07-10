@@ -6,8 +6,9 @@ class bertha::ant {
   }
 
   package { 'ant':
-    ensure   => installed,
-    provider => $ant_provider,
+    ensure        => installed,
+    provider      => $ant_provider,
+    allow_virtual => false,
   }
 
   file { [

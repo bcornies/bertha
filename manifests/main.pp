@@ -4,7 +4,8 @@ if !$::website {
 
 # Don't filebucket anything locally
 File { 
-  backup => false, 
+  backup => false,
+  owner  => $::user,
 }
 
 $engine = hiera('engine')
