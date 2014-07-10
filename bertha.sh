@@ -27,7 +27,7 @@ function run_bertha {
   export FACTER_cwd=`pwd`
 
   # Build our Puppet command
-  CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --parser future manifests/main.pp"
+  CMD="puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --show_diff --parser future manifests/main.pp"
 
   if [ $DEBUG == true ]
   then

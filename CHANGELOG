@@ -2,7 +2,13 @@
 
 FEATURES:
 
-  - concrete5 project support
+  - added dock feature
+  - concrete5 dock support
+  - concrete5 theme support
+
+BUGFIXES:
+
+  - cleaned up any remaining hardcoded paths
 
 ## 0.0.1 (Jun 25, 2014)
 

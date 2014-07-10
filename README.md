@@ -6,7 +6,7 @@ Features:
 
 * Bootstraps 3 different kinds of web projects:
     * Plain ol' HTML5 site
-    * Concrete5 theme (not implemented yet)
+    * Concrete5 theme
     * Wordpress theme (not implemented yet)
 * Dynamically patch existing projects with features added after initial project bootstrap
 * Drop-in any javascript, css, or sass frameworks and pick-and-choose which projects need what
