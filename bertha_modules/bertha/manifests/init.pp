@@ -1,10 +1,10 @@
 class bertha (
   $websites_dir,
-  $dock_dir,
+  $is_cms,
   $mysql_path,
+  $dock_dir = undef,
   $sites = {},
   $dist_items = [],
-  $is_cms,
   $include_libraries = {},
 ) {
 
