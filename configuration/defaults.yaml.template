@@ -1,2 +1,5 @@
-bertha::websites_dir: <fully qualified path to a directory where you want your websites to reside>
-bertha::mysql_path: <fully qualified path to a mysql executable>
+# fully qualified path to a directory where you want your websites to reside
+bertha::websites_dir: 
+
+# fully qualified path to a mysql executable
+bertha::mysql_path: 

@@ -1,0 +1,22 @@
+engine: html
+
+bertha::sites:
+  preview:
+    host:
+    ftp_host:
+    ftp_user:
+    ftp_password:
+  live:
+    host:
+    ftp_host:
+    ftp_user:
+    ftp_password:
+
+bertha::include_libraries:
+  css:
+    - cssreset
+  scss:
+    - grid
+    - typeplate
+  js:
+    - jquery-1.11.1.js
