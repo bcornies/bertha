@@ -12,3 +12,6 @@ sed -i 's/bertha::mysql_path: /bertha::mysql_path:  \/tmp/g' configuration/defau
 cp configuration/websites/project.yaml.template configuration/websites/project.yaml
 
 ./bertha.sh project
+
+cd /tmp/project
+ant
