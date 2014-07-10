@@ -29,7 +29,7 @@ function run_bertha {
   export FACTER_home=$HOME
 
   # Build our Puppet command
-  CMD="sudo puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --show_diff --parser future manifests/main.pp"
+  CMD="sudo -E puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --show_diff --parser future manifests/main.pp"
 
   if [ $DEBUG == true ]
   then
