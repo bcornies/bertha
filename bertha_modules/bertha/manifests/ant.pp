@@ -1,8 +1,13 @@
 class bertha::ant {
 
+  $ant_provider = $::osfamily ? {
+    'Darwin' => 'brew',
+    'RedHat' => 'yum',
+  }
+
   package { 'ant':
     ensure   => installed,
-    provider => 'brew',
+    provider => $ant_provider,
   }
 
   file { [
