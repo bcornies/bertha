@@ -1,0 +1,32 @@
+engine: concrete5
+
+bertha::sites:
+  preview:
+    host: monkey.sixsquarestudio.com
+    ftp_host: ftp.sixsquarestudio.com
+    ftp_user: monkey_preview@sixsquarestudio.com
+    ftp_password: password1
+    db_server: myserver
+    db_username: user
+    db_password: happy123
+    db_database: monkey_db
+  live:
+    host: monkey.ca
+    ftp_host: ftp.sixsquarestudio.com
+    ftp_user: monkey@sixsquarestudio.com
+    ftp_password: password2
+    db_server:
+    db_username:
+    db_password:
+    db_database:
+
+bertha::include_libraries:
+  css:
+    - cssreset
+    - fractionslider
+  scss:
+    - grid
+    - typeplate
+    - mixins
+  js:
+    - jquery.fractionslider

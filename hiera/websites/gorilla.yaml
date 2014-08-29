@@ -1,0 +1,39 @@
+engine: concrete5
+
+bertha::view_mode: dev # Valid values are dev or dist
+
+bertha::sites:
+  preview:
+    host: gorilla.sixsquarestudio.com
+    ftp_host: ftp.sixsquarestudio.com
+    ftp_user: gorilla_preview@sixsquarestudio.com
+    ftp_password: password1
+    db_server: myserver
+    db_username: user
+    db_password: happy123
+    db_database: gorilla_db
+  live:
+    host: gorilla.ca
+    ftp_host: ftp.sixsquarestudio.com
+    ftp_user: gorilla@sixsquarestudio.com
+    ftp_password: password2
+    db_server:
+    db_username:
+    db_password:
+    db_database:
+
+libraries:
+  - bourbon
+  - jquery
+
+jquery::plugins:
+  - jquery.fractionslider.js
+
+bertha::include_libraries:
+  css:
+    - fractionslider
+  scss:
+    - typeplate
+
+concrete5::packages:
+  - designer_content
