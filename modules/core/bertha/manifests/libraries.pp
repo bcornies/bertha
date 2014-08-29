@@ -1,15 +1,14 @@
 class bertha::libraries {
 
-  $include_libraries.each |$library_type, $libraries| {
+  $bertha::include_libraries.each |$library_type, $libraries| {
     file { [
-      "${website_home}/${library_type}",
-      "${website_home}/${library_type}/libraries",
+      "${bertha::website_home}/${library_type}/lib",
     ]:
       ensure => directory,
     }
 
     $libraries.each |$library| {
-      file { "${website_home}/${library_type}/lib/${library}.${library_type}":
+      file { "${bertha::website_home}/${library_type}/lib/${library}.${library_type}":
         ensure => file,
         source => "puppet:///modules/bertha/libraries/${library_type}/${library}.${library_type}",
       }
