@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Defaults
+# Setup
 DEBUG=false
-HIERA_DIR=configuration/hiera.yaml
+HIERA_CONFIG=hiera.yaml
 
 function usage {
 	echo "Usage: ./bertha [-d] <website>"
@@ -11,56 +11,59 @@ function usage {
 }
 
 function bootstrap {
-  if [ -f 'bertha.lock' ]; then
-    return
-  fi
+	sudo gem install bundler
+	bundle install
 
-  sudo gem install bundler
-  bundle install
-  r10k puppetfile install
-
-  touch bertha.lock
+	puppet module install puppetlabs/stdlib --modulepath=modules/imports
+	puppet module install bjoernalbers/homebrew --modulepath=modules/imports
 }
 
 function run_bertha {
-  export FACTER_website=$1
-  export FACTER_cwd=`pwd`
-  export FACTER_user=$USER
-  export FACTER_home=$HOME
+	export FACTER_website=$1
+	export FACTER_cwd=`pwd`
+	export FACTER_user=$USER
+	export FACTER_home=$HOME
 
-  # Build our Puppet command
-  CMD="sudo -E puppet apply --hiera_config $HIERA_DIR --modulepath=bertha_modules:modules --show_diff --parser future manifests/main.pp"
+	# Build our Puppet command
+	MODULE_PATH="modules/core"
+	MODULE_PATH="$MODULE_PATH:modules/engines"
+	MODULE_PATH="$MODULE_PATH:modules/imports"
+	CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future manifests/main.pp"
 
-  if [ $DEBUG == true ]
-  then
-    CMD="$CMD --debug" 
-  fi
+	if [ $DEBUG == true ]
+	then
+		CMD="$CMD --debug"
+	fi
 
-  # Run puppet!
-  $CMD
+	# Run puppet!
+	$CMD
 }
 
 while getopts ":d" opt; do
-  case $opt in
-    d)
-      DEBUG=true
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG"
-      usage
-      exit 1
-      ;;
-  esac
+	case $opt in
+		d)
+			DEBUG=true
+			;;
+		\?)
+			echo "Invalid option: -$OPTARG"
+			usage
+			exit 1
+			;;
+	esac
 done
 
 shift $((OPTIND - 1))
 
-if [ $# -eq 0 ] 
+if [ $# -eq 0 ]
 then
-  echo "No arguments supplied"
-  usage
-  exit 1
+	echo "No arguments supplied"
+	usage
+	exit 1
 fi
 
-bootstrap
+if [ ! -f 'bertha.lock' ]; then
+	bootstrap
+	touch bertha.lock
+fi
+
 run_bertha $1
