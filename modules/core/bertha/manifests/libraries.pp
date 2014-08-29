@@ -2,14 +2,14 @@ class bertha::libraries {
 
   $include_libraries.each |$library_type, $libraries| {
     file { [
-      "${base_dir}/${library_type}",
-      "${base_dir}/${library_type}/libraries",
+      "${website_home}/${library_type}",
+      "${website_home}/${library_type}/libraries",
     ]:
       ensure => directory,
     }
 
     $libraries.each |$library| {
-      file { "${base_dir}/${library_type}/lib/${library}.${library_type}":
+      file { "${website_home}/${library_type}/lib/${library}.${library_type}":
         ensure => file,
         source => "puppet:///modules/bertha/libraries/${library_type}/${library}.${library_type}",
       }
@@ -27,14 +27,14 @@ class bertha::libraries {
   }
 
   exec { 'bourbon install':
-    cwd     => "${bertha::base_dir}/scss",
-    creates => "${bertha::base_dir}/scss/bourbon",
+    cwd     => "${bertha::website_home}/scss",
+    creates => "${bertha::website_home}/scss/bourbon",
     path    => ['/usr/bin'],
   }
 
   exec { 'neat install':
-    cwd     => "${bertha::base_dir}/scss",
-    creates => "${bertha::base_dir}/scss/neat",
+    cwd     => "${bertha::website_home}/scss",
+    creates => "${bertha::website_home}/scss/neat",
     path    => ['/usr/bin'],
   }
 

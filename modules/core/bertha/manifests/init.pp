@@ -9,7 +9,7 @@ class bertha (
   $include_libraries = {},
 ) {
 
-  $base_dir="${websites_dir}/${::website}"
+  $website_home="${websites_dir}/${::website}"
 
   anchor { 'begin::bertha': } ->
   class { 'ant': } ->
@@ -17,45 +17,45 @@ class bertha (
   anchor { 'end::bertha': }
 
 	file { [
-      $base_dir,
-      "${base_dir}/js",
-      "${base_dir}/css",
-      "${base_dir}/scss",
-      "${base_dir}/includes",
-      "${base_dir}/img",
+      $website_home,
+      "${website_home}/js",
+      "${website_home}/css",
+      "${website_home}/scss",
+      "${website_home}/includes",
+      "${website_home}/img",
     ]:
 		ensure => directory,
 	}
 
-  file { "${base_dir}/scss/global.scss":
+  file { "${website_home}/scss/global.scss":
     ensure  => file,
     replace => false,
     source  => 'puppet:///modules/bertha/global.scss',
   }
 
-  file { "${base_dir}/js/main.js":
+  file { "${website_home}/js/main.js":
     ensure  => file,
     replace => false,
     source  => 'puppet:///modules/bertha/main.js',
   }
 
-  file { "${base_dir}/build.xml":
+  file { "${website_home}/build.xml":
     ensure  => file,
     content => template('bertha/build.xml.erb')
   }
 
-  file { "${base_dir}/run_sass.sh":
+  file { "${website_home}/run_sass.sh":
     ensure => file,
     source => 'puppet:///modules/bertha/run_sass.sh',
     mode   => '0755',
   }
 
-  file { "${base_dir}/includes/css.php":
+  file { "${website_home}/includes/css.php":
     ensure  => file,
     content => template("${::engine}/css.php.erb"),
   }
 
-  file { "${base_dir}/includes/js.php":
+  file { "${website_home}/includes/js.php":
     ensure  => file,
     content => template("${::engine}/js.php.erb"),
   }
