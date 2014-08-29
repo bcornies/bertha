@@ -1,7 +1,7 @@
 <project name="<%= @website %>" default="dist" basedir=".">
 
     <!-- ********************************** PROPERTIES DEFINITIONS ********************************** -->
-    
+
     <property name="dist" value="dist"/>
     <property name="data" value="sql"/>
     <property name="mysql.bin" location="<%= @mysql_path %>"/>
@@ -21,12 +21,12 @@
     <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"/>
 
     <!-- ********************************** TARGET DEFINITIONS ************************************** -->
-    
+
     <target name="init">
         <delete dir="${dist}"/>
         <mkdir dir="${dist}"/>
     </target>
-    
+
     <target name="dist-base" depends="init" description="Creates structure of distribution">
         <copy todir="${dist}">
             <fileset dir=".">
@@ -64,8 +64,10 @@
     <target name="dist-js" description="Minifies and concatenates js files">
         <jscomp compilationLevel="simple" debug="false" output="${dist}/js/<%= @website %>-min.js" warning="quiet">
             <sources dir="${dist}/js">
+                <%- if @include_libraries['js'] then -%>
                 <%- @include_libraries['js'].each do |javascript| -%>
-                <file name="libraries/<%= javascript %>.js"/>
+                <file name="lib/<%= javascript %>.js"/>
+                <%- end -%>
                 <%- end -%>
                 <file name="main.js"/>
             </sources>
@@ -96,22 +98,22 @@
     <%- if @is_cms -%>
     <target name="dump-mysql-local">
         <mkdir dir="${data}"/>
-        <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">  
-            <arg value="--user=wordpress"/>  
+        <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
+            <arg value="--user=wordpress"/>
             <arg value="--password=password"/>
             <arg value="--default-character-set=latin1"/>
-            <arg value="dawsonwallace"/>  
+            <arg value="dawsonwallace"/>
         </exec>
         <replace file="${data}/database-dump.sql" token="${host.local}" value="@WORDPRESS_HOST@"/>
     </target>
 
     <target name="import-mysql-local">
-        <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="${host.local}"/>    
-        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">  
-            <arg value="--user=wordpress"/>  
+        <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="${host.local}"/>
+        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
+            <arg value="--user=wordpress"/>
             <arg value="--password=password"/>
-            <arg value="dawsonwallace"/>  
-        </exec>       
+            <arg value="dawsonwallace"/>
+        </exec>
         <replace file="${data}/database-dump.sql" token="${host.local}" value="@WORDPRESS_HOST@"/>
     </target>
     <% end -%>
@@ -163,11 +165,11 @@
     <target name="dump-mysql-<%= site %>">
         <mkdir dir="${data}"/>
         <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
-            <arg value="--host=<%= props['db_host'] %>"/>  
-            <arg value="--user=<%= props['db_user'] %>"/>  
+            <arg value="--host=<%= props['db_host'] %>"/>
+            <arg value="--user=<%= props['db_user'] %>"/>
             <arg value="--password=<%= props['db_password'] %>"/>
             <arg value="--default-character-set=latin1"/>
-            <arg value="<%= props['db_name'] %>"/>  
+            <arg value="<%= props['db_name'] %>"/>
         </exec>
         <replace file="${data}/database-dump.sql" token="<%= props['host'] %>" value="@WORDPRESS_HOST@"/>
     </target>
@@ -176,11 +178,11 @@
     <target name="publish-<%= site %>" depends="dist<% if @is_cms %>, dump-mysql-local<% end %>">
         <%- if @is_cms -%>
         <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>"/>
-        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">  
-            <arg value="--host=<%= props['db_host'] %>"/>  
-            <arg value="--user=<%= props['db_user'] %>"/>  
+        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
+            <arg value="--host=<%= props['db_host'] %>"/>
+            <arg value="--user=<%= props['db_user'] %>"/>
             <arg value="--password=<%= props['db_password'] %>"/>
-            <arg value="<%= props['db_name'] %>"/>  
+            <arg value="<%= props['db_name'] %>"/>
         </exec>
         <%- end -%>
         <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" chmod="644" passive="yes">
@@ -188,5 +190,5 @@
         </ftp>
     </target>
     <% end -%>
-    
+
 </project>

@@ -8,12 +8,18 @@ class bertha (
   $include_libraries = {},
 ) {
 
-  class { 'ant': }
+  $base_dir="${websites_dir}/${::website}"
 
-	$base_dir="${websites_dir}/${::website}"
+  anchor { 'begin::bertha': } ->
+  class { 'ant': } ->
+  class { 'libraries': } ->
+  anchor { 'end::bertha': }
 
 	file { [
       $base_dir,
+      "${base_dir}/js",
+      "${base_dir}/css",
+      "${base_dir}/scss",
       "${base_dir}/includes",
       "${base_dir}/img",
     ]:
@@ -51,22 +57,6 @@ class bertha (
   file { "${base_dir}/includes/js.php":
     ensure  => file,
     content => template("${::engine}/js.php.erb"),
-  }
-
-  $include_libraries.each |$library_type, $libraries| {
-    file { [
-      "${base_dir}/${library_type}",
-      "${base_dir}/${library_type}/libraries",
-    ]:
-      ensure => directory,
-    }
-
-    $libraries.each |$library| {
-      file { "${base_dir}/${library_type}/libraries/${library}.${library_type}":
-        ensure => file,
-        source => "puppet:///modules/bertha/libraries/${library_type}/${library}.${library_type}",
-      }
-    }
   }
 
 }

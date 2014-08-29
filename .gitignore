@@ -1,5 +1,5 @@
-configuration/websites/*.yaml
-configuration/defaults.yaml
+hiera/websites/*.yaml
+hiera/defaults.yaml
 
 modules/imports
 

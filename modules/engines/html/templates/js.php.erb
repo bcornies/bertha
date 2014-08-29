@@ -1,4 +1,6 @@
+<%-if @include_libraries['js'] then -%>
 <%- @include_libraries['js'].each do |javascript| -%>
 <script type="text/javascript" src="/js/libraries/<%= javascript %>.js"></script>
+<%- end -%>
 <%- end -%>
 <script type="text/javascript" src="/js/main.js"></script>

@@ -1,7 +1,11 @@
+<%- if @include_libraries['css'] then -%>
 <%- @include_libraries['css'].each do |stylesheet| -%>
 <link rel="stylesheet" type="text/css" href="/css/libraries/<%= stylesheet %>.css">
 <%- end -%>
+<%- end -%>
+<%- if @include_libraries['scss'] then -%>
 <%- @include_libraries['scss'].each do |stylesheet| -%>
 <link rel="stylesheet" type="text/css" href="/css/libraries/<%= stylesheet %>.css">
+<%- end -%>
 <%- end -%>
 <link rel="stylesheet" type="text/css" href="/css/global.css">
