@@ -1,5 +1,7 @@
 engine: html
 
+bertha::view_mode: dev
+
 bertha::sites:
   preview:
     host:
