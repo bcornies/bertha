@@ -4,10 +4,10 @@
 
     <property name="dist" value="dist"/>
     <property name="data" value="sql"/>
-    <property name="mysql.bin" location="<%= @mysql_path %>"/>
+    <property name="mysql.bin" location="<%= scope['bertha::mysql_path'] %>"/>
     <property name="host.local" value="<%= @ipaddress %>"/>
-    <%- if @is_cms -%>
-    <%- @sites.each do |site, props| -%>
+    <%- if scope['bertha::is_cms'] -%>
+    <%- scope['bertha::sites'].each do |site, props| -%>
 
     <property name="db.server.<%= site %>" value="<%= props['db_server'] %>"/>
     <property name="db.username.<%= site %>" value="<%= props['db_username'] %>"/>
@@ -30,7 +30,7 @@
     <target name="dist-base" depends="init" description="Creates structure of distribution">
         <copy todir="${dist}">
             <fileset dir=".">
-                <%- @dist_items.each do |dist_item| -%>
+                <%- scope['bertha::dist_items'].each do |dist_item| -%>
                 <include name="<%= dist_item %>"/>
                 <%- end -%>
             </fileset>
@@ -64,8 +64,8 @@
     <target name="dist-js" description="Minifies and concatenates js files">
         <jscomp compilationLevel="simple" debug="false" output="${dist}/js/<%= @website %>-min.js" warning="quiet">
             <sources dir="${dist}/js">
-                <%- if @include_libraries['js'] then -%>
-                <%- @include_libraries['js'].each do |javascript| -%>
+                <%- if scope['bertha::include_libraries']['js'] then -%>
+                <%- scope['bertha::include_libraries']['js'].each do |javascript| -%>
                 <file name="lib/<%= javascript %>.js"/>
                 <%- end -%>
                 <%- end -%>
@@ -78,7 +78,7 @@
         </delete>
     </target>
 
-    <%- if @is_cms -%>
+    <%- if scope['bertha::is_cms'] -%>
     <target name="dist-config" description="Packages a CMS's configuration file">
         <copy todir="${dist}">
             <fileset dir=".">
@@ -92,10 +92,10 @@
         <antcall target="dist-base"/>
         <antcall target="dist-css"/>
         <antcall target="dist-js"/>
-        <% if @is_cms %><antcall target="dist-config"/><% end %>
+        <% if scope['bertha::is_cms'] %><antcall target="dist-config"/><% end %>
     </target>
 
-    <%- if @is_cms -%>
+    <%- if scope['bertha::is_cms'] -%>
     <target name="dump-mysql-local">
         <mkdir dir="${data}"/>
         <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
@@ -120,11 +120,11 @@
 
     <!-- ********************************** SITE DEFINITIONS ********************************** -->
 
-    <% @sites.each do |site, props| -%>
+    <% scope['bertha::sites'].each do |site, props| -%>
 
     <!-- *** <%= site %> *** -->
 
-    <%- if @is_cms -%>
+    <%- if scope['bertha::is_cms'] -%>
     <target name="dist-<%= site %>" depends="dist">
         <move todir="${dist}">
             <fileset dir="${dist}">
@@ -175,8 +175,8 @@
     </target>
     <% end -%>
 
-    <target name="publish-<%= site %>" depends="dist<% if @is_cms %>, dump-mysql-local<% end %>">
-        <%- if @is_cms -%>
+    <target name="publish-<%= site %>" depends="dist<% if scope['bertha::is_cms'] %>, dump-mysql-local<% end %>">
+        <%- if scope['bertha::is_cms'] -%>
         <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>"/>
         <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
             <arg value="--host=<%= props['db_host'] %>"/>

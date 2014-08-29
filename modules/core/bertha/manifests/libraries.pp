@@ -44,10 +44,16 @@ class bertha::libraries {
   Package['neat'] ->
   Exec['neat install']
 
-  # bertha::scss_import { 'bourbon/bourbon': }
-  # bertha::scss_import { 'neat/neat': }
-  #
-  # Bertha::Scss_import['bourbon/bourbon'] ->
-  # Bertha::Scss_import['neat/neat']
+  file_line { 'bourbon/bourbon':
+    ensure => present,
+    line   => "@import 'bourbon/bourbon';",
+    path   => "${bertha::website_home}/scss/_includes.scss",
+  }
+
+  file_line { 'neat/neat':
+    ensure => present,
+    line   => "@import 'neat/neat';",
+    path   => "${bertha::website_home}/scss/_includes.scss",
+  }
 
 }
