@@ -1,6 +1,7 @@
 class bertha (
   $websites_dir,
   $is_cms,
+  $view_mode,
   $mysql_path,
   $dock_dir = undef,
   $sites = {},

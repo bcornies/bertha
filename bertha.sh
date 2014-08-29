@@ -28,6 +28,7 @@ function run_bertha {
 	MODULE_PATH="modules/core"
 	MODULE_PATH="$MODULE_PATH:modules/engines"
 	MODULE_PATH="$MODULE_PATH:modules/imports"
+	MODULE_PATH="$MODULE_PATH:modules/servers"
 	CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future manifests/main.pp"
 
 	if [ $DEBUG == true ]

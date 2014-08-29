@@ -21,7 +21,7 @@ class concrete5::install {
   exec { 'download concrete5':
     command => "wget -O ${archive_file} ${download_url}",
     cwd     => $bertha::dock_dir,
-    creates => "${bertha::dock_dir}/concrete${concrete5::version}",
+    creates => $concrete5::docroot,
     path    => [ '/usr/local/bin' ],
   }
 
@@ -30,13 +30,13 @@ class concrete5::install {
   exec { 'unpack concrete5':
     command => "unzip -o ${archive_file}",
     cwd     => $bertha::dock_dir,
-    creates => "${bertha::dock_dir}/concrete${concrete5::version}",
+    creates => $concrete5::docroot,
     path    => [ '/usr/bin' ],
   }
 
   ->
 
-  file { "${bertha::dock_dir}/${archive_file}": 
+  file { "${bertha::dock_dir}/${archive_file}":
     ensure => absent,
   }
 

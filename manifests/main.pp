@@ -3,7 +3,7 @@ if !$::website {
 }
 
 # Don't filebucket anything locally
-File { 
+File {
   backup => false,
   owner  => $::user,
 }
@@ -12,3 +12,4 @@ $engine = hiera('engine')
 
 include bertha
 include $engine
+include mamp

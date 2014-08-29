@@ -1,4 +1,4 @@
-engine: concrete5
+engine: html
 
 bertha::view_mode: dev # Valid values are dev or dist
 
