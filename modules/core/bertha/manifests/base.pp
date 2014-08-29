@@ -5,6 +5,7 @@ class bertha::base {
       "${bertha::website_home}/js",
       "${bertha::website_home}/css",
       "${bertha::website_home}/scss",
+      "${bertha::website_home}/scss/alt",
       "${bertha::website_home}/includes",
       "${bertha::website_home}/img",
     ]:
@@ -19,6 +20,24 @@ class bertha::base {
 
   file { "${bertha::website_home}/scss/_includes.scss":
     ensure  => file,
+  }
+
+  file { "${bertha::website_home}/scss/alt/_mobile.scss":
+    ensure  => file,
+    replace => false,
+    source  => 'puppet:///modules/bertha/mobile.scss',
+  }
+
+  file { "${bertha::website_home}/scss/alt/_retina.scss":
+    ensure  => file,
+    replace => false,
+    source  => 'puppet:///modules/bertha/retina.scss',
+  }
+
+  file { "${bertha::website_home}/scss/alt/_ie.scss":
+    ensure  => file,
+    replace => false,
+    source  => 'puppet:///modules/bertha/ie.scss',
   }
 
   file { "${bertha::website_home}/js/main.js":

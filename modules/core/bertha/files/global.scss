@@ -8,27 +8,12 @@ $font_serif: Times, 'Times New Roman', serif;
 // ----------------- Includes --------------------- //
 
 @import 'includes';
+@import 'alt/mobile';
+@import 'alt/retina';
+@import 'alt/ie';
 
-// ----------------- General --------------------- //
+// ----------------- Styles --------------------- //
 
 html {
-
-}
-
-// ----------------- Mobile Styles... --------------------- //
-
-@media only screen and (max-width: 580px) {
-
-}
-
-// ----------------- High-Definition Styles... --------------------- //
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
-
-}
-
-// ------------------ IE Fixes -------------------- //
-
-.lt-ie9 {
 
 }

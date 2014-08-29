@@ -56,4 +56,7 @@ class bertha::libraries {
     path   => "${bertha::website_home}/scss/_includes.scss",
   }
 
+  File_line['bourbon/bourbon'] ->
+  File_line['neat/neat']
+
 }
