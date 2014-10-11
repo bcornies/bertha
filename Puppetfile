@@ -1,3 +1,5 @@
 forge "https://forge.puppetlabs.com"
 
-mod "bjoernalbers/homebrew", "0.2.0"
+mod "puppetlabs-stdlib"
+mod 'boxen-homebrew',
+  :git => "git://github.com//boxen/puppet-homebrew.git"

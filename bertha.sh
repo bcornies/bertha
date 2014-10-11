@@ -11,11 +11,8 @@ function usage {
 }
 
 function bootstrap {
-	sudo gem install bundler
+	gem install bundler
 	bundle install
-
-	puppet module install puppetlabs/stdlib --modulepath=modules/imports
-	puppet module install bjoernalbers/homebrew --modulepath=modules/imports
 }
 
 function run_bertha {
@@ -29,7 +26,7 @@ function run_bertha {
 	MODULE_PATH="$MODULE_PATH:modules/engines"
 	MODULE_PATH="$MODULE_PATH:modules/imports"
 	MODULE_PATH="$MODULE_PATH:modules/servers"
-	CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future manifests/main.pp"
+	CMD="puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future manifests/main.pp"
 
 	if [ $DEBUG == true ]
 	then
