@@ -1,4 +1,4 @@
-class bertha::ant {
+class ant {
 
   $ant_provider = $::osfamily ? {
     'Darwin' => 'brew',
@@ -27,9 +27,14 @@ class bertha::ant {
   $antlibs.each |$antlib| {
     file { "${::home}/.ant/lib/${antlib}":
       ensure => file,
-      source => "puppet:///modules/bertha/ant/${antlib}",
+      source => "puppet:///modules/ant/${antlib}",
       mode   => '0644',
     }
+  }
+
+  file { "${bertha::website_home}/build.xml":
+    ensure  => file,
+    content => template('ant/build.xml.erb')
   }
 
 }

@@ -13,6 +13,7 @@ class bertha (
 
   anchor { 'begin::bertha': } ->
   class { 'base': } ->
+  class { 'sass': } ->
   class { 'ant': } ->
   class { 'libraries': } ->
   anchor { 'end::bertha': }
