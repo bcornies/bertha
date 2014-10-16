@@ -13,6 +13,7 @@ function usage {
 function bootstrap {
 	gem install bundler
 	bundle install
+	librarian-puppet install
 }
 
 function run_bertha {

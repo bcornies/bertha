@@ -1,3 +1,5 @@
+.tmp
+
 hiera/websites/*.yaml
 hiera/defaults.yaml
 

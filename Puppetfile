@@ -1,5 +1,6 @@
-forge "https://forge.puppetlabs.com"
+forge 'https://forgeapi.puppetlabs.com'
 
-mod "puppetlabs-stdlib"
-mod 'boxen-homebrew',
-  :git => "git://github.com//boxen/puppet-homebrew.git"
+mod 'puppetlabs-stdlib'
+# Pending pull request so I don't have to reference my fork.
+mod 'bcornies-homebrew',
+  :git => 'git@github.com:bcornies/puppet-homebrew.git'

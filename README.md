@@ -1,20 +1,8 @@
 # Intro
 
-Bertha is a website bootstrapping engine built on top of Puppet.
+Bootstraps _everything_ you need to build a website.
 
-Features:
-
-* Bootstraps 3 different kinds of web projects:
-    * Plain ol' HTML5 site
-    * Concrete5 theme
-    * Wordpress theme (not implemented yet)
-* Dynamically patch existing projects with features added after initial project bootstrap
-* Drop-in any javascript, css, or sass frameworks and pick-and-choose which projects need what
-* Builds a custom Ant build script for each project that...
-    * Compiles your scss files
-    * Minifies and concatenates your css and js
-    * Publishes your project via FTP
-    * Keeps your CMS databases in sync
+Bertha is a full-stack website bootstrapping engine built on top of Puppet.
 
 # Prerequisites
 

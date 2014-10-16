@@ -1,0 +1,16 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    puppetlabs-stdlib (4.3.2)
+
+GIT
+  remote: git@github.com:bcornies/puppet-homebrew.git
+  ref: master
+  sha: 4d72393e53b636d7f76265c0b50cecedfa7b223f
+  specs:
+    bcornies-homebrew (0.2.0)
+
+DEPENDENCIES
+  bcornies-homebrew (>= 0)
+  puppetlabs-stdlib (>= 0)
+
