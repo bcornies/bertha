@@ -63,14 +63,11 @@
 
     <target name="dist-js" description="Minifies and concatenates js files">
         <jscomp compilationLevel="simple" debug="false" output="${dist}/js/<%= @website %>-min.js" warning="quiet">
-            <sources dir="${dist}/js">
-                <%- if scope['bertha::include_libraries']['js'] then -%>
-                <%- scope['bertha::include_libraries']['js'].each do |javascript| -%>
-                <file name="lib/<%= javascript %>.js"/>
-                <%- end -%>
-                <%- end -%>
-                <file name="main.js"/>
-            </sources>
+            <path>
+                <fileset dir="${dist}/js">
+                    <include name="**/*.js" />
+                </fileset>
+            </path>
         </jscomp>
         <echo file="${dist}/includes/js.php"><![CDATA[<script type="text/javascript" src="/js/<%= @website %>-min.js"></script>]]></echo>
         <delete includeemptydirs="true">
