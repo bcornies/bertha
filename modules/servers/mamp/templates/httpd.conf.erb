@@ -132,7 +132,7 @@ LoadModule rewrite_module modules/mod_rewrite.so
 LoadModule perl_module modules/mod_perl.so
 LoadModule wsgi_module modules/mod_wsgi.so
 
-LoadModule php5_module        /Applications/MAMP/bin/php/php5.5.10/modules/libphp5.so
+LoadModule php5_module        /Applications/MAMP/bin/php/php5.6.1/modules/libphp5.so
 
 #
 AddType application/x-httpd-php .php .phtml
@@ -147,7 +147,7 @@ AddType application/x-httpd-php .php .phtml
 # It is usually good practice to create a dedicated user and group for
 # running httpd, as with most system services.
 #
-User bcornies
+User <%= @id %>
 Group #-1
 
 </IfModule>
@@ -212,7 +212,7 @@ DocumentRoot "<%= scope["#{@engine}::docroot"] %>"
 #
 # This should be changed to whatever you set DocumentRoot to.
 #
-<Directory "<%= scope["#{@engine}::dockroot"] %>">
+<Directory "<%= scope["#{@engine}::docroot"] %>">
     #
     # Possible values for the Options directive are "None", "All",
     # or any combination of:
@@ -586,6 +586,10 @@ DefaultType text/plain
 #       but a statically compiled-in mod_ssl.
 #
 <IfModule ssl_module>
-SSLRandomSeed startup builtin
-SSLRandomSeed connect builtin
+SSLRandomSeed startup file:/dev/urandom 1024
+SSLRandomSeed connect file:/dev/urandom 1024
+
+#
+# Uncomment the next line if Apache should not accept SSLv3 connections, to learn more google for "POODLE SSLv3".
+# SSLProtocol All -SSLv2 -SSLv3
 </IfModule>

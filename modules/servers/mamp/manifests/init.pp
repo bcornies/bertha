@@ -1,5 +1,5 @@
 class mamp {
-  
+
   $install_dir = '/Applications/MAMP'
 
   file { "${install_dir}/conf/apache/httpd.conf":
@@ -10,17 +10,21 @@ class mamp {
   service { 'apachectl':
     ensure     => running,
     status     => 'pgrep httpd',
+    start      => "sudo ${install_dir}/Library/bin/apachectl start",
+    restart    => "sudo ${install_dir}/Library/bin/apachectl restart",
+    stop       => "sudo ${install_dir}/Library/bin/apachectl stop",
     hasrestart => true,
     provider   => 'init',
     path       => ["${install_dir}/Library/bin"],
   }
 
-  # I have no idea how to manage the mysqld service from Puppet
+  # I have no idea how to manage the mysqld service from Puppet...
   exec { 'echo "mysql needs to be started from the MAMP console!"':
     unless => 'pgrep mysqld',
     path   => ['/bin', '/usr/bin'],
   }
 
+  # ...this feels like it _should_ work but it doesn't
   # service { 'mysql':
   #   ensure   => running,
   #   stop     => 'stopMysql.sh',
