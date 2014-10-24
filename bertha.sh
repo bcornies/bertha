@@ -7,11 +7,18 @@ HIERA_CONFIG=configuration/hiera.yaml
 function usage {
 	echo "Usage: ./bertha [-d] <website>"
 	echo "   -d Turns Puppet debugging on"
-	echo "   <website> maps to a hiera file in hieradata/websites"
+	echo "   <website> maps to a hiera file in configuration/websites"
+}
+
+function check_prereqs {
+	command -v bundle
+	if [ $? -ne 0 ] ; then
+		echo "I require bundler but it's not installed.  Please install by running `gem install bundler` before proceeding."
+		exit 1
+	fi
 }
 
 function bootstrap {
-	gem install bundler
 	bundle install
 	librarian-puppet install
 }
@@ -63,6 +70,8 @@ then
 	usage
 	exit 1
 fi
+
+check_prereqs
 
 if [ ! -f 'bertha.lock' ]; then
 	bootstrap
