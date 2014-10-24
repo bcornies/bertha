@@ -30,13 +30,11 @@ class local (
   exec { 'bourbon install':
     cwd     => "${bertha::website_home}/scss",
     creates => "${bertha::website_home}/scss/bourbon",
-    path    => ['/usr/bin'],
   }
 
   exec { 'neat install':
     cwd     => "${bertha::website_home}/scss",
     creates => "${bertha::website_home}/scss/neat",
-    path    => ['/usr/bin'],
   }
 
   Package['bourbon'] ->

@@ -1,12 +1,10 @@
 .tmp
 
-hiera/websites/*.yaml
-hiera/defaults.yaml
+configuration/websites/*.yaml
+configuration/defaults.yaml
 
 modules/imports
 
 *.sublime-project
 *.sublime-workspace
 bertha.lock
-
-test/.vagrant

@@ -6,9 +6,9 @@ class concrete5 (
   # Required for server integration!
   $docroot = "${bertha::dock_dir}/concrete${concrete5::version}"
 
-  class { 'install': } ->
-  class { 'theme': } ->
-  class { 'config': } ->
-  class { 'dock': }
+  contain 'concrete5::install'
+  contain 'concrete5::theme'
+  contain 'concrete5::config'
+  contain 'concrete5::dock'
 
 }

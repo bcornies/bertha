@@ -8,15 +8,19 @@ File {
   owner  => $::user,
 }
 
+Exec {
+  path => hiera('default_path')
+}
+
 $builder         = hiera('builder')
 $dock            = hiera('dock')
 $frameworks      = hiera('frameworks')
 $package_manager = hiera('package_manager')
 $server          = hiera('server')
 
-class { bertha: } ->
-class { $builder: } ->
-class { $dock: } ->
-class { $frameworks: } ->
-class { $package_manager: } ->
-class { $server: }
+include bertha
+include $builder
+include $dock
+include $frameworks
+include $package_manager
+include $server

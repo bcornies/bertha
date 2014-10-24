@@ -7,6 +7,13 @@ bertha::mysql_path:
 # fully qualified path to where you want docks to be installed
 bertha::dock_dir:
 
+# the path to use for all system exec calls
+default_path:
+  - /opt/boxen/homebrew/bin
+  - /usr/local/bin
+  - /usr/bin
+  - /bin
+
 builder: ant
 dock: html
 frameworks:

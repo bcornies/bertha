@@ -4,6 +4,7 @@ class concrete5::install {
 
   $download_url = $concrete5::version? {
     '5.6.3.1' => 'http://www.concrete5.org/download_file/-/view/66159/8497/',
+    '5.6.3.2' => 'http://www.concrete5.org/download_file/-/view/70913/8497/',
     default   => undef,
   }
 
@@ -16,25 +17,17 @@ class concrete5::install {
     provider => brew,
   }
 
-  ->
-
   exec { 'download concrete5':
     command => "wget -O ${archive_file} ${download_url}",
     cwd     => $bertha::dock_dir,
     creates => $concrete5::docroot,
-    path    => [ '/usr/local/bin' ],
   }
-
-  ->
 
   exec { 'unpack concrete5':
     command => "unzip -o ${archive_file}",
     cwd     => $bertha::dock_dir,
     creates => $concrete5::docroot,
-    path    => [ '/usr/bin' ],
   }
-
-  ->
 
   file { "${bertha::dock_dir}/${archive_file}":
     ensure => absent,

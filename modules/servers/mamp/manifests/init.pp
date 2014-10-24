@@ -21,7 +21,6 @@ class mamp {
   # I have no idea how to manage the mysqld service from Puppet...
   exec { 'echo "mysql needs to be started from the MAMP console!"':
     unless => 'pgrep mysqld',
-    path   => ['/bin', '/usr/bin'],
   }
 
   # ...this feels like it _should_ work but it doesn't
