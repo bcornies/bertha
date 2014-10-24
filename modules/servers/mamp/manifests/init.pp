@@ -1,6 +1,7 @@
-class mamp {
-
-  $install_dir = '/Applications/MAMP'
+class mamp (
+  $install_dir = '/Applications/MAMP',
+  $port = 80,
+  ) {
 
   file { "${install_dir}/conf/apache/httpd.conf":
     ensure  => file,
