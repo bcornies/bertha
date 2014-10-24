@@ -12,10 +12,18 @@ class bertha (
   $website_home="${websites_dir}/${::website}"
 
   file { [
-      $bertha::website_home,
       "${bertha::website_home}/js",
       "${bertha::website_home}/css",
       "${bertha::website_home}/includes",
+    ]:
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
+    force   => true,
+  }
+
+  file { [
+      $bertha::website_home,
       "${bertha::website_home}/img",
     ]:
     ensure => directory,

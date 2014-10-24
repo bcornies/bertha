@@ -1,5 +1,5 @@
-<%-if scope['bertha::include_libraries']['js'] then -%>
-<%- scope['bertha::include_libraries']['js'].each do |javascript| -%>
+<%-if scope['::packages']['js'] then -%>
+<%- scope['::packages']['js'].each do |javascript| -%>
 <script type="text/javascript" src="/js/lib/<%= javascript %>.js"></script>
 <%- end -%>
 <%- end -%>

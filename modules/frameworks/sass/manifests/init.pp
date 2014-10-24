@@ -1,5 +1,10 @@
 class sass {
 
+  package { 'sass':
+    ensure   => installed,
+    provider => 'gem',
+  }
+
   file { [
       "${bertha::website_home}/scss",
       "${bertha::website_home}/scss/alt",
