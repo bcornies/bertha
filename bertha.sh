@@ -13,7 +13,7 @@ function usage {
 function check_prereqs {
 	command -v bundle
 	if [ $? -ne 0 ] ; then
-		echo "I require bundler but it's not installed.  Please install by running `gem install bundler` before proceeding."
+		echo "I require bundler but it's not installed.  Please install by running 'gem install bundler' before proceeding."
 		exit 1
 	fi
 }
