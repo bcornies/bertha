@@ -3,6 +3,8 @@ bertha::dock_dir: /Users/bcornies/Documents/SixSquareStudio/Docks
 bertha::mysql_path: /Applications/MAMP/Library/bin
 
 builder: ant
+dock: html
+frameworks:
+  - sass
+package_manager: local
 server: mamp
-
-jquery::version: 1.11.1

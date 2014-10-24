@@ -25,3 +25,7 @@ The first time you run bertha, it will bootstrap itself with everything it needs
 It will create a `bertha.lock` file after the first run. This prevents it from
 attempting to bootstrap itself more than once. If you want to force it to re-run
 the bootstrap, just delete the `bertha.lock` file.
+
+# Project Roadmap
+
+All 'todos', tasks, features and defects are tracked using [this Trello board](https://trello.com/b/yjDBFPSw/bertha).

@@ -1,16 +1,18 @@
-class bertha::libraries {
+class local (
+  $packages,
+) {
 
-  $bertha::include_libraries.each |$library_type, $libraries| {
+  $packages.each |$package_type, $packages| {
     file { [
-      "${bertha::website_home}/${library_type}/lib",
+      "${bertha::website_home}/${package_type}/lib",
     ]:
       ensure => directory,
     }
 
-    $libraries.each |$library| {
-      file { "${bertha::website_home}/${library_type}/lib/${library}.${library_type}":
+    $packages.each |$package| {
+      file { "${bertha::website_home}/${package_type}/lib/${package}.${package_type}":
         ensure => file,
-        source => "puppet:///modules/bertha/libraries/${library_type}/${library}.${library_type}",
+        source => "puppet:///modules/local/${package_type}/${package}.${package_type}",
       }
     }
   }
@@ -57,5 +59,4 @@ class bertha::libraries {
 
   File_line['bourbon/bourbon'] ->
   File_line['neat/neat']
-
 }

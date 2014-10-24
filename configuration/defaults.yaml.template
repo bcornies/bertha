@@ -1,0 +1,15 @@
+# fully qualified path to a directory where you want your websites to reside
+bertha::websites_dir:
+
+# fully qualified path to a mysql executable
+bertha::mysql_path:
+
+# fully qualified path to where you want docks to be installed
+bertha::dock_dir:
+
+builder: ant
+dock: html
+frameworks:
+  - sass
+package_manager: local
+server: mamp

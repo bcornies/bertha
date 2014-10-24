@@ -187,7 +187,7 @@ ServerName localhost:80
 # symbolic links and aliases may be used to point to other locations.
 #
 # MAMP DOCUMENT_ROOT !! Don't remove this line !!
-DocumentRoot "<%= scope["#{@engine}::docroot"] %>"
+DocumentRoot "<%= scope["#{@dock}::docroot"] %>"
 
 #
 # Each directory to which Apache has access can be configured with respect
@@ -212,7 +212,7 @@ DocumentRoot "<%= scope["#{@engine}::docroot"] %>"
 #
 # This should be changed to whatever you set DocumentRoot to.
 #
-<Directory "<%= scope["#{@engine}::docroot"] %>">
+<Directory "<%= scope["#{@dock}::docroot"] %>">
     #
     # Possible values for the Options directive are "None", "All",
     # or any combination of:

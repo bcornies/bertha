@@ -1,6 +1,4 @@
-engine: html
-
-bertha::view_mode: dev
+bertha::view_mode: dev # Valid values are dev or dist
 
 bertha::sites:
   preview:
@@ -14,7 +12,7 @@ bertha::sites:
     ftp_user:
     ftp_password:
 
-bertha::include_libraries:
+local::packages:
   css:
     - cssreset
   scss:

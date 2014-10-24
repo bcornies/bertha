@@ -8,8 +8,15 @@ File {
   owner  => $::user,
 }
 
-$engine = hiera('engine')
+$builder         = hiera('builder')
+$dock            = hiera('dock')
+$frameworks      = hiera('frameworks')
+$package_manager = hiera('package_manager')
+$server          = hiera('server')
 
-include bertha
-include $engine
-include mamp
+class { bertha: } ->
+class { $builder: } ->
+class { $dock: } ->
+class { $frameworks: } ->
+class { $package_manager: } ->
+class { $server: }

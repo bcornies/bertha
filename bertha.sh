@@ -2,7 +2,7 @@
 
 # Setup
 DEBUG=false
-HIERA_CONFIG=hiera.yaml
+HIERA_CONFIG=configuration/hiera.yaml
 
 function usage {
 	echo "Usage: ./bertha [-d] <website>"
@@ -25,10 +25,12 @@ function run_bertha {
 	# Build our Puppet command
 	MODULE_PATH="modules/core"
 	MODULE_PATH="$MODULE_PATH:modules/builders"
+	MODULE_PATH="$MODULE_PATH:modules/docks"
 	MODULE_PATH="$MODULE_PATH:modules/frameworks"
-	MODULE_PATH="$MODULE_PATH:modules/engines"
 	MODULE_PATH="$MODULE_PATH:modules/imports"
+	MODULE_PATH="$MODULE_PATH:modules/package_managers"
 	MODULE_PATH="$MODULE_PATH:modules/servers"
+
 	CMD="puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future manifests/main.pp"
 
 	if [ $DEBUG == true ]

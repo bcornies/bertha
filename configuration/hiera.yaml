@@ -1,8 +1,8 @@
 :backends:
   - yaml
 :yaml:
-  :datadir: "%{::cwd}/hiera"
+  :datadir: "%{::cwd}/configuration"
 :hierarchy:
   - websites/%{::website}
-  - engines/%{engine}
+  - docks/%{dock}
   - defaults
