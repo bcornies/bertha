@@ -4,12 +4,12 @@ class concrete5::theme {
       "${bertha::website_home}/elements",
       "${bertha::website_home}/config",
       "${bertha::website_home}/packages",
-    ]: 
+    ]:
     ensure => directory,
   }
 
   # Boilerplate files - these do _not_ get replaced once created
-  [ 
+  [
     'default.php',
     'view.php',
     'elements/header.php',
@@ -33,7 +33,7 @@ class concrete5::theme {
     replace => false,
   }
 
-  $packages.each |$package| {
+  $concrete5::packages.each |$package| {
     file { "${bertha::website_home}/packages/${package}":
       ensure  => directory,
       source  => "puppet:///modules/concrete5/packages/${package}",

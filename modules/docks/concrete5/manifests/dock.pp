@@ -8,15 +8,15 @@ class concrete5::dock {
     }
   }
 
-  file { "${concrete5::docroot}/themes/${::website}":
+  file { "${concrete5::docroot}/application/themes/${::website}":
     ensure => link,
     target => "${bertha::website_home}",
     force  => true,
   }
 
-  file { "${concrete5::docroot}/config/site.php":
+  file { "${concrete5::docroot}/application/config/database.php":
     ensure => link,
-    target => "${bertha::website_home}/config/site.php",
+    target => "${bertha::website_home}/config/database.php",
     force  => true,
   }
 
