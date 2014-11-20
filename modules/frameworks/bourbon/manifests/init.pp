@@ -1,11 +1,18 @@
-class bourbon {
+class bourbon (
+  $bourbon_version,
+  $neat_version,
+) {
 
-  package { [
-      'bourbon',
-      'neat'
-    ]:
-    ensure   => installed,
+  package { 'bourbon':
+    ensure   => $bourbon_version,
     provider => 'gem',
+    notify   => Exec['bourbon install'],
+  }
+
+  package { 'neat':
+    ensure   => $neat_version,
+    provider => 'gem',
+    notify   => Exec['neat install']
   }
 
   exec { 'bourbon install':
@@ -27,6 +34,18 @@ class bourbon {
   file_line { 'neat/neat':
     ensure => present,
     line   => "@import 'neat/neat';",
+    path   => "${bertha::website_home}/scss/_includes.scss",
+  }
+
+  file { "${bertha::website_home}/scss/_grid.scss":
+    ensure  => file,
+    source  => 'puppet:///modules/bourbon/grid.scss',
+    replace => false,
+  }
+
+  file_line { 'grid':
+    ensure => present,
+    line   => "@import 'grid';",
     path   => "${bertha::website_home}/scss/_includes.scss",
   }
 

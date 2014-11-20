@@ -2,30 +2,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<?php Loader::element('header_required'); ?>
-  
-<!-- Site Header Content //-->
-<?php $this->inc('includes/css.php'); ?>
-
+  <?php Loader::element('header_required')?>
+  <?php $this->inc('includes/css.php'); ?>
+  <?php $this->inc('includes/js.php'); ?>
 </head>
 <body>
-  <div id="header">
-    
-    <?php if ($c->isEditMode()) { ?>
-    <div style="min-height: 80px">
-    <?php } ?>
-    
-    <div id="nav">
-      <?php
-      $a = new Area('Header Nav');
-      $a->display($c);
-      ?>
-    </div>
-    
-    <h1 id="logo"><!-- <a href="<?php echo DIR_REL?>/"></a> --></h1>
-
-    <?php if ($c->isEditMode()) { ?>
-    </div>
-    <?php } ?>
-    
-  </div>
+  <div class="<?php echo $c->getPageWrapperClass()?>">
+    <header>
+      <section>
+        <div class="logo">
+          <?php
+            $a = new GlobalArea('Logo');
+            $a->display($c);
+          ?>
+        </div>
+        <nav>
+          <?php
+            $a = new GlobalArea('Nav');
+            $a->display($c);
+          ?>
+        </nav>
+      </section>
+    </header>

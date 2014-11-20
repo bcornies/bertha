@@ -11,7 +11,6 @@ class concrete5::theme {
   # Boilerplate files - these do _not_ get replaced once created
   [
     'default.php',
-    'view.php',
     'elements/header.php',
     'elements/footer.php',
   ].each |$page| {
