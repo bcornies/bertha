@@ -2,14 +2,17 @@ if !$::website {
   fail('You must specify a website name!')
 }
 
-# Don't filebucket anything locally
 File {
   backup => false,
   owner  => $::user,
+  group  => 'staff',
 }
 
 Exec {
-  path => hiera('default_path')
+  logoutput => on_failure,
+  path      => hiera('default_path'),
+  user      => $::user,
+  group     => 'staff',
 }
 
 $builder         = hiera('builder')

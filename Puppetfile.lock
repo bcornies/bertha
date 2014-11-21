@@ -1,8 +1,8 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    puppetlabs-inifile (1.1.4)
-    puppetlabs-stdlib (4.3.2)
+    puppetlabs-inifile (1.2.0)
+    puppetlabs-stdlib (4.4.0)
 
 GIT
   remote: git@github.com:bcornies/puppet-homebrew.git
@@ -11,8 +11,16 @@ GIT
   specs:
     bcornies-homebrew (0.2.0)
 
+GIT
+  remote: git@github.com:bcornies/puppet-vagrant.git
+  ref: feature/boxen_decouple
+  sha: 5055b8fc73da309189b1382d0f39646e64590139
+  specs:
+    bcornies-vagrant (0.0.1)
+
 DEPENDENCIES
   bcornies-homebrew (>= 0)
+  bcornies-vagrant (>= 0)
   puppetlabs-inifile (>= 0)
   puppetlabs-stdlib (>= 0)
 

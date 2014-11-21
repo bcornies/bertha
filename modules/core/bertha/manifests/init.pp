@@ -45,4 +45,52 @@ class bertha (
     content => template("${::dock}/js.php.erb"),
   }
 
+  file { [
+      "${bertha::website_home}/puppet",
+      "${bertha::website_home}/puppet/manifests",
+      "${bertha::website_home}/puppet/modules",
+    ]:
+    ensure  => directory,
+  }
+
+  file { "${bertha::website_home}/Vagrantfile":
+    ensure  => file,
+    content => template("bertha/Vagrantfile.erb"),
+  }
+
+  file { "${bertha::website_home}/puppet/manifests/site.pp":
+    ensure  => file,
+    content => template("bertha/site.pp.erb"),
+  }
+
+  file { "${bertha::website_home}/.gitignore":
+    ensure  => file,
+  }
+
+  [
+    'puppet/modules',
+    '.tmp',
+    '.librarian',
+    '.vagrant',
+    '.sass',
+  ].each |$line| {
+    file_line { "gitignore_${line}":
+      ensure => present,
+      line   => $line,
+      path   => "${bertha::website_home}/.gitignore",
+    }
+  }
+
+  file { "${bertha::website_home}/puppet/Puppetfile":
+    ensure  => file,
+    replace => false,
+    source  => 'puppet:///modules/bertha/Puppetfile'
+  }
+
+  exec { 'librarian-puppet install':
+    cwd         => "${bertha::website_home}/puppet",
+    refreshonly => true,
+  }
+
+
 }
