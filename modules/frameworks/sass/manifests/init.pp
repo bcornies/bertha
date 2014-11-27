@@ -46,4 +46,10 @@ class sass {
     mode   => '0755',
   }
 
+  file_line { 'gitignore_.sass-cache':
+    ensure => present,
+    line   => '.sass-cache',
+    path   => "${bertha::website_home}/.gitignore",
+  }
+
 }

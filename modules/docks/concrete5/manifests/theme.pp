@@ -32,12 +32,4 @@ class concrete5::theme {
     replace => false,
   }
 
-  $concrete5::packages.each |$package| {
-    file { "${bertha::website_home}/packages/${package}":
-      ensure  => directory,
-      source  => "puppet:///modules/concrete5/packages/${package}",
-      recurse => true,
-    }
-  }
-
 }

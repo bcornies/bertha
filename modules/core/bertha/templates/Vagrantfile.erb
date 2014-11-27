@@ -2,32 +2,34 @@
 # vi: set ft=ruby :
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
-VAGRANTFILE_API_VERSION = "2"
+VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  config.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box'
+
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = 'centos-65-x64-virtualbox-puppet'
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  # config.vm.network 'private_network', ip: '192.168.33.10'
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
   # your network.
-  config.vm.network "public_network"
+  config.vm.network 'public_network', bridge: 'en1: Wi-Fi (AirPort)'
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
+  # config.vm.provider 'virtualbox' do |vb|
   #   # Don't boot with headless mode
   #   vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
+  #   vb.customize ['modifyvm', :id, '--memory', '1024']
   # end
 
   # Enable provisioning with Puppet stand alone.  Puppet manifests
@@ -35,10 +37,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # You will need to create the manifests directory and a manifest in
   # the file default.pp in the manifests_path directory.
   #
-  config.vm.provision "puppet" do |puppet|
-		puppet.manifests_path = "puppet/manifests"
-		puppet.module_path = "puppet/modules"
-		puppet.manifest_file  = "site.pp"
+  config.vm.provision 'puppet' do |puppet|
+		puppet.manifests_path = 'server/manifests'
+		puppet.module_path    = 'server/modules'
+		puppet.manifest_file  = 'site.pp'
   end
 
 end
