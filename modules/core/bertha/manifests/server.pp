@@ -38,8 +38,8 @@ class bertha::server {
 	}
 
 	file { "${bertha::website_home}/server/manifests/site.pp":
-		ensure => file,
-		source => "puppet:///modules/${::dock}/server/site.pp",
+		ensure  => file,
+		content => template("${::dock}/server/site.pp.erb"),
 	}
 
 }

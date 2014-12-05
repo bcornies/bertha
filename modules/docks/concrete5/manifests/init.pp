@@ -1,6 +1,4 @@
-class concrete5 (
-  $version,
-) {
+class concrete5 {
 
   contain 'concrete5::theme'
   contain 'concrete5::config'

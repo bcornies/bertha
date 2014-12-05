@@ -1,0 +1,24 @@
+class { 'apache':
+	docroot => '/opt/concrete5.7.2.1',
+}
+
+include ::apache::mod::php
+
+class { 'concrete5':
+	install_dir => '/opt',
+	version     => '5.7.2.1',
+}
+
+class { 'mysql::server':
+	# TODO: what do with db root password?
+	root_password => 'strongpassword',
+}
+
+mysql::db { '<%= scope['bertha::sites']['develop']['db_name'] %>':
+	user     => '<%= scope['bertha::sites']['develop']['db_user'] %>',
+	password => '<%= scope['bertha::sites']['develop']['db_password'] %>',
+	host     => '<%= scope['bertha::sites']['develop']['db_host'] %>',
+}
+
+Class['concrete5'] ~>
+Class['apache::service']
