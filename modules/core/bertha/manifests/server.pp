@@ -42,4 +42,8 @@ class bertha::server {
 		content => template("${::dock}/server/site.pp.erb"),
 	}
 
+	host { $bertha::server_name:
+		ip => $bertha::server_ip,
+	}
+
 }

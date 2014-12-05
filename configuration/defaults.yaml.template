@@ -7,6 +7,9 @@ bertha::mysql_path:
 # fully qualified path to where you want docks to be installed
 bertha::dock_dir:
 
+# the named network interface to use for dev server bridge network
+bertha::server_network: 'en1: Wi-Fi (AirPort)'
+
 # the path to use for all system exec calls
 default_path:
   - /opt/boxen/homebrew/bin
@@ -19,4 +22,3 @@ dock: html
 frameworks:
   - sass
 package_manager: local
-server: mamp
