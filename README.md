@@ -46,7 +46,3 @@ The first time you run bertha, it will bootstrap itself with everything it needs
 * r10k (for installing required Puppet modules)
 
 It will create a `bertha.lock` file after the first run. This prevents it from attempting to bootstrap itself more than once. If you want to force it to re-run the bootstrap, just delete the `bertha.lock` file. I'm sure there's a better way of doing this, but this works for now and it saves time when running `bertha` repetitively.
-
-# Project Roadmap
-
-All 'todos', tasks, features and defects are tracked using [my public Trello board](https://trello.com/b/yjDBFPSw/bertha).
