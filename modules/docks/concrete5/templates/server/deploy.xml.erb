@@ -1,0 +1,87 @@
+<project name="<%= @website %>-deploy">
+
+  <property name="data" value="sql"/>
+  <property name="mysql.bin" location="<%= scope['bertha::mysql_path'] %>"/>
+
+  <target name="dist-config" description="Packages Concrete5's configuration files">
+    <copy todir="${dist}">
+      <fileset dir=".">
+        <include name="config/**"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <% scope['bertha::sites'].each do |site, props| -%>
+
+  <!-- *** <%= site %> *** -->
+
+  <target name="dist-<%= site %>" depends="dist">
+    <move todir="${dist}">
+      <fileset dir="${dist}">
+        <include name="config/*.php.template"/>
+      </fileset>
+      <mapper type="glob" from="*.php.template" to="*.php"/>
+    </move>
+    <replace token="@DB_SERVER@" value="<%= props['db_server'] %>">
+      <fileset dir="${dist}">
+        <include name="config/*.php"/>
+      </fileset>
+    </replace>
+    <replace token="@DB_USERNAME@" value="<%= props['db_username'] %>">
+      <fileset dir="${dist}">
+        <include name="config/*.php"/>
+      </fileset>
+    </replace>
+    <replace token="@DB_PASSWORD@" value="<%= props['db_password'] %>">
+      <fileset dir="${dist}">
+        <include name="config/*.php"/>
+      </fileset>
+    </replace>
+    <replace token="@DB_DATABASE@" value="<%= props['db_database'] %>">
+      <fileset dir="${dist}">
+        <include name="config/*.php"/>
+      </fileset>
+    </replace>
+  </target>
+
+  <target name="dump-uploads-<%= site %>" description="Pulls files from <%= site %>, overwrites local">
+    <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" remotedir="<%= @uploads_dir %>" action="get">
+      <fileset dir="<%= @uploads_dir %>">
+        <include name="**"/>
+      </fileset>
+    </ftp>
+  </target>
+
+  <target name="dump-mysql-<%= site %>">
+    <mkdir dir="${data}"/>
+    <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
+      <arg value="--host=<%= props['db_host'] %>"/>
+      <arg value="--user=<%= props['db_user'] %>"/>
+      <arg value="--password=<%= props['db_password'] %>"/>
+      <arg value="--default-character-set=latin1"/>
+      <arg value="<%= props['db_name'] %>"/>
+    </exec>
+  </target>
+
+  <target name="publish-<%= site %>" depends="dist">
+    <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
+      <arg value="--host=<%= props['db_host'] %>"/>
+      <arg value="--user=<%= props['db_user'] %>"/>
+      <arg value="--password=<%= props['db_password'] %>"/>
+      <arg value="<%= props['db_name'] %>"/>
+    </exec>
+    <ftp server="<%= props['ftp_host'] %>" remotedir="application/themes/<%= @website %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" chmod="644" passive="yes">
+      <fileset dir="${dist}">
+        <exclude name="config/**"/>
+      </fileset>
+    </ftp>
+    <ftp server="<%= props['ftp_host'] %>" remotedir="application" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" chmod="644" passive="yes">
+      <fileset dir="${dist}">
+        <include name="config/**"/>
+      </fileset>
+    </ftp>
+  </target>
+
+  <% end -%>
+
+</project>

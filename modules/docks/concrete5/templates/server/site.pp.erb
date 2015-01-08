@@ -1,23 +1,42 @@
 class { 'apache':
-	docroot => '/opt/concrete5.7.2.1',
+  docroot => '/opt/concrete5',
 }
 
-include ::apache::mod::php
+class { 'apache::mod::php': }
 
 class { 'concrete5':
-	install_dir => '/opt',
-	version     => '5.7.2.1',
+  install_dir => '/opt',
+  version     => '5.7.2.1',
+  theme_name  => '<%= @website %>'
 }
 
 class { 'mysql::server':
-	# TODO: what do with db root password?
-	root_password => 'strongpassword',
+  # TODO: what to do with db root password?
+  root_password => 'strongpassword',
+  override_options => {
+    'mysqld' => {
+      'bind-address' => '',
+    }
+  }
+}
+
+user { 'concrete':
+  ensure   => present,
+  home     => '/opt/concrete5.7.2.1',
+  password => '$1$L.VJMxsp$.K5fA1XQ/GrCfx5dXGhlS/',
+}
+
+class { 'vsftpd':
+  anonymous_enable  => 'NO',
+  write_enable      => 'YES',
+  local_enable      => 'YES',
+  chroot_local_user => 'YES',
 }
 
 mysql::db { '<%= scope['bertha::sites']['develop']['db_name'] %>':
-	user     => '<%= scope['bertha::sites']['develop']['db_user'] %>',
-	password => '<%= scope['bertha::sites']['develop']['db_password'] %>',
-	host     => '<%= scope['bertha::sites']['develop']['db_host'] %>',
+  user     => '<%= scope['bertha::sites']['develop']['db_user'] %>',
+  password => '<%= scope['bertha::sites']['develop']['db_password'] %>',
+  host     => '%',
 }
 
 Class['concrete5'] ~>

@@ -5,6 +5,8 @@ bertha::dist_items:
   - css/**
   - elements/**
   - default.php
+  - description.txt
+  - thumbnail.png
 bertha::cms_props:
   uploads_dir:
   config_file: config/site.php

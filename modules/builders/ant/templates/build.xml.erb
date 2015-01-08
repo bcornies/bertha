@@ -1,20 +1,10 @@
 <project name="<%= @website %>" default="dist" basedir=".">
 
+    <import file="deploy.xml"/>
+
     <!-- ********************************** PROPERTIES DEFINITIONS ********************************** -->
 
     <property name="dist" value="dist"/>
-    <property name="data" value="sql"/>
-    <property name="mysql.bin" location="<%= scope['bertha::mysql_path'] %>"/>
-    <property name="host.local" value="<%= @ipaddress %>"/>
-    <%- if scope['bertha::is_cms'] -%>
-    <%- scope['bertha::sites'].each do |site, props| -%>
-
-    <property name="db.server.<%= site %>" value="<%= props['db_server'] %>"/>
-    <property name="db.username.<%= site %>" value="<%= props['db_username'] %>"/>
-    <property name="db.password.<%= site %>" value="<%= props['db_password'] %>"/>
-    <property name="db.database.<%= site %>" value="<%= props['db_database'] %>"/>
-    <%- end -%>
-    <%- end -%>
 
     <!-- ********************************** CUSTOM TASK DEFINITIONS ********************************* -->
 
@@ -75,117 +65,11 @@
         </delete>
     </target>
 
-    <%- if scope['bertha::is_cms'] -%>
-    <target name="dist-config" description="Packages a CMS's configuration file">
-        <copy todir="${dist}">
-            <fileset dir=".">
-                <include name="config/**"/>
-            </fileset>
-        </copy>
-    </target>
-    <% end -%>
-
     <target name="dist" description="Creates a distributable package">
         <antcall target="dist-base"/>
         <antcall target="dist-css"/>
         <antcall target="dist-js"/>
         <% if scope['bertha::is_cms'] %><antcall target="dist-config"/><% end %>
     </target>
-
-    <%- if scope['bertha::is_cms'] -%>
-    <target name="dump-mysql-local">
-        <mkdir dir="${data}"/>
-        <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
-            <arg value="--user=wordpress"/>
-            <arg value="--password=password"/>
-            <arg value="--default-character-set=latin1"/>
-            <arg value="dawsonwallace"/>
-        </exec>
-        <replace file="${data}/database-dump.sql" token="${host.local}" value="@WORDPRESS_HOST@"/>
-    </target>
-
-    <target name="import-mysql-local">
-        <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="${host.local}"/>
-        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
-            <arg value="--user=wordpress"/>
-            <arg value="--password=password"/>
-            <arg value="dawsonwallace"/>
-        </exec>
-        <replace file="${data}/database-dump.sql" token="${host.local}" value="@WORDPRESS_HOST@"/>
-    </target>
-    <% end -%>
-
-    <!-- ********************************** SITE DEFINITIONS ********************************** -->
-
-    <% scope['bertha::sites'].each do |site, props| -%>
-
-    <!-- *** <%= site %> *** -->
-
-    <%- if scope['bertha::is_cms'] -%>
-    <target name="dist-<%= site %>" depends="dist">
-        <move todir="${dist}">
-            <fileset dir="${dist}">
-                <include name="config/*.php.template"/>
-            </fileset>
-            <mapper type="glob" from="*.php.template" to="*.php"/>
-        </move>
-        <replace token="@DB_SERVER@" value="${db.server.<%= site %>}">
-            <fileset dir="${dist}">
-                <include name="config/*.php"/>
-            </fileset>
-        </replace>
-        <replace token="@DB_USERNAME@" value="${db.username.<%= site %>}">
-            <fileset dir="${dist}">
-                <include name="config/*.php"/>
-            </fileset>
-        </replace>
-        <replace token="@DB_PASSWORD@" value="${db.password.<%= site %>}">
-            <fileset dir="${dist}">
-                <include name="config/*.php"/>
-            </fileset>
-        </replace>
-        <replace token="@DB_DATABASE@" value="${db.database.<%= site %>}">
-            <fileset dir="${dist}">
-                <include name="config/*.php"/>
-            </fileset>
-        </replace>
-    </target>
-
-    <target name="dump-uploads-<%= site %>" description="Pulls files from <%= site %>, overwrites local">
-        <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" remotedir="<%= @uploads_dir %>" action="get">
-            <fileset dir="<%= @uploads_dir %>">
-                <include name="**"/>
-            </fileset>
-        </ftp>
-    </target>
-
-    <target name="dump-mysql-<%= site %>">
-        <mkdir dir="${data}"/>
-        <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
-            <arg value="--host=<%= props['db_host'] %>"/>
-            <arg value="--user=<%= props['db_user'] %>"/>
-            <arg value="--password=<%= props['db_password'] %>"/>
-            <arg value="--default-character-set=latin1"/>
-            <arg value="<%= props['db_name'] %>"/>
-        </exec>
-        <replace file="${data}/database-dump.sql" token="<%= props['host'] %>" value="@WORDPRESS_HOST@"/>
-    </target>
-    <% end -%>
-
-    <target name="publish-<%= site %>" depends="dist<% if scope['bertha::is_cms'] %>, dump-mysql-local<% end %>">
-        <%- if scope['bertha::is_cms'] -%>
-        <replace file="${data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>"/>
-        <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
-            <arg value="--host=<%= props['db_host'] %>"/>
-            <arg value="--user=<%= props['db_user'] %>"/>
-            <arg value="--password=<%= props['db_password'] %>"/>
-            <arg value="<%= props['db_name'] %>"/>
-        </exec>
-        <%- end -%>
-        <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" chmod="644" passive="yes">
-            <fileset dir="${dist}"/>
-        </ftp>
-    </target>
-    <% end -%>
 
 </project>
