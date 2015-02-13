@@ -54,11 +54,12 @@
 
   <target name="dump-mysql-<%= site %>">
     <mkdir dir="${data}"/>
-    <exec executable="${mysql.bin}/mysqldump" output="${data}/database-dump.sql">
+    <exec executable="${mysql.bin}/mysqldump">
       <arg value="--host=<%= props['db_host'] %>"/>
       <arg value="--user=<%= props['db_user'] %>"/>
       <arg value="--password=<%= props['db_password'] %>"/>
-      <arg value="--default-character-set=latin1"/>
+      <arg value="--default-character-set=utf8"/>
+      <arg value="--result-file=${data}/database-dump.sql"/>
       <arg value="<%= props['db_name'] %>"/>
     </exec>
   </target>
