@@ -15,4 +15,15 @@ class concrete5::server {
     source => 'puppet:///modules/concrete5/database.php',
   }
 
+  file { "${bertha::website_home}/server/Puppetfile":
+    ensure => file,
+    source => "puppet:///modules/concrete5/server/Puppetfile",
+    notify => Exec['librarian-puppet install'],
+  }
+
+  file { "${bertha::website_home}/server/manifests/site.pp":
+    ensure  => file,
+    content => template("concrete5/server/site.pp.erb"),
+  }
+
 }

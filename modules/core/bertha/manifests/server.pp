@@ -13,33 +13,20 @@ class bertha::server {
 		content => template("bertha/Vagrantfile.erb"),
 	}
 
-	[
+	$gitignore_rules = [
 		'server/modules',
 		'.tmp',
 		'.librarian',
 		'.vagrant',
-	].each |$line| {
-		file_line { "gitignore_${line}":
-			ensure => present,
-			line   => $line,
-			path   => "${bertha::website_home}/.gitignore",
-		}
+	]
+
+	$gitignore_rules.each |$rule| {
+		bertha::gitignore { $rule: }
 	}
 
 	exec { 'librarian-puppet install':
 		cwd         => "${bertha::website_home}/server",
 		refreshonly => true,
-	}
-
-	file { "${bertha::website_home}/server/Puppetfile":
-		ensure => file,
-		source => "puppet:///modules/${::cms}/server/Puppetfile",
-		notify => Exec['librarian-puppet install'],
-	}
-
-	file { "${bertha::website_home}/server/manifests/site.pp":
-		ensure  => file,
-		content => template("${::cms}/server/site.pp.erb"),
 	}
 
 	host { $bertha::server_name:
