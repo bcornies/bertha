@@ -18,10 +18,6 @@ class sass {
     source  => 'puppet:///modules/sass/global.scss',
   }
 
-  file { "${bertha::website_home}/scss/_includes.scss":
-    ensure  => file,
-  }
-
   file { "${bertha::website_home}/scss/alt/_mobile.scss":
     ensure  => file,
     replace => false,

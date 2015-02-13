@@ -15,6 +15,5 @@ class bertha (
 
   contain bertha::skeleton
   contain bertha::server
-  contain bertha::git
 
 }

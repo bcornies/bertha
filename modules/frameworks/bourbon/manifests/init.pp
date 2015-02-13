@@ -27,28 +27,16 @@ class bourbon (
     creates => "${bertha::website_home}/scss/neat",
   }
 
-  file_line { 'bourbon/bourbon':
-    ensure => present,
-    line   => "@import 'bourbon/bourbon';",
-    path   => "${bertha::website_home}/scss/_includes.scss",
-  }
-
-  file_line { 'neat/neat':
-    ensure => present,
-    line   => "@import 'neat/neat';",
-    path   => "${bertha::website_home}/scss/_includes.scss",
-  }
-
   file { "${bertha::website_home}/scss/_grid.scss":
     ensure  => file,
     source  => 'puppet:///modules/bourbon/grid.scss',
     replace => false,
   }
 
-  file_line { 'grid':
-    ensure => present,
-    line   => "@import 'grid';",
-    path   => "${bertha::website_home}/scss/_includes.scss",
-  }
+  sass::includes { [
+    'bourbon/bourbon',
+    'neat/neat',
+    'grid'
+  ]: }
 
 }

@@ -1,8 +1,6 @@
-_This is still a work in progress and should be considered **alpha software** (at best) at the moment._
-
 # Bertha
 
-Bootstraps _everything_ you need to build a website, declaratively.
+Bootstraps _everything_ you need to build websites _your_ way. Declaratively.
 
 Bertha is a full-stack website bootstrapping _and_ maintenance engine built on top of Puppet. You tell it everything you need when you build websites and Bertha will both install and configure it all. You can go from a pristine, just-unboxed workstation to developing your website with every tool you need in minutes.
 
@@ -15,8 +13,7 @@ The main components are divided up into the following logical groupings. The int
 - **builder** (Current modules: `ant`) The build system you use to compile SASS, concatenate js files, compress images, etc.
 - **cms** (Current modules: `html`, `wordpress`, `concrete5`) What kind of web project you're building. Is it a plain HTML website, a Wordpress theme or a Concrete5 theme?
 - **frameworks** (Current modules: `sass`, `bourbon`) Any pre-processors or other development frameworks you rely on.
-- **package_manager** (Current modules: `local`) How you manage all your third-party js files, jquery plugins, css files, etc.
-- **server** (Current modules: `mamp`) The software you use to host a local version of your website for testing.
+- **package_manager** (Current modules: `local`) Manages all your third-party js files, jquery plugins, css files, etc.
 
 # Requirements
 
