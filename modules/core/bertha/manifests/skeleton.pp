@@ -26,12 +26,12 @@ class bertha::skeleton {
 
 	file { "${bertha::website_home}/includes/css.php":
 		ensure  => file,
-		content => template("${::dock}/css.php.erb"),
-		}
+		content => template("${::cms}/css.php.erb"),
+	}
 
 	file { "${bertha::website_home}/includes/js.php":
 		ensure  => file,
-		content => template("${::dock}/js.php.erb"),
+		content => template("${::cms}/js.php.erb"),
 	}
 
 }

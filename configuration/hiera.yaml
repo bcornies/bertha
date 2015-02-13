@@ -4,5 +4,5 @@
   :datadir: "%{::cwd}/configuration"
 :hierarchy:
   - websites/%{::website}
-  - docks/%{dock}
+  - cmss/%{cms}
   - defaults

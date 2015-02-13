@@ -16,13 +16,13 @@ Exec {
 }
 
 $builder         = hiera('builder')
-$dock            = hiera('dock')
+$cms             = hiera('cms')
 $frameworks      = hiera('frameworks')
 $package_manager = hiera('package_manager')
 $packages        = hiera('packages')
 
 include bertha
 include $builder
-include $dock
+include $cms
 include $frameworks
 include $package_manager

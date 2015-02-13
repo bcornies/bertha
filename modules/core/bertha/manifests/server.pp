@@ -33,13 +33,13 @@ class bertha::server {
 
 	file { "${bertha::website_home}/server/Puppetfile":
 		ensure => file,
-		source => "puppet:///modules/${::dock}/server/Puppetfile",
+		source => "puppet:///modules/${::cms}/server/Puppetfile",
 		notify => Exec['librarian-puppet install'],
 	}
 
 	file { "${bertha::website_home}/server/manifests/site.pp":
 		ensure  => file,
-		content => template("${::dock}/server/site.pp.erb"),
+		content => template("${::cms}/server/site.pp.erb"),
 	}
 
 	host { $bertha::server_name:

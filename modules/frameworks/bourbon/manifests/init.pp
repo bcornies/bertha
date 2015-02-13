@@ -3,6 +3,8 @@ class bourbon (
   $neat_version,
 ) {
 
+  include sass
+
   package { 'bourbon':
     ensure   => $bourbon_version,
     provider => 'gem',

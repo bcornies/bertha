@@ -13,7 +13,7 @@ Some of the assumptions made may be a bit opinionated but I've tried to keep it 
 The main components are divided up into the following logical groupings. The intention is to make these **pluggable modules** so anyone can contribute their own modules for different systems:
 
 - **builder** (Current modules: `ant`) The build system you use to compile SASS, concatenate js files, compress images, etc.
-- **dock** (Current modules: `html`, `wordpress`, `concrete5`) What kind of web project you're building. Is it a plain HTML website, a Wordpress theme or a Concrete5 theme?
+- **cms** (Current modules: `html`, `wordpress`, `concrete5`) What kind of web project you're building. Is it a plain HTML website, a Wordpress theme or a Concrete5 theme?
 - **frameworks** (Current modules: `sass`, `bourbon`) Any pre-processors or other development frameworks you rely on.
 - **package_manager** (Current modules: `local`) How you manage all your third-party js files, jquery plugins, css files, etc.
 - **server** (Current modules: `mamp`) The software you use to host a local version of your website for testing.

@@ -4,9 +4,6 @@ bertha::websites_dir:
 # fully qualified path to a mysql executable
 bertha::mysql_path:
 
-# fully qualified path to where you want docks to be installed
-bertha::dock_dir:
-
 # the named network interface to use for dev server bridge network
 bertha::server_network: 'en1: Wi-Fi (AirPort)'
 
@@ -18,7 +15,7 @@ default_path:
   - /bin
 
 builder: ant
-dock: html
+cms: html
 frameworks:
   - sass
 package_manager: local
