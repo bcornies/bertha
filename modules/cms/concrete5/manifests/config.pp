@@ -1,4 +1,4 @@
-class concrete5::server {
+class concrete5::config {
 
   file { "${bertha::website_home}/deploy.xml":
     ensure => file,
