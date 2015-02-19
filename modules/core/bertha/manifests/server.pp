@@ -24,6 +24,17 @@ class bertha::server {
 		bertha::gitignore { $rule: }
 	}
 
+	file { "${bertha::website_home}/server/Puppetfile":
+		ensure => file,
+		source => "puppet:///modules/${::cms}/server/Puppetfile",
+		notify => Exec['librarian-puppet install'],
+	}
+
+	file { "${bertha::website_home}/server/manifests/site.pp":
+		ensure  => file,
+		content => template("${::cms}/server/site.pp.erb"),
+	}
+
 	exec { 'librarian-puppet install':
 		cwd         => "${bertha::website_home}/server",
 		refreshonly => true,
