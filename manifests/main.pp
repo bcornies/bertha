@@ -19,7 +19,7 @@ $builder         = hiera('builder')
 $cms             = hiera('cms')
 $frameworks      = hiera('frameworks')
 $library_manager = hiera('library_manager')
-$libraries        = hiera('libraries')
+$libraries       = hiera('libraries')
 
 include bertha
 include $builder
