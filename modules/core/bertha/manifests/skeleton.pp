@@ -2,7 +2,9 @@ class bertha::skeleton {
 
 	file { [
 		"${bertha::website_home}/js",
+		"${bertha::website_home}/js/lib",
 		"${bertha::website_home}/css",
+		"${bertha::website_home}/css/lib",
 		"${bertha::website_home}/includes",
 	]:
 		ensure  => directory,

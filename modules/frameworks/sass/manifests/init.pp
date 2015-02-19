@@ -12,6 +12,13 @@ class sass {
     ensure => directory,
   }
 
+  file { "${bertha::website_home}/scss/lib":
+    ensure  => directory,
+    recurse => true,
+    purge   => true,
+    force   => true,
+  }
+
   file { "${bertha::website_home}/scss/global.scss":
     ensure  => file,
     replace => false,

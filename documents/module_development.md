@@ -1,19 +1,24 @@
-# Creating a cms module
+# Creating a CMS module
 
-When creating a new cms module for use in Puppet, you need to address three responsibilities:
+When creating a new CMS module for use in Puppet, you need to address four requirements:
 
 1. Theme scaffolding and layout
-2. Web server provisioning
-3. Deployment tasks
-4. Local tooling
+2. How css and js files get included
+3. Web server provisioning
+4. Deployment tasks
+5. Local tooling
 
 We'll walk through these one at a time.
 
 ## Theme scaffolding and layout
 
-Bertha is setup to support theme development for CMS systems. This means that any projects created by Bertha will contain only the elements required for a single theme. It will _not_ contain _any_ CMS framework files.
+Bertha was created to support theme development for CMS systems. This means that any projects created by Bertha will contain only the elements required for a single theme. It will _not_ contain _any_ CMS framework files.
 
 You will be responsible for ensuring that the CMS module creates any files/directories necessary for a functioning theme within your CMS.
+
+## How css and js files get included
+
+Most CMS systems have a standard way of including js/css files in your head tag. Typically, it's the stand <script> or <style> tags with a CMS-specific way of pathing to the theme.
 
 ## Web server provisioning
 
