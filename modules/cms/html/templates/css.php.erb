@@ -1,10 +1,10 @@
-<%- if scope['::packages']['css'] then -%>
-<%- scope['::packages']['css'].each do |stylesheet| -%>
+<%- if scope['::libraries']['css'] then -%>
+<%- scope['::libraries']['css'].each do |stylesheet| -%>
 <link rel="stylesheet" type="text/css" href="/css/lib/<%= stylesheet %>.css">
 <%- end -%>
 <%- end -%>
-<%- if scope['::packages']['scss'] then -%>
-<%- scope['::packages']['scss'].each do |stylesheet| -%>
+<%- if scope['::libraries']['scss'] then -%>
+<%- scope['::libraries']['scss'].each do |stylesheet| -%>
 <link rel="stylesheet" type="text/css" href="/css/lib/<%= stylesheet %>.css">
 <%- end -%>
 <%- end -%>

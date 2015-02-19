@@ -13,7 +13,7 @@ The main components are divided up into the following logical groupings. The int
 - **builder** (Current modules: `ant`) The build system you use to compile SASS, concatenate js files, compress images, etc.
 - **cms** (Current modules: `html`, `wordpress`, `concrete5`) What kind of web project you're building. Is it a plain HTML website, a Wordpress theme or a Concrete5 theme?
 - **frameworks** (Current modules: `sass`, `bourbon`) Any pre-processors or other development frameworks you rely on.
-- **package_manager** (Current modules: `local`) Manages all your third-party js files, jquery plugins, css files, etc.
+- **library_manager** (Current modules: `local`) Manages all your third-party js files, jquery plugins, css files, etc.
 
 # Requirements
 

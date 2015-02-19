@@ -1,17 +1,17 @@
 # == Class: local
 #
-# The local package manager is a simple way of including any third-party packages
+# The local library manager is a simple way of including any third-party libraries
 # (js, css, scss files, etc.) you depend on in your website. It looks for a local
-# package "repository" on your filesystem and copies all specified packages into
+# library "repository" on your filesystem and copies all specified libraries into
 # your website's appropriate directories.
 #
 # === Parameters
 #
-# [*packages_dir*]
-#   The location of your local package "repository". Your repository should be organized
+# [*libraries_dir*]
+#   The location of your local library "repository". Your repository should be organized
 #   as follows:
 #
-#   <packages_dir>
+#   <libraries_dir>
 #     - js
 #       - jquery-1.11.1.js
 #       - ...other js libs
@@ -21,7 +21,7 @@
 #
 # === Variables
 #
-# [*packages*]
+# [*libraries*]
 #   This should be set in an approprate *.yaml file in the configuration directory.
 #   See defaults.yaml.template for an example.
 #
@@ -36,16 +36,16 @@
 # Bryan Cornies <bryan@sixsquarestudio.com>
 #
 class local (
-  $packages_dir = "${::home}/packages",
+  $libraries_dir = "${::home}/libraries",
 ) {
 
-  $::packages.each |$package_type, $packages| {
+  $::libraries.each |$library_type, $libraries| {
 
-    $packages.each |$package| {
+    $libraries.each |$library| {
 
-      file { "${bertha::website_home}/${package_type}/lib/${package}.${package_type}":
+      file { "${bertha::website_home}/${library_type}/lib/${library}.${library_type}":
         ensure => file,
-        source => "file://${packages_dir}/${package_type}/${package}.${package_type}",
+        source => "file://${libraries_dir}/${library_type}/${library}.${library_type}",
       }
 
     }

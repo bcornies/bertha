@@ -12,7 +12,7 @@ bertha::sites:
     ftp_user:
     ftp_password:
 
-packages:
+libraries:
   css:
     - cssreset
   scss:

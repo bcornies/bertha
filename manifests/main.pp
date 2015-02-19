@@ -18,11 +18,11 @@ Exec {
 $builder         = hiera('builder')
 $cms             = hiera('cms')
 $frameworks      = hiera('frameworks')
-$package_manager = hiera('package_manager')
-$packages        = hiera('packages')
+$library_manager = hiera('library_manager')
+$libraries        = hiera('libraries')
 
 include bertha
 include $builder
 include $cms
 include $frameworks
-include $package_manager
+include $library_manager

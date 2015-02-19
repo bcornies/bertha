@@ -1,2 +1,2 @@
-files/packages/**
-!files/packages/README.md
+files/libraries/**
+!files/libraries/README.md

@@ -1,5 +1,28 @@
 # Creating a CMS module
 
+A custom CMS module is nothing more than a Puppet module that...
+
+- bootstraps a skeleton theme
+- manages the development server configuration
+- defines deployment logic
+
+A typical CMS module must have the following minimum structure:
+
+    `files`
+      |- `server`
+          |- `Puppetfile` (required!)
+    `manifests`
+      |- `init.pp` (required!) <- declares any necessary parameters and includes class declared in other manifsts
+      |- `theme.pp` <- manages all files and directories required to bootstrap a skeleton theme for the CMS
+      |- `config.pp` <- manages any configuration file templates for connecting to a CMS database (for example)
+      |- `tools.pp` <- ensures any client tools that are required to work with CMS are installed locally
+    `templates`
+      |- `server`
+          |- `deploy.xml.erb`
+          |- `site.pp.erb`
+      |- `css.php.erb`
+      |- `js.php.erb`
+
 When creating a new CMS module for use in Puppet, you need to address four requirements:
 
 1. Theme scaffolding and layout

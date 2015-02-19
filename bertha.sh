@@ -35,7 +35,7 @@ function run_bertha {
 	MODULE_PATH="$MODULE_PATH:modules/cms"
 	MODULE_PATH="$MODULE_PATH:modules/frameworks"
 	MODULE_PATH="$MODULE_PATH:modules/imports"
-	MODULE_PATH="$MODULE_PATH:modules/package_managers"
+	MODULE_PATH="$MODULE_PATH:modules/library_managers"
 
 	CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future --ordering manifest manifests/main.pp"
 
