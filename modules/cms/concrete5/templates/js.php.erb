@@ -1,6 +1,0 @@
-<%- if scope['::libraries']['js'] then -%>
-<%- scope['::libraries']['js'].each do |javascript| -%>
-<script type="text/javascript" src="<?php echo $this->getThemePath(); ?>/js/lib/<%= javascript %>.js"></script>
-<%- end -%>
-<%- end -%>
-<script type="text/javascript" src="<?php echo $this->getThemePath(); ?>/js/main.js"></script>

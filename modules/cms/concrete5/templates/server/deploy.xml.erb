@@ -64,7 +64,7 @@
     </exec>
   </target>
 
-  <target name="publish-<%= site %>" depends="dist">
+  <target name="publish-<%= site %>" depends="dist-<%= site %>">
     <exec executable="${mysql.bin}/mysql" input="${data}/database-dump.sql">
       <arg value="--host=<%= props['db_host'] %>"/>
       <arg value="--user=<%= props['db_user'] %>"/>
