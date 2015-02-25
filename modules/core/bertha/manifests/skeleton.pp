@@ -20,17 +20,21 @@ class bertha::skeleton {
 		ensure => directory,
 	}
 
-	file { "${bertha::website_home}/js/main.js":
-		ensure  => file,
-		replace => false,
-		source  => 'puppet:///modules/bertha/main.js',
+	boilerplate_file { "${bertha::website_home}/js/main.js":
+		boilerplate_key => 'main.js',
+		default_source  => 'puppet:///modules/bertha/main.js',
+	}
+
+	boilerplate_file { "${bertha::website_home}/css/global.css":
+		boilerplate_key => 'global.css',
+		default_source  => 'puppet:///modules/bertha/global.css',
 	}
 
 	file { [
 		"${bertha::website_home}/includes/css.php",
 		"${bertha::website_home}/includes/js.php",
 	]:
-		ensure  => file,
+		ensure => file,
 	}
 
 	$theme_path = chomp(template("${::cms}/theme_path.erb"))
@@ -47,7 +51,7 @@ class bertha::skeleton {
 
 	file_line { "css_include_main":
 		ensure => present,
-		line   => "<link rel=\"stylesheet\" type=\"text/css\" href=\"${theme_path}/css/main.css\">",
+		line   => "<link rel=\"stylesheet\" type=\"text/css\" href=\"${theme_path}/css/global.css\">",
 		path   => "${bertha::website_home}/includes/css.php",
 	}
 

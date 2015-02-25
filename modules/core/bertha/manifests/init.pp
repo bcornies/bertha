@@ -1,5 +1,6 @@
 class bertha (
   $websites_dir,
+  $boilerplate_dir,
   $server_ip,
   $server_network,
   $is_cms,

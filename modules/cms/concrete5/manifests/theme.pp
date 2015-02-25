@@ -1,10 +1,10 @@
 class concrete5::theme {
 
   file { [
-      "${bertha::website_home}/elements",
-      "${bertha::website_home}/config",
-      "${bertha::website_home}/packages",
-    ]:
+    "${bertha::website_home}/elements",
+    "${bertha::website_home}/config",
+    "${bertha::website_home}/packages",
+  ]:
     ensure => directory,
   }
 
@@ -14,10 +14,9 @@ class concrete5::theme {
     'elements/header.php',
     'elements/footer.php',
   ].each |$page| {
-    file { "${bertha::website_home}/${page}":
-      ensure  => file,
-      replace => false,
-      source  => "puppet:///modules/concrete5/${page}",
+    bertha::boilerplate_file { "${bertha::website_home}/${page}":
+      boilerplate_key => $page,
+      default_source  => "puppet:///modules/concrete5/${page}",
     }
   }
 
