@@ -1,14 +1,49 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    puppetlabs-stdlib (4.4.0)
+    puppetlabs-stdlib (4.5.1)
 
 GIT
   remote: git@github.com:bcornies/bertha-ant.git
-  ref: master
+  ref: 0.0.1
   sha: 89400c8b9e93f195352e4f88c2400578a3d2f8cd
   specs:
     bertha-ant (0.0.1)
+
+GIT
+  remote: git@github.com:bcornies/bertha-bourbon.git
+  ref: 0.0.1
+  sha: 2b0eb367a56bae0e15befaabd14fc087372213e1
+  specs:
+    bertha-bourbon (0.0.1)
+
+GIT
+  remote: git@github.com:bcornies/bertha-concrete5.git
+  ref: 0.0.1
+  sha: f951b7daf15dabad963a32096b2090c02c9dc964
+  specs:
+    bertha-concrete5 (0.0.1)
+
+GIT
+  remote: git@github.com:bcornies/bertha-html.git
+  ref: 0.0.1
+  sha: 238cd9b7dde4cdc51459800de4cc4a4240631dbf
+  specs:
+    bertha-html (0.0.1)
+
+GIT
+  remote: git@github.com:bcornies/bertha-local_libs.git
+  ref: 0.0.1
+  sha: 34c1c1bcfbab5d033056da52b67dcc7fd4ed4306
+  specs:
+    bertha-local_libs (0.0.1)
+
+GIT
+  remote: git@github.com:bcornies/bertha-sass.git
+  ref: 0.0.1
+  sha: beaa005c55a1f87a26bf4cbbf891de0364b31aff
+  specs:
+    bertha-sass (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/puppet-homebrew.git
@@ -28,5 +63,10 @@ DEPENDENCIES
   bcornies-homebrew (>= 0)
   bcornies-vagrant (>= 0)
   bertha-ant (>= 0)
+  bertha-bourbon (>= 0)
+  bertha-concrete5 (>= 0)
+  bertha-html (>= 0)
+  bertha-local_libs (>= 0)
+  bertha-sass (>= 0)
   puppetlabs-stdlib (>= 0)
 

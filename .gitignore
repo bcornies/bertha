@@ -3,7 +3,7 @@
 configuration/websites/*.yaml
 configuration/defaults.yaml
 
-modules/imports
+modules
 
 *.sublime-project
 *.sublime-workspace

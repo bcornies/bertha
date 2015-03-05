@@ -21,7 +21,7 @@ cms: html
 builder: ant
 frameworks:
   - sass
-library_manager: local
+library_manager: local_libs
 
 # any module-specific parameters go here
-local::libraries_dir: /Users/<you>/Libraries
+local_libs::libraries_dir: /Users/<you>/Libraries
