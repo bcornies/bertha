@@ -1,6 +1,0 @@
-<%-if scope['::libraries']['js'] then -%>
-<%- scope['::libraries']['js'].each do |javascript| -%>
-<script type="text/javascript" src="/js/lib/<%= javascript %>.js"></script>
-<%- end -%>
-<%- end -%>
-<script type="text/javascript" src="/js/main.js"></script>

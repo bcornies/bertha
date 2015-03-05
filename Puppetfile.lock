@@ -1,8 +1,14 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    puppetlabs-inifile (1.2.0)
     puppetlabs-stdlib (4.4.0)
+
+GIT
+  remote: git@github.com:bcornies/bertha-ant.git
+  ref: master
+  sha: 89400c8b9e93f195352e4f88c2400578a3d2f8cd
+  specs:
+    bertha-ant (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/puppet-homebrew.git
@@ -21,6 +27,6 @@ GIT
 DEPENDENCIES
   bcornies-homebrew (>= 0)
   bcornies-vagrant (>= 0)
-  puppetlabs-inifile (>= 0)
+  bertha-ant (>= 0)
   puppetlabs-stdlib (>= 0)
 

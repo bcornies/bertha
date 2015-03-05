@@ -30,12 +30,7 @@ function run_bertha {
 	export FACTER_home=$HOME
 
 	# Build our Puppet command
-	MODULE_PATH="modules/core"
-	MODULE_PATH="$MODULE_PATH:modules/builders"
-	MODULE_PATH="$MODULE_PATH:modules/cms"
-	MODULE_PATH="$MODULE_PATH:modules/frameworks"
-	MODULE_PATH="$MODULE_PATH:modules/imports"
-	MODULE_PATH="$MODULE_PATH:modules/library_managers"
+	MODULE_PATH="core:modules"
 
 	CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future --ordering manifest manifests/main.pp"
 
