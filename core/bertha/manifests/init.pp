@@ -1,13 +1,13 @@
 class bertha (
   $websites_dir,
-  $boilerplate_dir,
-  $server_ip,
   $server_network,
   $is_cms,
-  $view_mode,
-  $mysql_path,
-  $sites = {},
-  $dist_items = [],
+  $boilerplate_dir   = undef,
+  $server_ip         = undef,
+  $mysql_path        = undef,
+  $view_mode         = 'dev',
+  $sites             = {},
+  $dist_items        = [],
   $include_libraries = {},
 ) {
 

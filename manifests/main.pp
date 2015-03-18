@@ -15,14 +15,17 @@ Exec {
   group     => 'staff',
 }
 
-$builder         = hiera('builder')
-$cms             = hiera('cms')
-$frameworks      = hiera('frameworks')
-$library_manager = hiera('library_manager')
-$libraries       = hiera('libraries')
+$builder         = hiera('builder', undef)
+$cms             = hiera('cms', undef)
+$frameworks      = hiera('frameworks', undef)
+$library_manager = hiera('library_manager', undef)
 
-include bertha
-include $builder
+# TODO: where does this belong?
+$libraries       = hiera('libraries', {})
+validate_hash($libraries)
+
 include $cms
+include $builder
 include $frameworks
 include $library_manager
+include bertha
