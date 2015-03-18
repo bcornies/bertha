@@ -131,6 +131,14 @@ That looks better. Our Wordpress module is integrated with Bertha. Now we need t
 
 ### Adding required files to your CMS module
 
+#### Create some empty file placeholders
+
+    $ mkdir templates/server
+    $ touch templates/server/site.pp.erb
+    $ mkdir files
+    $ mkdir files/server
+    $ touch files/server/Puppetfile
+
 #### JS and CSS inclusion strategies
 
 How does your CMS handle including javascript and CSS files? Depending on the your answer you have 2 options in how to handle this in your CMS module.
@@ -162,6 +170,9 @@ That's the easy part. Now for the _real_ work. We have access to the global `$::
     $ touch templates/functions.php.erb
 
 
+    $ ./bertha.sh tutorial
+    ...
+    Notice: /Stage[main]/Wordpress/Notify[Hello world!]/message: defined 'message' as 'Hello world!'
 
 
 
