@@ -12,11 +12,13 @@ bertha::sites:
     ftp_user:
     ftp_password:
 
-libraries:
+bertha::libraries:
   css:
-    - cssreset
+    - name: cssreset
   scss:
-    - grid
-    - typeplate
+    - name: grid
+    - name: typeplate
+      version: 1.1.3
   js:
-    - jquery-1.11.1
+    - name: jquery
+      version: 1.11.1
