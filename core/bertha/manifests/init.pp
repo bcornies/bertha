@@ -8,7 +8,7 @@ class bertha (
   $mysql_path,
   $sites = {},
   $dist_items = [],
-  $include_libraries = {},
+  $libraries = {},
 ) {
 
   $website_home = "${bertha::websites_dir}/${::website}"

@@ -19,4 +19,3 @@ Bertha relies on a configuration engine called [Hiera](https://docs.puppetlabs.c
 - `bertha::mysql_path` -
 - `bertha::sites` -
 - `bertha::dist_items` -
-- `bertha::include_libraries` -
