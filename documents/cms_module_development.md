@@ -93,8 +93,7 @@ Eventually, we will publish your module to Github and give Bertha the URL for do
 
 Now that Bertha is installed, we need setup some default configurations for it to use. Bertha ships with a template for the default configuration. We can simply copy it and name it defaults.yaml (case-sensitive!).
 
-    $ cd configuration
-    $ cp defaults.yaml.template defaults.yaml
+    $ cp configuration/defaults.yaml.template configuration/defaults.yaml
 
 Let's tell Bertha our preferences by editing the `defaults.yaml` file. We just want set the bare minimum required to get Bertha running so we can test our `wordpress` module.
 
@@ -106,12 +105,11 @@ Let's tell Bertha our preferences by editing the `defaults.yaml` file. We just w
 
 we'll need to create a new website configuration so we have something to test. A website configuration consists of a home directory and some other data that tells Bertha what kind of website it will be. We do this by creating a new yaml configuration file in `configuration/websites`. We will call it `tutorial.yaml`.
 
-    $ cd configuration/websites
-    $ touch tutorial.yaml
+    $ touch configuration/websites/tutorial.yaml
 
 For now, all Bertha needs to know about our new website project is that it will be a wordpress theme. We do this by specifying the `cms` key as `wordpress`.
 
-    # Content of tutorial.yaml
+    # Content of configuration/websites/tutorial.yaml
     cms: wordpress
 
 Let's try running Bertha now.
@@ -119,9 +117,11 @@ Let's try running Bertha now.
     $ ./bertha.sh tutorial
     Error: Evaluation Error: Error while evaluating a Function Call, Could not find class ::wordpress for bryans-macbook-pro at     /private/tmp/tutorial/bertha/manifests/main.pp:24:1 on node bryans-macbook-pro
 
+Since we haven't told Bertha about our new `wordpress` module it doesn't recognize the name of the `::wordpress` class.
+
 ### Link your CMS module into Bertha
 
-Since we haven't told Bertha about our new `wordpress` module it doesn't recognize the name of the class. For now, we'll create a symlink so our `wordpress` module gets included in the `modules` directory of Bertha.
+For now, we'll create a symlink so our `wordpress` module gets included in the `modules` directory of Bertha.
 
     $ ln -s /path/to/your/projects/bertha-wordpress modules/wordpress
     $ ./bertha.sh tutorial
@@ -168,16 +168,82 @@ If the way your CMS handles javascript and CSS file inclusion is more complicate
 That's the easy part. Now for the _real_ work. We have access to the global `$::libraries` variable in our class. This is a hash of all the libraries a developer wants to include in their Website project. Wordpress handles library includes using the `wp_enqueue_style()` and `wp_enqueue_script()` functions which can be found in the `functions.php` file. I think we're going to want to create an ERB template for this file so that we can iterate over our `$::libraries` and include them in the appropriate manor using the aforementioned functions.
 
     $ touch templates/functions.php.erb
+    function <%= scope['::website'] %>_scripts() {
+    <%- @libraries.each do | library_type, library_elements | -%>
+      # <%= library_type %> libraries
+      <%- case library_type
+          when 'js' -%>
+        <%- library_elements.each do | library | -%>
+      wp_enqueue_script( '<%= library['name'] %>', get_template_directory_uri() . '/js/lib/<%= library['name'] %>.js', array(), '<%= library['version'] %>', true );
+      <%- end %>
+      <% when 'css' -%>
+        <%- library_elements.each do | library | -%>
+      wp_enqueue_style( '<%= library['name'] %>', get_template_directory_uri() . '/css/lib/<%= library['name'] %>.css', array(), '<%= library['version'] %>' );
+      <%- end %>
+      <%- when 'scss' -%>
+        <%- library_elements.each do | library | -%>
+      wp_enqueue_style( '<%= library['name'] %>', get_template_directory_uri() . '/css/lib/<%= library['name'] %>.css', array(), '<%= library['version'] %>' );
+      <%- end %>
+      <%- else -%>
+      <%- end -%>
+    <%- end -%>
+    }
 
+    add_action( 'wp_enqueue_scripts', '<%= scope['::website'] %>_scripts' );
+
+
+We'll want some libraries defined in our "tutorial" webproject, so let's go ahead and add some configuration into `configuration/projects/tutorial.yaml`.
+
+    # (Partial) Content of configuration/projects/tutorial.yaml
+    bertha::libraries:
+      css:
+        - name: cssreset
+        - name: fractionslider
+      scss:
+        - name: grid
+        - name: typeplate
+          version: 1.1.3
+        - name: mixins
+      js:
+        - name: jquery
+          version: 1.11.1
+        - name: jquery.fractionslider
 
     $ ./bertha.sh tutorial
     ...
+    Notice: /Stage[main]/Wordpress::Includes/File[/tmp/tutorial/tutorial/functions.php]/content: content changed...
     Notice: /Stage[main]/Wordpress/Notify[Hello world!]/message: defined 'message' as 'Hello world!'
 
+Sweet! Bertha is now auto-generating our functions.php file and loading all of the libraries we've specified in our `tutorial.yaml` configuration file.
 
+### Creating the Theme bootstrap
 
+We now have our Wordpress module wired up with Bertha. We will now start on defining what our theme bootstrap will look like. We'll do this by creating a `manifests/theme.pp` file to contain our `wordpress::theme` class.
 
+    $ touch manifests/theme.pp
 
+    # Content of manifests/theme.pp
+    class wordpress::theme {
+      # Boilerplate files - these do _not_ get replaced once created
+      [
+        'index.php',
+        'page.php',
+        'header.php',
+        'footer.php',
+      ].each |$page| {
+        bertha::boilerplate_file { "${bertha::website_home}/${page}":
+          boilerplate_key => "wordpress/${page}",
+          default_source  => "puppet:///modules/wordpress/${page}",
+        }
+      }
+    }
+
+...and we want to make sure it gets included in our "main" `wordpress` class
+
+    # Content of `manifests/init.pp`
+    class wordpress {
+      contain wordpress::theme
+    }
 
 ## Parking Lot Content
 
