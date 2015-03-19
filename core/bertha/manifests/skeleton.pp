@@ -32,8 +32,9 @@ class bertha::skeleton {
 
 	if defined("${::cms}::includes") {
 		debug("Found class ${::cms}::includes. Including in catalog.")
+		include "${::cms}::includes"
 	} else {
-		notice("${::cms}::includes is not defined. Falling back to default bertha::includes.")
+		debug("${::cms}::includes is not defined. Falling back to default bertha::includes.")
 		include bertha::includes
 	}
 
