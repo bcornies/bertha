@@ -24,8 +24,8 @@ $library_manager = hiera('library_manager', undef)
 $libraries       = hiera('libraries', {})
 validate_hash($libraries)
 
+include bertha
 include $cms
 include $builder
 include $frameworks
 include $library_manager
-include bertha
