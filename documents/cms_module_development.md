@@ -216,7 +216,7 @@ We'll want some libraries defined in our "tutorial" webproject, so let's go ahea
 
 Sweet! Bertha is now auto-generating our functions.php file and loading all of the libraries we've specified in our `tutorial.yaml` configuration file.
 
-### Creating the Theme bootstrap
+### Creating a Theme skeleton
 
 We now have our Wordpress module wired up with Bertha. We will now start on defining what our theme bootstrap will look like. We'll do this by creating a `manifests/theme.pp` file to contain our `wordpress::theme` class.
 
@@ -244,6 +244,38 @@ We now have our Wordpress module wired up with Bertha. We will now start on defi
     class wordpress {
       contain wordpress::theme
     }
+
+
+
+
+
+
+
+
+### Creating a Development Server Specification
+
+At this point, we have a working Wordpress theme skeleton. Now is the time to start thinking about how we're going to test it. Bertha uses Vagrant and Puppet to create and provision a development environment. This is where we can add special instructions for _how_ a Wordpress server gets provisioned (i.e. what do we need to install and configure on our VM to be able to run a Wordpress site?).
+
+We do this by adding 2 files to our CMS module:
+
+1. `templates/server/site.pp.erb` - This is a Puppet manifest that will get applied to our VM. It contains instructions for installing all of the necessary components for a functional Wordpress server.
+2. `files/server/Puppetfile` - This contains a list of any Puppet modules that we require for `site.pp` to do its job.
+
+We'll start by filling out the site.pp.erb file we created earlier.
+
+
+
+
+
+### Adding Support for Deployment Tasks
+
+< Note to self: I skipped ahead and created this w/o documenting >
+- Create deploy.xml.erb
+- Create config.pp
+
+
+
+
 
 ## Parking Lot Content
 
