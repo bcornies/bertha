@@ -1,4 +1,6 @@
 bertha::is_cms: true
 bertha::cms_props:
+  install_dir: /opt/wordpress
   uploads_dir: wp-content/uploads
   config_file: wp-config.php
+  themes_dir: wp-content/themes

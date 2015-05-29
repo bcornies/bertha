@@ -13,6 +13,15 @@ class bertha::skeleton {
 		force   => true,
 	}
 
+	if $bertha::is_cms {
+		file { [
+			"${bertha::website_home}/content",
+			"${bertha::website_home}/content/uploads",
+		]:
+			ensure  => directory,
+		}
+	}
+
 	file { [
 		$bertha::website_home,
 		"${bertha::website_home}/img",

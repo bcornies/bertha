@@ -27,7 +27,6 @@ class bertha::server {
 	file { "${bertha::website_home}/server/Puppetfile":
 		ensure => file,
 		source => "puppet:///modules/${::cms}/server/Puppetfile",
-		notify => Exec['librarian-puppet install'],
 	}
 
 	file { "${bertha::website_home}/server/manifests/site.pp":
@@ -38,10 +37,16 @@ class bertha::server {
 	exec { 'librarian-puppet install':
 		cwd         => "${bertha::website_home}/server",
 		refreshonly => true,
+		environment => [
+			"HOME=${::home}"
+		]
 	}
 
 	host { $bertha::server_name:
 		ip => $bertha::server_ip,
 	}
+
+	File["${bertha::website_home}/server/Puppetfile"] ~>
+	Exec['librarian-puppet install']
 
 }
