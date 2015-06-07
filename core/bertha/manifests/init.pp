@@ -19,10 +19,12 @@ class bertha (
     validate_string($cms_props['themes_dir'])
   }
 
+  $cache_dir    = "${::home}/.bertha"
   $website_home = "${bertha::websites_dir}/${::website}"
   $server_name  = "dev-${::website}"
 
   contain bertha::skeleton
   contain bertha::server
+  contain bertha::cache
 
 }

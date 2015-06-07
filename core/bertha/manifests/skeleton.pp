@@ -34,10 +34,22 @@ class bertha::skeleton {
 		default_source  => 'puppet:///modules/bertha/main.js',
 	}
 
+	create_resources("${cms}::include_script", {
+    'main' => {
+      'path' => 'js',
+    }
+  })
+
 	boilerplate_file { "${bertha::website_home}/css/global.css":
 		boilerplate_key => 'global.css',
 		default_source  => 'puppet:///modules/bertha/global.css',
 	}
+
+	create_resources("${cms}::include_stylesheet", {
+    'global' => {
+      'path' => 'css',
+    }
+  })
 
 	if defined("${::cms}::includes") {
 		debug("Found class ${::cms}::includes. Including in catalog.")

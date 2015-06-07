@@ -1,5 +1,7 @@
 class bertha::includes {
 
+  notify { 'Am I even used???': }
+
   file { [
     "${bertha::website_home}/includes/css.php",
     "${bertha::website_home}/includes/js.php",

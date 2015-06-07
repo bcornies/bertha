@@ -4,3 +4,4 @@ bertha::cms_props:
   uploads_dir: wp-content/uploads
   config_file: wp-config.php
   themes_dir: wp-content/themes
+  plugins_dir: wp-content/plugins

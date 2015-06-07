@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.synced_folder '.', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['themes_dir'] %>/<%= scope['::website'] %>'
   config.vm.synced_folder 'content/uploads', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['uploads_dir'] %>'
+  config.vm.synced_folder 'plugins', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['plugins_dir'] %>'  
 
   config.trigger.before [:up, :provision] do
     run "bash -c 'cd server ; librarian-puppet install'"
