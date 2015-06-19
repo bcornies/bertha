@@ -5,45 +5,59 @@ FORGE
 
 GIT
   remote: git@github.com:bcornies/bertha-ant.git
-  ref: 0.0.2
+  ref: master
   sha: 2ef0afe5e31baf78f9babff9c081923f77ef91a8
   specs:
     bertha-ant (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/bertha-bourbon.git
-  ref: 0.0.1
+  ref: master
   sha: 2b0eb367a56bae0e15befaabd14fc087372213e1
   specs:
     bertha-bourbon (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/bertha-concrete5.git
-  ref: 0.0.1
-  sha: f951b7daf15dabad963a32096b2090c02c9dc964
+  ref: master
+  sha: b959aa8e582f4f60d89057a501beaa2ab1d253d7
   specs:
     bertha-concrete5 (0.0.1)
 
 GIT
+  remote: git@github.com:bcornies/bertha-font_awesome.git
+  ref: master
+  sha: e4212ed99bba643263d448994b99e52d10946616
+  specs:
+    bertha-font_awesome (0.0.1)
+
+GIT
   remote: git@github.com:bcornies/bertha-html.git
-  ref: 0.0.1
+  ref: master
   sha: 238cd9b7dde4cdc51459800de4cc4a4240631dbf
   specs:
     bertha-html (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/bertha-local_libs.git
-  ref: 0.0.1
-  sha: dd252af9cbb92bcf2515037552f7a3db9c4b8e97
+  ref: master
+  sha: f46ed55b8b6fab06c0ab6870e5668c28f4e29a99
   specs:
     bertha-local_libs (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/bertha-sass.git
-  ref: 0.0.1
+  ref: master
   sha: beaa005c55a1f87a26bf4cbbf891de0364b31aff
   specs:
     bertha-sass (0.0.1)
+
+GIT
+  remote: git@github.com:bcornies/bertha-wordpress.git
+  ref: master
+  sha: ab5ccb4091a9c756718a569d119fe31514c3f685
+  specs:
+    bertha-wordpress (0.0.1)
 
 GIT
   remote: git@github.com:bcornies/puppet-homebrew.git
@@ -65,8 +79,10 @@ DEPENDENCIES
   bertha-ant (>= 0)
   bertha-bourbon (>= 0)
   bertha-concrete5 (>= 0)
+  bertha-font_awesome (>= 0)
   bertha-html (>= 0)
   bertha-local_libs (>= 0)
   bertha-sass (>= 0)
+  bertha-wordpress (>= 0)
   puppetlabs-stdlib (>= 0)
 
