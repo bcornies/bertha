@@ -1,6 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+ip_address = '<%= scope['bertha::server_ip'] %>'
+puts "You can view your website at http://#{ip_address}"
+
 required_plugins = [
   'vagrant-triggers',
 ]
@@ -19,12 +22,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box'
   config.vm.box = 'centos-65-x64-virtualbox-puppet'
 
-  config.vm.network 'public_network', bridge: '<%= scope['bertha::server_network'] %>', ip: '<%= scope['bertha::server_ip'] %>'
+  config.vm.network 'public_network', bridge: '<%= scope['bertha::server_network'] %>', ip: ip_address
   config.vm.hostname = '<%= scope['bertha::server_name'] %>'
 
   config.vm.synced_folder '.', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['themes_dir'] %>/<%= scope['::website'] %>'
   config.vm.synced_folder 'content/uploads', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['uploads_dir'] %>'
-  config.vm.synced_folder 'plugins', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['plugins_dir'] %>'  
+  config.vm.synced_folder 'plugins', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['plugins_dir'] %>'
 
   config.trigger.before [:up, :provision] do
     run "bash -c 'cd server ; librarian-puppet install'"
