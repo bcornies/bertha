@@ -1,0 +1,117 @@
+<project name="<%= @website %>-deploy">
+
+  <property name="dist" value="dist"/>
+  <property name="dist.www" value="${dist}/www"/>
+  <property name="dist.data" value="${dist}/data"/>
+  <property name="dist.content" value="${dist}/www/wp-content"/>
+  <property name="dist.themes" value="${dist}/www/wp-content/themes"/>
+  <property name="dist.theme" value="${dist}/www/wp-content/themes/<%= @website %>"/>
+  <property name="dist.uploads" value="${dist}/www/wp-content/uploads"/>
+  <property name="dist.plugins" value="${dist}/www/wp-content/plugins"/>
+
+  <property name="data" value="content/sql"/>
+  <property name="mysql.bin" location="<%= scope['bertha::mysql_path'] %>"/>
+
+  <target name="dist-base" description="Packages all files required by website">
+    <copy todir="${dist.theme}">
+      <fileset dir=".">
+        <include name="img/**"/>
+        <include name="js/**"/>
+        <include name="css/**"/>
+        <include name="*.php"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist.www}">
+      <fileset dir="web_root">
+        <include name="**"/>
+      </fileset>
+    </copy>
+    <copy tofile="${dist.theme}/includes/scripts.php">
+      <fileset dir="includes">
+        <include name="scripts-min.php"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist.data}">
+      <fileset dir="content/sql">
+        <include name="*.sql"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist.uploads}">
+      <fileset dir="content/uploads">
+        <!-- Include all uploads -->
+        <!-- <include name="**"/> -->
+
+        <!-- Include only uploads from 2015-->
+        <!-- <include name="2015/**"/> -->
+
+        <!-- Skip all uploads -->
+        <include name="xxx"/>
+      </fileset>
+    </copy>
+    <copy todir="${dist.plugins}">
+      <fileset dir="plugins">
+        <!-- Include all uploads -->
+        <!-- <include name="**"/> -->
+
+        <!-- Skip all plugins -->
+        <include name="xxx"/>
+      </fileset>
+    </copy>
+  </target>
+
+  <% scope['bertha::sites'].each do |site, props| -%>
+
+
+  <!-- *** <%= site %> *** -->
+
+
+  <target name="dist-<%= site %>" depends="dist">
+    <replace file="${dist.www}/wp-config.php" token="@DB_NAME@" value="<%= props['db_name'] %>" summary="true"/>
+    <replace file="${dist.www}/wp-config.php" token="@DB_USER@" value="<%= props['db_user'] %>" summary="true"/>
+    <replace file="${dist.www}/wp-config.php" token="@DB_PASSWORD@" value="<%= props['db_password'] %>" summary="true"/>
+    <replace file="${dist.www}/wp-config.php" token="@DB_HOST@" value="<%= props['db_host_wp_config'] %>" summary="true"/>
+    <replace file="${dist.www}/wp-config.php" token="@TABLE_PREFIX@" value="<%= props['db_table_prefix'] %>" summary="true"/>
+    <replace file="${dist.data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>" summary="true"/>
+  </target>
+
+  <target name="dump-uploads-<%= site %>" description="Pulls files from <%= site %>, overwrites local">
+    <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" remotedir="wp-content/uploads" action="get">
+      <fileset dir="wp-content/uploads">
+        <include name="**"/>
+      </fileset>
+    </ftp>
+  </target>
+
+  <target name="dump-mysql-<%= site %>">
+    <mkdir dir="${data}"/>
+    <exec executable="${mysql.bin}/mysqldump">
+      <arg value="--host=<%= props['db_host'] %>"/>
+      <arg value="--user=<%= props['db_user'] %>"/>
+      <arg value="--password=<%= props['db_password'] %>"/>
+      <arg value="--default-character-set=utf8"/>
+      <arg value="--result-file=${data}/database-dump.sql"/>
+      <arg value="<%= props['db_name'] %>"/>
+    </exec>
+    <replace file="${data}/database-dump.sql" token="<%= props['host'] %>" value="@WORDPRESS_HOST@" summary="true"/>
+  </target>
+
+  <target name="publish-<%= site %>" depends="dist-<%= site %>">
+    <!-- Import the database -->
+    <exec executable="${mysql.bin}/mysql" input="${dist.data}/database-dump.sql">
+      <arg value="--host=<%= props['db_host'] %>"/>
+      <arg value="--user=<%= props['db_user'] %>"/>
+      <arg value="--password=<%= props['db_password'] %>"/>
+      <arg value="<%= props['db_name'] %>"/>
+    </exec>
+
+    <!-- Upload web files -->
+    <ftp server="<%= props['ftp_host'] %>" userid="<%= props['ftp_user'] %>" password="<%= props['ftp_password'] %>" verbose="true" chmod="644" passive="yes">
+      <fileset dir="${dist.www}">
+        <include name="**"/>
+      </fileset>
+    </ftp>
+  </target>
+
+  <% end -%>
+
+</project>

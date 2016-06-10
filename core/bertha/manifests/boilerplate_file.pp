@@ -1,6 +1,6 @@
 define bertha::boilerplate_file (
   $boilerplate_key,
-  $default_source,
+  $default_source = '',
 ) {
 
   file { $title:

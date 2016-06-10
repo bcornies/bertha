@@ -17,7 +17,7 @@ default_path:
   - /bin
 
 # default modules to use when building projects
-cms: html
+cms: wordpress
 builder: ant
 frameworks:
   - sass

@@ -11,7 +11,7 @@ function usage {
 }
 
 function check_prereqs {
-	command -v bundle
+	command -v bundle > /dev/null
 	if [ $? -ne 0 ] ; then
 		echo "I require bundler but it's not installed.  Please install by running 'gem install bundler' before proceeding."
 		exit 1
@@ -32,21 +32,30 @@ function run_bertha {
 	# Build our Puppet command
 	MODULE_PATH="core:modules"
 
-	CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --parser future --ordering manifest manifests/main.pp"
+	# CMD="sudo -E puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --ordering manifest manifests/main.pp"
+	CMD="bundle exec puppet apply --hiera_config $HIERA_CONFIG --modulepath=$MODULE_PATH --show_diff --ordering manifest manifests/main.pp"
 
-	if [ $DEBUG == true ]
+	if [ "$DEBUG" == true ]
 	then
 		CMD="$CMD --debug"
+	fi
+
+	if [ "$TRACE" == true ]
+	then
+		CMD="$CMD --trace"
 	fi
 
 	# Run puppet!
 	$CMD
 }
 
-while getopts ":d" opt; do
+while getopts ":dt" opt; do
 	case $opt in
 		d)
 			DEBUG=true
+			;;
+		t)
+			TRACE=true
 			;;
 		\?)
 			echo "Invalid option: -$OPTARG"

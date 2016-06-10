@@ -1,0 +1,67 @@
+<project name="<%= @website %>" default="dist" basedir=".">
+
+    <import file="deploy.xml"/>
+
+    <!-- ********************************** PROPERTIES DEFINITIONS ********************************** -->
+
+    <property name="dist" value="dist"/>
+
+    <!-- ********************************** CUSTOM TASK DEFINITIONS ********************************* -->
+
+    <taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask"/>
+
+    <!-- ********************************** TARGET DEFINITIONS ************************************** -->
+
+    <target name="init">
+        <delete dir="${dist}"/>
+        <mkdir dir="${dist}"/>
+    </target>
+
+    <target name="dist-css" description="Minifies and concatenates css files">
+        <apply executable="java" parallel="false" verbose="true">
+            <fileset dir="${dist.theme}/css">
+                <include name="**/*.css"/>
+            </fileset>
+            <arg line="-jar"/>
+            <arg path="${user.home}/.ant/lib/yuicompressor-2.4.7.jar"/>
+            <arg line="--line-break 0"/>
+            <srcfile />
+            <arg line="-o"/>
+            <mapper type="glob" from="*.css" to="${dist.theme}/css/*-min.css"/>
+            <targetfile />
+        </apply>
+        <concat destfile="${dist.theme}/css/<%= @website %>-min.css">
+            <fileset dir="${dist.theme}/css/lib">
+                <include name="*-min.css"/>
+            </fileset>
+            <!-- Include custom styles last so they win specificity ties -->
+            <fileset dir="${dist.theme}/css">
+                <include name="*-min.css"/>
+            </fileset>
+        </concat>
+        <delete includeemptydirs="true">
+            <fileset dir="${dist.theme}/css" excludes="<%= @website %>-min.css"/>
+        </delete>
+    </target>
+
+    <target name="dist-js" description="Minifies and concatenates js files">
+        <jscomp compilationLevel="simple" debug="false" output="${dist.theme}/js/<%= @website %>-min.js" warning="quiet">
+            <sources dir="${dist.theme}/js">
+                <%- scope['bertha::libraries']['js'].each do |js_lib| -%>
+                <file name="lib/<%= js_lib['name'] %>.js"/>
+                <%- end -%>
+                <file name="main.js"/>
+            </sources>
+        </jscomp>
+        <delete includeemptydirs="true">
+            <fileset dir="${dist.theme}/js" excludes="<%= @website %>-min.js"/>
+        </delete>
+    </target>
+
+    <target name="dist" description="Creates a distributable package" depends="init">
+        <antcall target="dist-base"/>
+        <antcall target="dist-css"/>
+        <antcall target="dist-js"/>
+    </target>
+
+</project>

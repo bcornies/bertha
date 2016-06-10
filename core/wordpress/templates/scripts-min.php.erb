@@ -1,0 +1,8 @@
+<?php
+
+function <%= scope['::website'] %>_scripts() {
+  wp_enqueue_script( 'main', get_template_directory_uri() . '/js/<%= scope['::website'] %>-min.js', array(), '', true );
+  wp_enqueue_style( 'global', get_template_directory_uri() . '/css/<%= scope['::website'] %>-min.css', array(), '' );
+}
+
+?>

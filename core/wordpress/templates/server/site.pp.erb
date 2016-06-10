@@ -1,0 +1,81 @@
+<%- db_name = scope['bertha::sites']['develop']['db_name'] -%>
+<%- db_host = scope['bertha::sites']['develop']['db_host'] -%>
+<%- db_user = scope['bertha::sites']['develop']['db_user'] -%>
+<%- db_password = scope['bertha::sites']['develop']['db_password'] -%>
+
+package { 'wget':
+  ensure => latest,
+}
+
+package { [
+  'php',
+  'php-mysql',
+]:
+  ensure => installed,
+}
+
+class { 'apache':
+  sendfile => 'Off', # Fixes illegal character problem when syncing files
+}
+
+apache::vhost { 'sixsquarestudio.com':
+  port          => '80',
+  docroot       => '/opt/wordpress',
+  override      => ['All'],
+  docroot_owner => 'apache',
+  docroot_group => 'apache',
+  priority      => '05',
+}
+
+class { 'apache::mod::php': }
+
+class { 'mysql::server':
+  # TODO: what to do with db root password?
+  root_password => 'strongpassword',
+  override_options => {
+    'mysqld' => {
+      'bind-address' => '<%= db_host %>',
+    }
+  }
+}
+
+mysql_user { '<%= db_user %>@%':
+  ensure                   => 'present',
+  password_hash            => mysql_password('<%= db_password %>'),
+  max_connections_per_hour => '0',
+  max_queries_per_hour     => '0',
+  max_updates_per_hour     => '0',
+  max_user_connections     => '0',
+}
+
+mysql_grant { '<%= db_user %>@%/*.*':
+  ensure     => 'present',
+  options    => ['GRANT'],
+  privileges => ['ALL'],
+  table      => '*.*',
+  user       => '<%= db_user %>@%',
+}
+
+class { 'wordpress':
+  version         => '4.2.2',
+  install_dir     => '/opt/wordpress',
+  install_url     => 'https://www.wordpress.org',
+  create_db       => true,
+  create_db_user  => false,
+  db_name         => '<%= db_name %>',
+  db_host         => '<%= db_host %>',
+  db_user         => '<%= db_user %>',
+  db_password     => '<%= db_password %>',
+  wp_table_prefix => '<%= @website %>_',
+}
+
+class { 'vsftpd':
+  anonymous_enable  => 'NO',
+  write_enable      => 'YES',
+  local_enable      => 'YES',
+  chroot_local_user => 'YES',
+}
+
+Package<| |> ->
+Class['wordpress'] ~>
+Class['apache::service']
