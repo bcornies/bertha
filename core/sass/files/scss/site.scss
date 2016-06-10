@@ -8,6 +8,7 @@ $font_serif: Times, 'Times New Roman', serif;
 // ----------------- Includes --------------------- //
 
 @import 'includes';
+@import 'foundation';
 @import 'alt/mobile';
 @import 'alt/retina';
 @import 'alt/ie';

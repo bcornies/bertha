@@ -1,13 +1,15 @@
-class sass::skeleton {
+class sass::skeleton (
+  $theme_dir = $wordpress::theme_dir,
+) {
 
   file { [
-    "${bertha::website_home}/scss",
-    "${bertha::website_home}/scss/alt",
+    "${theme_dir}/scss",
+    "${theme_dir}/scss/alt",
   ]:
     ensure => directory,
   }
 
-  file { "${bertha::website_home}/scss/lib":
+  file { "${theme_dir}/scss/lib":
     ensure  => directory,
     recurse => true,
     purge   => true,
@@ -16,12 +18,13 @@ class sass::skeleton {
 
   # Boilerplate files - these do _not_ get replaced once created
   [
-    'scss/global.scss',
+    'scss/site.scss',
+    'scss/_foundation.scss',
     'scss/alt/_mobile.scss',
     'scss/alt/_retina.scss',
     'scss/alt/_ie.scss',
   ].each |$page| {
-    bertha::boilerplate_file { "${bertha::website_home}/${page}":
+    bertha::boilerplate_file { "${theme_dir}/${page}":
       boilerplate_key => $page,
       default_source  => "puppet:///modules/sass/${page}",
     }
