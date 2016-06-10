@@ -5,7 +5,7 @@ ip_address = '<%= scope['bertha::server_ip'] %>'
 puts "You can view your website at http://#{ip_address}"
 
 required_plugins = [
-  'vagrant-triggers',
+  'vagrant-librarian-puppet',
 ]
 
 required_plugins.each do |plugin|
@@ -29,9 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder 'content/uploads', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['uploads_dir'] %>'
   config.vm.synced_folder 'plugins', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['plugins_dir'] %>'
 
-  config.trigger.before [:up, :provision] do
-    run "bash -c 'cd server ; librarian-puppet install'"
-  end
+  config.librarian_puppet.puppetfile_dir = 'server'
 
   config.vm.provision 'puppet' do |puppet|
 		puppet.manifests_path = 'server/manifests'
