@@ -54,9 +54,9 @@ class local_libs (
       # Now delegate to the cms for what to do with it
 
       create_resources("${cms}::lib::library_source", {
-        $lib['name'] => {
+        "${lib['name']}.${library_type}" => {
           type   => $library_type,
-          source => file_source,
+          source => $file_source,
         }
       })
 

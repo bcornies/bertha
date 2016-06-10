@@ -19,22 +19,23 @@ VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.box_url = 'http://puppet-vagrant-boxes.puppetlabs.com/centos-65-x64-virtualbox-puppet.box'
-  config.vm.box = 'centos-65-x64-virtualbox-puppet'
+  config.vm.box = 'puppetlabs/centos-6.6-64-puppet'
 
   config.vm.network 'public_network', bridge: '<%= scope['bertha::server_network'] %>', ip: ip_address
   config.vm.hostname = '<%= scope['bertha::server_name'] %>'
 
-  config.vm.synced_folder '.', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['themes_dir'] %>/<%= scope['::website'] %>'
-  config.vm.synced_folder 'content/uploads', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['uploads_dir'] %>'
-  config.vm.synced_folder 'plugins', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['plugins_dir'] %>'
+  config.vm.synced_folder '<%= scope['bertha::cms_props']['themes_dir'] %>', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['themes_dir'] %>'#, owner: 'apache', group: 'apache'
+  config.vm.synced_folder '<%= scope['bertha::cms_props']['uploads_dir'] %>', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['uploads_dir'] %>'#, owner: 'apache', group: 'apache'
+  config.vm.synced_folder '<%= scope['bertha::cms_props']['plugins_dir'] %>', '<%= scope['bertha::cms_props']['install_dir'] %>/<%= scope['bertha::cms_props']['plugins_dir'] %>'#, owner: 'apache', group: 'apache'
 
-  config.librarian_puppet.puppetfile_dir = 'server'
+  config.librarian_puppet.puppetfile_dir = 'server/environments/dev'
 
-  config.vm.provision 'puppet' do |puppet|
-		puppet.manifests_path = 'server/manifests'
-		puppet.module_path    = 'server/modules'
-		puppet.manifest_file  = 'site.pp'
+  config.vm.provision 'puppet', run: 'always' do |puppet|
+    puppet.environment      = 'dev'
+    puppet.environment_path = 'server/environments'
+    puppet.options = [
+      # '--debug',
+    ]
   end
 
 end

@@ -1,6 +1,7 @@
 # Installs font-awesome assets
 class font_awesome (
   $version,
+  $theme_dir = $wordpress::theme_dir,
 ) {
 
   # Download to cache
@@ -24,21 +25,21 @@ class font_awesome (
 
   # Copy to web project
 
-  file { "${bertha::website_home}/fonts":
+  file { "${theme_dir}/fonts":
     ensure  => directory,
     source  => "file:///${bertha::cache_dir}/font-awesome-${version}/fonts",
     recurse => true,
   }
 
-  file { "${bertha::website_home}/css/font-awesome.css":
+  file { "${theme_dir}/css/font-awesome.css":
     ensure  => file,
     source  => "file:///${bertha::cache_dir}/font-awesome-${version}/css/font-awesome.css",
     replace => false,
   }
 
-  # 4. Add to include points
+  # Add to include points
 
-  create_resources("${cms}::include_stylesheet", {
+  create_resources("${cms}::lib::include_stylesheet", {
     'font-awesome' => {
       'version' => $version,
       'path'    => 'css',

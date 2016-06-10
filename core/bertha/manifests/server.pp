@@ -2,9 +2,11 @@ class bertha::server {
 
 	file { [
 		"${bertha::website_home}/server",
-		"${bertha::website_home}/server/manifests",
-		"${bertha::website_home}/server/modules",
-		]:
+		"${bertha::website_home}/server/environments",
+		"${bertha::website_home}/server/environments/dev",
+		"${bertha::website_home}/server/environments/dev/manifests",
+		"${bertha::website_home}/server/environments/dev/modules",
+	]:
 		ensure  => directory,
 	}
 
@@ -24,18 +26,18 @@ class bertha::server {
 		bertha::gitignore { $rule: }
 	}
 
-	file { "${bertha::website_home}/server/Puppetfile":
+	file { "${bertha::website_home}/server/environments/dev/Puppetfile":
 		ensure => file,
 		source => "puppet:///modules/${::cms}/server/Puppetfile",
 	}
 
-	file { "${bertha::website_home}/server/manifests/site.pp":
+	file { "${bertha::website_home}/server/environments/dev/manifests/site.pp":
 		ensure  => file,
 		content => template("${::cms}/server/site.pp.erb"),
 	}
 
 	exec { 'librarian-puppet install':
-		cwd         => "${bertha::website_home}/server",
+		cwd         => "${bertha::website_home}/server/environments/dev",
 		refreshonly => true,
 		environment => [
 			"HOME=${::home}"
@@ -46,7 +48,7 @@ class bertha::server {
 		ip => $bertha::server_ip,
 	}
 
-	File["${bertha::website_home}/server/Puppetfile"] ~>
+	File["${bertha::website_home}/server/environments/dev/Puppetfile"] ~>
 	Exec['librarian-puppet install']
 
 }
