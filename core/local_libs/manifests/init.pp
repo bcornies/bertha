@@ -34,7 +34,7 @@
 # Bryan Cornies <bryan@sixsquarestudio.com>
 #
 class local_libs (
-  $libraries_dir    = "${::home}/libraries",
+  $libraries_dir    = "${::home}/bertha/libraries",
   $libraries        = $bertha::libraries,
   $project_libs_dir = getvar("${cms}::theme::theme_dir"),
 ) {

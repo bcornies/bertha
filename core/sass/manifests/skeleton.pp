@@ -5,6 +5,7 @@ class sass::skeleton (
   file { [
     "${theme_dir}/scss",
     "${theme_dir}/scss/alt",
+    "${theme_dir}/scss/pages",
   ]:
     ensure => directory,
   }
@@ -16,6 +17,10 @@ class sass::skeleton (
     force   => true,
   }
 
+  file { "${theme_dir}/scss/_includes.scss":
+    ensure => file,
+  }
+
   # Boilerplate files - these do _not_ get replaced once created
   [
     'scss/site.scss',
@@ -23,6 +28,8 @@ class sass::skeleton (
     'scss/alt/_mobile.scss',
     'scss/alt/_retina.scss',
     'scss/alt/_ie.scss',
+    'scss/pages/home.scss',
+    'scss/pages/404.scss',
   ].each |$page| {
     bertha::boilerplate_file { "${theme_dir}/${page}":
       boilerplate_key => $page,

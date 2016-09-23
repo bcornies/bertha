@@ -1,8 +1,8 @@
 class wordpress::base {
 
   file { [
+    "${bertha::website_home}/web_root",
     "${bertha::website_home}/wp-content",
-    "${bertha::website_home}/wp-content/web_root",
     "${bertha::website_home}/wp-content/plugins",
     "${bertha::website_home}/wp-content/themes",
     "${bertha::website_home}/wp-content/uploads",

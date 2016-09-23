@@ -1,24 +1,67 @@
-bertha::view_mode: dev # Valid values are dev or dist
+# This is a WordPress theme project
+cms: wordpress
 
+# Whether or not your Vagrant developer webserver uses
+# unminified (dev) or minified (dist) source files
+#
+# Valid options: dev|dist
+bertha::view_mode: dev
+
+# List of webservers that you will be deploying the project to
+# Uncomment prievew/live and fill in values. You can add more
+# sites as required.
 bertha::sites:
-  preview:
-    host:
-    ftp_host:
-    ftp_user:
-    ftp_password:
-  live:
-    host:
-    ftp_host:
-    ftp_user:
-    ftp_password:
+  develop:
+    host: 192.168.11.50
+    ftp_host: 192.168.11.50
+    ftp_user: ftp@sixsquarestudio.com
+    ftp_password: password1
+    db_host: 192.168.11.50
+    db_host_wp_config: 192.168.11.50
+    db_name: wordpress
+    db_user: wordpress
+    db_password: password
+    db_table_prefix: wp_
+  # preview:
+  #   host:
+  #   ftp_host:
+  #   ftp_user:
+  #   ftp_password:
+  #   db_host:
+  #   db_host_wp_config:
+  #   db_name:
+  #   db_user:
+  #   db_password:
+  #   db_table_prefix:
+  # live:
+  #   host:
+  #   ftp_host:
+  #   ftp_user:
+  #   ftp_password:
+  #   db_host:
+  #   db_host_wp_config:
+  #   db_name:
+  #   db_user:
+  #   db_password:
+  #   db_table_prefix:
 
+# A list of library files to include in the project.
+# This will copy over all sources files from `local_libs::libraries_dir`.
+# Files must be in the form `${local_libs::libraries_dir}/css/bootstrap-3.3.4.css`
 bertha::libraries:
   css:
-    - name: cssreset
-  scss:
-    - name: grid
-    - name: typeplate
-      version: 1.1.3
+    - name: bootstrap
+      version: 3.3.4
   js:
     - name: jquery
-      version: 1.11.1
+      version: 3.1.1
+    - name: bootstrap
+      version: 3.3.4
+
+font_awesome::version: 4.6.3
+
+wordpress::plugins:
+  # - custom-post-type-ui
+  # - advanced-custom-fields
+  # - ninja-forms
+  # - better-search-replace
