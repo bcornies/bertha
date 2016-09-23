@@ -1,11 +1,11 @@
 class bertha (
-  $websites_dir,
   $server_network,
   $is_cms,
   $cms_props,
-  $boilerplate_dir   = undef,
+  $websites_dir      = "${::home}/bertha/projects",
+  $boilerplate_dir   = "${::home}/bertha/boilerplate_files",
   $server_ip         = undef,
-  $mysql_path        = undef,
+  $mysql_path        = "/Applications/MAMP/Library/bin",
   $view_mode         = 'dev',
   $sites             = {},
   $dist_items        = [],
@@ -26,5 +26,6 @@ class bertha (
   contain bertha::skeleton
   contain bertha::server
   contain bertha::cache
+  contain bertha::tools
 
 }

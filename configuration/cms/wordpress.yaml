@@ -6,9 +6,3 @@ bertha::cms_props:
   config_file: wp-config.php
   themes_dir: wp-content/themes
   plugins_dir: wp-content/plugins
-
-wordpress::plugins:
-  - custom-post-type-ui
-  - advanced-custom-fields
-  - ninja-forms
-  - better-search-replace

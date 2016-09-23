@@ -1,7 +1,9 @@
 class bertha::skeleton {
 
-	file { $bertha::website_home:
-    ensure => directory,
-  }
+	exec { "mkdir -p ${bertha::website_home}":
+		creates => $bertha::website_home,
+		user    => $::user,
+		group   => 'staff',
+	}
 
 }

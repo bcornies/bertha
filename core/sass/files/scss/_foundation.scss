@@ -1,5 +1,21 @@
-// Common styles that you globally across all websites go here.
+// Common styles that you apply globally across all websites go here.
 
-html {
+body {
+  margin: 0;
+}
 
+.logged-in .navbar-fixed-top {
+	top: 32px;
+}
+
+#page {
+  min-height: 100%;
+  position: relative;
+}
+
+footer {
+  /* Stick to bottom, even on short pages.*/
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

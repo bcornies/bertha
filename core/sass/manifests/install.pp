@@ -2,15 +2,16 @@ class sass::install (
   $theme_dir = $wordpress::theme_dir,
 ) {
 
-  package { 'sass':
-    ensure   => installed,
-    provider => 'gem',
+  file_line { 'gem sass':
+    line   => 'gem "sass"',
+    path   => "${bertha::website_home}/Gemfile",
+    notify => Exec['bundle install'],
   }
 
-  file { "${theme_dir}/run_sass.sh":
-    ensure => file,
-    source => 'puppet:///modules/sass/run_sass.sh',
-    mode   => '0755',
+  file { "${bertha::website_home}/run_sass.sh":
+    ensure  => file,
+    content => template('sass/run_sass.sh.erb'),
+    mode    => '0755',
   }
 
   bertha::gitignore { '.sass-cache': }

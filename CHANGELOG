@@ -2,18 +2,17 @@
 
 FEATURES:
 
-  - added cms feature
-  - concrete5 cms support
-  - concrete5 theme support
+  - remove plug-in capabilities to focus on core functionality
 
 BUGFIXES:
 
   - cleaned up any remaining hardcoded paths
+  - lots of miscellaneous bugfixes
 
 ## 0.0.1 (Jun 25, 2014)
 
 FEATURES:
-  
+
   - initial release
   - plain html/php website support
   - self-bootstrapping
