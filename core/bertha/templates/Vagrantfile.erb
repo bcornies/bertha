@@ -38,4 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ]
   end
 
+  # Copy web root content into Apache webroot.
+  config.vm.provision 'shell', inline: 'cp -R /vagrant/dist/www/* /opt/wordpress/.'
+
 end

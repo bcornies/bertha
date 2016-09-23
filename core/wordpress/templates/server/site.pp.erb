@@ -21,8 +21,10 @@ package { 'wget':
 package { [
   'php',
   'php-mysql',
+  'php-gd',
 ]:
-  ensure => installed,
+  ensure          => installed,
+  install_options => '--enablerepo=remi,remi-test',
 }
 
 class { 'apache':
@@ -42,7 +44,8 @@ class { 'apache::mod::php': }
 
 class { 'mysql::server':
   # TODO: what to do with db root password?
-  root_password => 'strongpassword',
+  root_password    => 'strongpassword',
+  install_options  => '--enablerepo=remi,remi-test',
   override_options => {
     'mysqld' => {
       'bind-address' => '<%= db_host %>',

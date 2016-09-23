@@ -1,5 +1,12 @@
 <project name="<%= @website %>-deploy">
 
+  <property name="src.www" value="web_root"/>
+  <property name="src.data" value="content"/>
+  <property name="src.themes" value="wp-content/themes"/>
+  <property name="src.theme" value="wp-content/themes/<%= @website %>"/>
+  <property name="src.uploads" value="wp-content/uploads"/>
+  <property name="src.plugins" value="wp-content/plugins"/>
+
   <property name="dist" value="dist"/>
   <property name="dist.www" value="${dist}/www"/>
   <property name="dist.data" value="${dist}/data"/>
@@ -14,7 +21,7 @@
 
   <target name="dist-base" description="Packages all files required by website">
     <copy todir="${dist.theme}">
-      <fileset dir=".">
+      <fileset dir="${src.theme}">
         <include name="img/**"/>
         <include name="js/**"/>
         <include name="css/**"/>
@@ -22,22 +29,22 @@
       </fileset>
     </copy>
     <copy todir="${dist.www}">
-      <fileset dir="web_root">
+      <fileset dir="${src.www}">
         <include name="**"/>
       </fileset>
     </copy>
     <copy tofile="${dist.theme}/includes/scripts.php">
-      <fileset dir="includes">
+      <fileset dir="${src.theme}/includes">
         <include name="scripts-min.php"/>
       </fileset>
     </copy>
     <copy todir="${dist.data}">
-      <fileset dir="content/sql">
+      <fileset dir="${src.data}/sql">
         <include name="*.sql"/>
       </fileset>
     </copy>
     <copy todir="${dist.uploads}">
-      <fileset dir="content/uploads">
+      <fileset dir="${src.uploads}">
         <!-- Include all uploads -->
         <!-- <include name="**"/> -->
 
@@ -49,7 +56,7 @@
       </fileset>
     </copy>
     <copy todir="${dist.plugins}">
-      <fileset dir="plugins">
+      <fileset dir="${src.plugins}">
         <!-- Include all uploads -->
         <!-- <include name="**"/> -->
 

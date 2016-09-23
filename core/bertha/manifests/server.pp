@@ -16,7 +16,7 @@ class bertha::server {
 	}
 
 	$gitignore_rules = [
-		'server/modules',
+		'server/environments/dev/modules',
 		'.tmp',
 		'.librarian',
 		'.vagrant',
