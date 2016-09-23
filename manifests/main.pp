@@ -2,6 +2,12 @@ if !$::website {
   fail('You must specify a website name!')
 }
 
+validate_re(
+  $::website,
+  '^[A-Za-z0-9\-\.]+$',
+  'The website name can only contain letters, numbers, underscores and dots.'
+)
+
 File {
   backup => false,
   owner  => $::user,
