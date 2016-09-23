@@ -24,4 +24,4 @@ frameworks:
 library_manager: local_libs
 
 # any module-specific parameters go here
-local_libs::libraries_dir: /Users/<you>/Libraries
+local_libs::libraries_dir:

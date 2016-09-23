@@ -30,12 +30,26 @@ It will _probably_ work on other versions of OS X. It _should_ also work on vari
 
     $ ruby --version
     ruby 2.0.0p353 (2013-11-22 revision 43784) [x86_64-darwin13.2.0]
-    $ bertha git:(master) ✗ bundler --version
+    $ bundler --version
     Bundler version 1.7.3
 
-# Run it
+# Getting Started
 
-    Usage: ./bertha [-d] <website>
+## 1. Configure it
+
+### Rename defaults.yaml.template -> defaults.yaml
+
+Customize to your preferences.
+
+### Create a website.yaml
+
+Copy configuration/websites/project.yaml.template to configuration/websites/<your_project_name>.yaml.
+
+Customize to your preferences.
+
+## 2. Run it
+
+    Usage: ./bertha.sh [-d] <website>
         -d Turns Puppet debugging on
         <website> maps to a hiera (yaml) file in hieradata/websites
 
