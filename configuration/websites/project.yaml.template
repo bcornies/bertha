@@ -7,17 +7,22 @@ cms: wordpress
 # Valid options: dev|dist
 bertha::view_mode: dev
 
+# A static IP assigned to your Vagrant Apache webserver VM.
+# This should be on your internal network so you can reach the dev
+# website from your other devices.
+bertha::server_ip: 192.168.11.50
+
 # List of webservers that you will be deploying the project to
 # Uncomment prievew/live and fill in values. You can add more
 # sites as required.
 bertha::sites:
   develop:
-    host: 192.168.11.50
-    ftp_host: 192.168.11.50
+    host: "%{hiera('bertha::server_ip')}"
+    ftp_host: "%{hiera('bertha::server_ip')}"
     ftp_user: ftp@sixsquarestudio.com
     ftp_password: password1
-    db_host: 192.168.11.50
-    db_host_wp_config: 192.168.11.50
+    db_host: "%{hiera('bertha::server_ip')}"
+    db_host_wp_config: "%{hiera('bertha::server_ip')}"
     db_name: wordpress
     db_user: wordpress
     db_password: password
