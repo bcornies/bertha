@@ -58,3 +58,37 @@ The first time you run Bertha, it will bootstrap itself with everything it needs
 * r10k (for installing required Puppet modules)
 
 It will create a `bertha.lock` file after the first run. This prevents it from attempting to bootstrap itself more than once. If you want to force it to re-run the bootstrap, just delete the `bertha.lock` file. I'm sure there's a better way of doing this, but this works for now and it saves time when running `bertha` repetitively.
+
+## 3. Launch development environment
+
+### Navigate to you new WordPress theme project
+
+    $ cd /path/to/your/project
+
+_By default, this will be in the `bertha::websites_dir` as configured in `configuration/defaults.yaml`._
+
+### Create development distribution
+
+    $ ant dist-develop
+
+_This will create a `dist` directory in your project with compiled/minimized versions of your libraries and an environment-specific `wp-config.php` file._
+
+### Create and provision your Vagrant Apache webserver VM
+
+    $ vagrant up
+
+## 4. Configure WordPress
+
+#### a. Browse to http://<ip.of.your.server>
+
+You should see this address at the top of the `vagrant up` output.
+
+#### b. Fill out WordPress setup form
+
+## 5. Run SASS watcher
+
+    $ ./run_sass.sh
+
+## 6. Develop and test your theme!
+
+Simply save your file and refresh your browser.
