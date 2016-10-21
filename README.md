@@ -79,7 +79,7 @@ _This will create a `dist` directory in your project with compiled/minimized ver
 
 ## 4. Configure WordPress
 
-#### a. Browse to http://<ip.of.your.server>
+#### a. Browse to http://ip.of.your.server
 
 You should see this address at the top of the `vagrant up` output.
 
