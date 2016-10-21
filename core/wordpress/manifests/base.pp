@@ -2,6 +2,8 @@ class wordpress::base {
 
   file { [
     "${bertha::website_home}/web_root",
+    "${bertha::website_home}/data",
+    "${bertha::website_home}/data/sql",
     "${bertha::website_home}/wp-content",
     "${bertha::website_home}/wp-content/plugins",
     "${bertha::website_home}/wp-content/themes",

@@ -44,10 +44,6 @@ class bertha::server {
 		]
 	}
 
-	host { $bertha::server_name:
-		ip => $bertha::server_ip,
-	}
-
 	File["${bertha::website_home}/server/environments/dev/Puppetfile"] ~>
 	Exec['librarian-puppet install']
 

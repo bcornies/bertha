@@ -4,27 +4,28 @@
 <%- db_user     = scope['bertha::sites']['develop']['db_user'] -%>
 <%- db_password = scope['bertha::sites']['develop']['db_password'] -%>
 
-exec { 'add epel repos':
-  command => '/bin/rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm',
-  creates => '/etc/yum.repos.d/epel.repo',
-}
-
-exec { 'add remi repos':
-  command => '/bin/rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm',
-  creates => '/etc/yum.repos.d/remi.repo',
-}
+# The php packages from these repos are not installing properly as of Oct 21, 2016.
+# There are broken package dependencies.
+# exec { 'add epel repos':
+#   command => '/bin/rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm',
+#   creates => '/etc/yum.repos.d/epel.repo',
+# }
+#
+# exec { 'add remi repos':
+#   command => '/bin/rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm',
+#   creates => '/etc/yum.repos.d/remi.repo',
+# }
 
 package { 'wget':
   ensure => latest,
 }
 
 package { [
-  'php',
   'php-mysql',
   'php-gd',
 ]:
   ensure          => installed,
-  install_options => '--enablerepo=remi,remi-test',
+  # install_options => '--enablerepo=remi,remi-test',
 }
 
 class { 'apache':
@@ -94,8 +95,8 @@ service { 'iptables':
   ensure => stopped,
 }
 
-Exec['add epel repos'] ->
-Exec['add remi repos'] ->
+# Exec['add epel repos'] ->
+# Exec['add remi repos'] ->
 Package<| |> ->
 Class['wordpress'] ~>
 Class['apache::service']
