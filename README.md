@@ -1,22 +1,20 @@
 # Bertha
 
-Bootstraps _everything_ you need to develop a Wordpress website. Declaratively.
+A WordPress theme bootstrapper built with Puppet.
 
-Bertha is a full-stack website bootstrapping _and_ configuration engine built on top of Puppet. You tell it everything you need when you build websites and Bertha will both install and configure it all. You can go from a pristine, just-unboxed workstation to developing your website with every tool you need in minutes.
+Bertha is a full-stack WordPress theme bootstrapping and configuration engine built on top of Puppet. You tell it everything you need when you build a WordPress theme and Bertha will install, configure and provision a new WordPress theme project skeleton for you, ready to develop and test.
 
 Here's what Bertha will setup for you:
 
-* Customizable WordPress theme skeleton
-  * SASS support
-  * WordPress plugin management
-  * JS, SASS, CSS library management
-* Sandboxed development webserver using Vagrant
+* SASS framework and skeleton style files
+* WordPress plugins
+* JS, SASS, CSS libraries
+* Font Awesome framework
+* Apache webserver VM using Vagrant
 * Build scripts to minify and bundle your website for deployment
 * Deployment scripts for syncing and deploying to multiple webservers
 
-Due to the idempotent nature of Puppet, you can also use it to incrementally add to, modify, and maintain all of your web projects. Easily keep all of your web projects in-sync and working using the same toolsets and conventions.
-
-Some of the assumptions made may be a bit opinionated but I've tried to keep it as configurable and flexible as possible.
+Due to the idempotent nature of Puppet, you can use it to evolve your WordPress theme development standards, and ensure all of your themes stay up-to-date with your latest standards. Easily keep all of your WordPress theme projects in-sync and working using the same toolsets and conventions.
 
 # Requirements
 
@@ -24,7 +22,7 @@ Some of the assumptions made may be a bit opinionated but I've tried to keep it 
 
 - Mac OS X Mavericks 10.9.3 and above
 
-It will _probably_ work on other versions of OS X. It _should_ also work on various Linux distros but it would probably require a little bit of extra compatibility effort.
+It will probably work on other versions of OS X. It should also work on various Linux distros but it would probably require a little bit of extra compatibility effort.
 
 ### Ruby and Bundler
 
@@ -37,15 +35,13 @@ It will _probably_ work on other versions of OS X. It _should_ also work on vari
 
 ## 1. Configure it
 
-### Rename defaults.yaml.template -> defaults.yaml
+### Create the default configuration
 
-Customize to your preferences.
+Browser to the `configuration` directory. Rename `defaults.yaml.template` to `defaults.yaml`. Customize to your preferences.
 
-### Create a website.yaml
+### Create a new website configuration
 
-Copy configuration/websites/project.yaml.template to configuration/websites/<your_project_name>.yaml.
-
-Customize to your preferences.
+Copy `configuration/websites/project.yaml.template` to `configuration/websites/<your_project_name>.yaml`. This file will contain any configurations that are specific to your new website project.
 
 ## 2. Run it
 

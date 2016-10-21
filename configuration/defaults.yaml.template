@@ -1,8 +1,8 @@
 # fully qualified path to a directory where you want your websites to reside
-bertha::websites_dir:
+bertha::websites_dir: ~/bertha/websites
 
 # fully qualified path to a directory where you keep your personalized boilerplate files
-bertha::boilerplate_dir:
+bertha::boilerplate_dir: ~/bertha/boilerplate_files
 
 # fully qualified path to a mysql executable
 bertha::mysql_path:
@@ -28,4 +28,4 @@ frameworks:
   - font_awesome
 
 # any module-specific parameters go here
-local_libs::libraries_dir:
+local_libs::libraries_dir: ~/bertha/libraries
