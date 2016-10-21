@@ -13,10 +13,10 @@ class bertha (
 ) {
 
   if $is_cms {
-    validate_absolute_path($cms_props['install_dir'])
-    validate_string($cms_props['uploads_dir'])
-    validate_string($cms_props['config_file'])
-    validate_string($cms_props['themes_dir'])
+    validate_legacy('Stdlib::Absolutepath', 'validate_absolute_path', $cms_props['install_dir'])
+    validate_legacy('String', 'validate_string', $cms_props['uploads_dir'])
+    validate_legacy('String', 'validate_string', $cms_props['config_file'])
+    validate_legacy('String', 'validate_string', $cms_props['themes_dir'])
   }
 
   $cache_dir    = "${::home}/.bertha"

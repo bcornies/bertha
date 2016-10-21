@@ -35,19 +35,22 @@ It will probably work on other versions of OS X. It should also work on various 
 
 ## 1. Configure it
 
-### Create the default configuration
+### (Optional) Edit the default configuration
 
-Browser to the `configuration` directory. Rename `defaults.yaml.template` to `defaults.yaml`. Customize to your preferences.
+Browser to the `configuration` directory. Open the `defaults.yaml` file and edit to suit your preferences. These are all the default settings that your website project will inherit.
 
 ### Create a new website configuration
 
 Copy `configuration/websites/project.yaml.template` to `configuration/websites/<your_project_name>.yaml`. This file will contain any configurations that are specific to your new website project.
 
+Here you can override any default settings in the `defaults.yaml` file.
+
 ## 2. Run it
 
-    Usage: ./bertha.sh [-d] <website>
+    Usage: ./bertha.sh [-dt] <website>
         -d Turns Puppet debugging on
-        <website> maps to a hiera (yaml) file in hieradata/websites
+        -t Turns Puppet error tracing on
+        <website> maps to a hiera (yaml) file in configuration/websites
 
 The first time you run Bertha, it will bootstrap itself with everything it needs:
 

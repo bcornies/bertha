@@ -1,31 +1,29 @@
-# fully qualified path to a directory where you want your websites to reside
-bertha::websites_dir: ~/bertha/websites
+# fully qualified path to a directory where you want your WordPress theme projects to reside
+bertha::websites_dir: "/Users/%{::user}/bertha/websites"
 
 # fully qualified path to a directory where you keep your personalized boilerplate files
-bertha::boilerplate_dir: ~/bertha/boilerplate_files
+bertha::boilerplate_dir: "/Users/%{::user}/bertha/boilerplate_files"
 
 # fully qualified path to a mysql executable
-bertha::mysql_path:
+bertha::mysql_path: /opt/boxen/homebrew/bin/mysql
 
 # the named network interface to use for dev server bridge network
 bertha::server_network: 'en1: Wi-Fi (AirPort)'
 
 # the path to use for all system exec calls
 default_path:
-  - /opt/homebrew/bin
+  - /opt/boxen/homebrew/bin
   - /usr/local/bin
   - /usr/bin
   - /bin
 
 # default modules to use when building projects
+# don't touch these unless you know what you're doing!
 cms: wordpress
 builder: ant
-library_manager: local_libs
-
-# a list of frameworks in install in all projects
 frameworks:
   - sass
-  - font_awesome
+library_manager: local_libs
 
 # any module-specific parameters go here
-local_libs::libraries_dir: ~/bertha/libraries
+local_libs::libraries_dir: "/Users/%{::user}/bertha/libraries"

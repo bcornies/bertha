@@ -1,10 +1,4 @@
 .tmp
-
 configuration/websites/*.yaml
-configuration/defaults.yaml
-
 modules
-
-*.sublime-project
-*.sublime-workspace
 bertha.lock

@@ -5,8 +5,9 @@ DEBUG=false
 HIERA_CONFIG=configuration/hiera.yaml
 
 function usage {
-	echo "Usage: ./bertha [-d] <website>"
+	echo "Usage: ./bertha [-dt] <website>"
 	echo "   -d Turns Puppet debugging on"
+	echo "   -t Turns Puppet error tracing on"
 	echo "   <website> maps to a hiera file in configuration/websites"
 }
 

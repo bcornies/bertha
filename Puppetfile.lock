@@ -1,7 +1,14 @@
 FORGE
   remote: https://forgeapi.puppetlabs.com
   specs:
-    puppetlabs-stdlib (4.12.0)
+    puppetlabs-stdlib (4.13.1)
+
+GIT
+  remote: git@github.com:bcornies/puppet-homebrew.git
+  ref: master
+  sha: 4d72393e53b636d7f76265c0b50cecedfa7b223f
+  specs:
+    puppet-homebrew (0.2.0)
 
 GIT
   remote: git@github.com:bcornies/puppet-vagrant.git
@@ -9,13 +16,6 @@ GIT
   sha: 5055b8fc73da309189b1382d0f39646e64590139
   specs:
     bcornies-vagrant (0.0.1)
-
-GIT
-  remote: git@github.com:bjoernalbers/puppet-homebrew.git
-  ref: master
-  sha: 460cd4d28b4343289f2bc645e65dd258139e2411
-  specs:
-    puppet-homebrew (0.0.1)
 
 DEPENDENCIES
   bcornies-vagrant (>= 0)

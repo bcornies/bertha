@@ -2,11 +2,18 @@ if !$::website {
   fail('You must specify a website name!')
 }
 
-validate_re(
-  $::website,
-  '^[A-Za-z0-9\-\.]+$',
-  'The website name can only contain letters, numbers, underscores and dots.'
-)
+if $::website =~ /^[A-Za-z0-9\-\.]+$/ {
+  notice("Website named '${::website}' is valid.")
+} else {
+  fail("Website named '${::website}' is invalid. The website name can only contain letters, numbers, dashes and dots.")
+}
+
+$sites_test = lookup('bertha::sites', { default_value => undef })
+if $sites_test {
+  notice("Found configuration file for website named '${::website}'")
+} else {
+  fail("Could not find a valid configuration file for website named '${::website}'")
+}
 
 File {
   backup => false,
@@ -21,10 +28,10 @@ Exec {
   group     => 'staff',
 }
 
-$builder         = hiera('builder', undef)
-$cms             = hiera('cms', undef)
-$frameworks      = hiera('frameworks', undef)
-$library_manager = hiera('library_manager', undef)
+$builder         = lookup('builder', { default_value => undef })
+$cms             = lookup('cms', { default_value => undef })
+$frameworks      = lookup('frameworks', { default_value => undef })
+$library_manager = lookup('library_manager', { default_value => undef })
 
 include bertha
 include $builder
