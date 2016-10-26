@@ -37,7 +37,7 @@ It will probably work on other versions of OS X. It should also work on various 
 
 ### (Optional) Edit the default configuration
 
-Browser to the `configuration` directory. Open the `defaults.yaml` file and edit to suit your preferences. These are all the default settings that your website project will inherit.
+Browse to the `configuration` directory. Open the `defaults.yaml` file and edit to suit your preferences. These are all the default settings that your website project will inherit.
 
 ### Create a new website configuration
 
@@ -61,7 +61,7 @@ It will create a `bertha.lock` file after the first run. This prevents it from a
 
 ## 3. Launch development environment
 
-### Navigate to you new WordPress theme project
+### Navigate to your new WordPress theme project
 
     $ cd /path/to/your/project
 

@@ -78,7 +78,9 @@
     <replace file="${dist.www}/wp-config.php" token="@DB_PASSWORD@" value="<%= props['db_password'] %>" summary="true"/>
     <replace file="${dist.www}/wp-config.php" token="@DB_HOST@" value="<%= props['db_host_wp_config'] %>" summary="true"/>
     <replace file="${dist.www}/wp-config.php" token="@TABLE_PREFIX@" value="<%= props['db_table_prefix'] %>" summary="true"/>
-    <replace file="${dist.data}/database-dump.sql" token="@WORDPRESS_HOST@" value="<%= props['host'] %>" summary="true"/>
+    <replace dir="${dist}" token="@WORDPRESS_HOST@" value="<%= props['host'] %>" summary="true">
+      <include name="**/*.sql"/>
+    </replace>
   </target>
 
   <target name="dump-uploads-<%= site %>" description="Pulls files from <%= site %>, overwrites local">
