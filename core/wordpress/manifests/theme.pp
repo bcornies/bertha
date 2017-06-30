@@ -16,10 +16,12 @@ class wordpress::theme (
     'header.php',
     'footer.php',
     'style.css',
+    'js/main.js',
   ].each |$page| {
-    bertha::boilerplate_file { "${theme_dir}/${page}":
-      boilerplate_key => "wordpress/${page}",
-      default_source  => "puppet:///modules/wordpress/${page}",
+    file { "${theme_dir}/${page}":
+      ensure  => file,
+      replace => false,
+      content => template("wordpress/${page}.erb")
     }
   }
 
@@ -36,21 +38,12 @@ class wordpress::theme (
     force   => true,
   }
 
-  bertha::boilerplate_file { "${theme_dir}/js/main.js":
-    boilerplate_key => 'main.js',
-    default_source  => 'puppet:///modules/bertha/main.js',
-  }
 
   wordpress::lib::include_script { 'main':
     path => 'js',
   }
 
-  bertha::boilerplate_file { "${theme_dir}/css/global.css":
-    boilerplate_key => 'global.css',
-    default_source  => 'puppet:///modules/bertha/global.css',
-  }
-
-  wordpress::lib::include_stylesheet { 'global':
+  wordpress::lib::include_stylesheet { 'site':
     path => 'css',
   }
 

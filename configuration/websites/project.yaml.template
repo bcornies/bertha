@@ -7,11 +7,6 @@ cms: wordpress
 # Valid options: dev|dist
 bertha::view_mode: dev
 
-# A static IP assigned to your Vagrant Apache webserver VM.
-# This should be on your internal network so you can reach the dev
-# website from your other devices.
-bertha::server_ip: 192.168.11.50
-
 # List of webservers that you will be deploying the project to
 # Uncomment prievew/live and fill in values. You can add more
 # sites as required.
@@ -70,3 +65,5 @@ wordpress::plugins:
   # - advanced-custom-fields
   # - ninja-forms
   # - better-search-replace
+
+wordpress::is_child_theme: false

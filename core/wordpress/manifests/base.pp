@@ -1,7 +1,6 @@
 class wordpress::base {
 
   file { [
-    "${bertha::website_home}/web_root",
     "${bertha::website_home}/data",
     "${bertha::website_home}/data/sql",
     "${bertha::website_home}/wp-content",
@@ -12,11 +11,6 @@ class wordpress::base {
     ensure => directory,
   }
 
-  file { "${bertha::website_home}/web_root/wp-config.php":
-    ensure => file,
-    source => 'puppet:///modules/wordpress/wp-config.php',
-  }
-
   file { "${bertha::website_home}/deploy.xml":
     ensure  => file,
     content => template('wordpress/server/deploy.xml.erb'),
@@ -25,6 +19,11 @@ class wordpress::base {
   $gitignore_rules = [
     'wp-content/plugins',
     'wp-content/uploads',
+    'wp-content/index.php',
+    'wp-content/themes/twenty*',
+    'wp-content/themes/index.php',
+    'www/*',
+    '!www/.htaccess',
   ]
 
   $gitignore_rules.each |$rule| {

@@ -1,9 +1,6 @@
 # Where you want your WordPress theme projects to reside
 bertha::websites_dir: "/Users/%{::user}/bertha/websites"
 
-# Where you keep your personalized boilerplate files
-bertha::boilerplate_dir: "/Users/%{::user}/bertha/boilerplate_files"
-
 # A mysql executable
 # (Bertha will install mysql here if you don't have it already)
 bertha::mysql_path: /opt/boxen/homebrew/bin

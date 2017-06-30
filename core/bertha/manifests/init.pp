@@ -3,7 +3,6 @@ class bertha (
   $is_cms,
   $cms_props,
   $websites_dir      = "${::home}/bertha/projects",
-  $boilerplate_dir   = "${::home}/bertha/boilerplate_files",
   $server_ip         = undef,
   $mysql_path        = "/Applications/MAMP/Library/bin",
   $view_mode         = 'dev',

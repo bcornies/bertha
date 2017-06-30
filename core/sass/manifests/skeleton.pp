@@ -31,9 +31,10 @@ class sass::skeleton (
     'scss/pages/home.scss',
     'scss/pages/404.scss',
   ].each |$page| {
-    bertha::boilerplate_file { "${theme_dir}/${page}":
-      boilerplate_key => $page,
-      default_source  => "puppet:///modules/sass/${page}",
+    file { "${theme_dir}/${page}":
+      ensure  => file,
+      replace => false,
+      source  => "puppet:///modules/sass/${page}",
     }
   }
 

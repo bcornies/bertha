@@ -21,9 +21,4 @@ class bertha::tools {
     replace => false,
   }
 
-  exec { 'bundle install':
-    refreshonly => true,
-    cwd         => $bertha::website_home,
-  }
-
 }

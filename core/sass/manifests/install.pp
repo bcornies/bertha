@@ -5,7 +5,6 @@ class sass::install (
   file_line { 'gem sass':
     line   => 'gem "sass"',
     path   => "${bertha::website_home}/Gemfile",
-    notify => Exec['bundle install'],
   }
 
   file { "${bertha::website_home}/run_sass.sh":

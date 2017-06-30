@@ -10,9 +10,10 @@ class wordpress::child_theme (
   [
     'style.css',
   ].each |$page| {
-    bertha::boilerplate_file { "${theme_dir}/${page}":
-      boilerplate_key => "wordpress/${page}",
-      default_source  => "puppet:///modules/wordpress/${page}",
+    file { "${theme_dir}/${page}":
+      ensure  => file,
+      replace => false,
+      content => template("sass/${page}.erb"),
     }
   }
 
