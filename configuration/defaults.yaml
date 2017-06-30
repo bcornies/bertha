@@ -6,7 +6,7 @@ bertha::boilerplate_dir: "/Users/%{::user}/bertha/boilerplate_files"
 
 # A mysql executable
 # (Bertha will install mysql here if you don't have it already)
-bertha::mysql_path: /opt/boxen/homebrew/bin/mysql
+bertha::mysql_path: /opt/boxen/homebrew/bin
 
 # The named network interface to use for dev server bridge network
 bertha::server_network: 'en1: Wi-Fi (AirPort)'
@@ -32,3 +32,7 @@ library_manager: local_libs
 # Files must be organized like `${local_libs::libraries_dir}/css/bootstrap-3.3.4.css`
 # See configuration/websites/project.yaml.template for usage example
 local_libs::libraries_dir: "/Users/%{::user}/bertha/libraries"
+
+bertha::libraries:
+  css: []
+  js: []

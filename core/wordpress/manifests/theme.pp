@@ -57,6 +57,7 @@ class wordpress::theme (
   file { "${theme_dir}/functions.php":
     ensure  => file,
     content => template('wordpress/functions.php.erb'),
+    replace => false,
   }
 
   file { "${theme_dir}/includes/scripts.php":

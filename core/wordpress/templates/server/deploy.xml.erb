@@ -16,7 +16,6 @@
   <property name="dist.uploads" value="${dist}/www/wp-content/uploads"/>
   <property name="dist.plugins" value="${dist}/www/wp-content/plugins"/>
 
-  <property name="data" value="content/sql"/>
   <property name="mysql.bin" location="<%= scope['bertha::mysql_path'] %>"/>
 
   <target name="dist-base" description="Packages all files required by website">
@@ -39,7 +38,7 @@
       </fileset>
     </copy>
     <copy todir="${dist.data}">
-      <fileset dir="${src.data}/sql">
+      <fileset dir="${src.data}">
         <include name="*.sql"/>
       </fileset>
     </copy>
@@ -92,16 +91,16 @@
   </target>
 
   <target name="dump-mysql-<%= site %>">
-    <mkdir dir="${data}"/>
+    <mkdir dir="${src.data}"/>
     <exec executable="${mysql.bin}/mysqldump">
       <arg value="--host=<%= props['db_host'] %>"/>
       <arg value="--user=<%= props['db_user'] %>"/>
       <arg value="--password=<%= props['db_password'] %>"/>
       <arg value="--default-character-set=utf8"/>
-      <arg value="--result-file=${data}/database-dump.sql"/>
+      <arg value="--result-file=${src.data}/database-dump.sql"/>
       <arg value="<%= props['db_name'] %>"/>
     </exec>
-    <replace file="${data}/database-dump.sql" token="<%= props['host'] %>" value="@WORDPRESS_HOST@" summary="true"/>
+    <replace file="${src.data}/database-dump.sql" token="<%= props['host'] %>" value="@WORDPRESS_HOST@" summary="true"/>
   </target>
 
   <target name="publish-<%= site %>" depends="dist-<%= site %>">

@@ -5,4 +5,5 @@
 :hierarchy:
   - websites/%{::website}
   - cms/%{cms}
+  - my_conf
   - defaults
