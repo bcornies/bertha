@@ -5,12 +5,9 @@ $white: #ffffff;
 
 $font_serif: Times, 'Times New Roman', serif;
 
-// ----------------- Includes --------------------- //
+// ----------------- Foundational Styles --------------------- //
 
 @import 'foundation';
-@import 'alt/mobile';
-@import 'alt/retina';
-@import 'alt/ie';
 
 // ----------------- Styles --------------------- //
 
@@ -22,7 +19,11 @@ body {
   margin: 0;
 }
 
-// ----------------- Import our Pages --------------------- //
+// ----------------- Import Overrides and Pages --------------------- //
+
+@import 'alt/mobile';
+@import 'alt/retina';
+@import 'alt/ie';
 
 @import 'pages/home';
 @import 'pages/404';
